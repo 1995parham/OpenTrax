@@ -5,11 +5,11 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>home.parham</groupId>
-    <artifactId>HmanCoder</artifactId>
+    <artifactId>OpenTrax</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>GUI Huffman Coder</name>
+    <name>Open Trax</name>
     <url>https://github.com/1995parham/opentrax</url>
 
     <developers>
