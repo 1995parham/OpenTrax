@@ -1,2 +1,2 @@
-# OpenTrax
-Open source implementaion of TRAX game
+# Introduction
+Open source implementaion of TRAX game.
