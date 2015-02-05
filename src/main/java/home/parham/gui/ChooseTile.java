@@ -1,4 +1,6 @@
-package org.traxgame.gui;
+package home.parham.gui;
+
+import home.parham.gui.Tile;
 
 import java.awt.Insets;
 import java.awt.event.ActionEvent;

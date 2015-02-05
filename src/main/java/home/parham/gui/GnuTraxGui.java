@@ -1,15 +1,13 @@
-package org.traxgame.gui;
+package home.parham.gui;
 
-import java.awt.*;
+import home.parham.main.GnuTrax;
+import home.parham.main.TraxBoard;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.image.*;
-import java.io.*;
+import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-
-import javax.imageio.*;
-import org.traxgame.main.*;
 
 public class GnuTraxGui extends JFrame {
 
@@ -19,7 +17,7 @@ public class GnuTraxGui extends JFrame {
 	private GnuTrax gnuTraxGame;
 	private Loading loading;
 
-	public GnuTraxGui() {
+	public GnuTraxGui(){
 		super("GnuTrax 1.0");
 		setResizable(false);
 		setMinimumSize(new Dimension(80, 80));
@@ -30,72 +28,72 @@ public class GnuTraxGui extends JFrame {
 		newGame("simple");
 	}
 
-	private void newGame(String ai) {
+	private void newGame(String ai){
 		this.gnuTraxGame = new GnuTrax(ai);
 		this.gnuTraxGame.userNew();
 		if (board != null && board.size() > 0) {
 			for (int i = 0; i < 1; i++) {
-				board.get(i).setImage(tiles[Traxboard.INVALID].getImage());
+				board.get(i).setImage(tiles[TraxBoard.INVALID].getImage());
 			}
-			board.get(0).setImage(tiles[Traxboard.EMPTY].getImage());
+			board.get(0).setImage(tiles[TraxBoard.EMPTY].getImage());
 			this.repaint();
 		}
 	}
 
-	private String getRowColForPos(int x, int y) {
+	private String getRowColForPos(int x, int y){
 		StringBuilder sb = new StringBuilder();
 		// System.out.println("POS: x: " + x + " Y: " + y);
 		switch (x) {
-		case 0:
-			sb.append("@");
-			break;
-		case 1:
-		case 2:
-		case 3:
-		case 4:
-		case 5:
-		case 6:
-		case 7:
-		case 8:
-			sb.append(Character.toString((char) (x - 1 + 65)));
-			break;
+			case 0:
+				sb.append("@");
+				break;
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+			case 6:
+			case 7:
+			case 8:
+				sb.append(Character.toString((char) (x - 1 + 65)));
+				break;
 		}
 		sb.append(y);
 		return sb.toString();
 	}
 
-	private String position(int x, int y, int tileType) {
+	private String position(int x, int y, int tileType){
 		StringBuilder sb = new StringBuilder();
 		sb.append(getRowColForPos(x, y));
 		switch (tileType) {
-		case Traxboard.NS:
-		case Traxboard.EW:
-			sb.append("+");
-			break;
-		case Traxboard.SE:
-		case Traxboard.WN:
-			sb.append("/");
-			break;
-		case Traxboard.NE:
-		case Traxboard.WS:
-			sb.append("\\");
-			break;
+			case TraxBoard.NS:
+			case TraxBoard.EW:
+				sb.append("+");
+				break;
+			case TraxBoard.SE:
+			case TraxBoard.WN:
+				sb.append("/");
+				break;
+			case TraxBoard.NE:
+			case TraxBoard.WS:
+				sb.append("\\");
+				break;
 		}
 		// System.out.println(sb.toString());
 		return sb.toString();
 	}
 
-	private void clearBoard() {
+	private void clearBoard(){
 		for (ImagePanel ip : board) {
-			ip.setImage(tiles[Traxboard.EMPTY].getImage());
+			ip.setImage(tiles[TraxBoard.EMPTY].getImage());
 		}
 	}
 
-	private int noToDraw(int a) {
+	private int noToDraw(int a){
 		return (a == 8) ? 8 : a + 2;
 	}
 
-	private void drawBoard() {
+	private void drawBoard(){
 		int colDiff = 0, rowDiff = 0;
 		this.setVisible(false);
 		outerPanel = new JPanel();
@@ -104,7 +102,7 @@ public class GnuTraxGui extends JFrame {
 		int noOfColsToDraw = noToDraw(this.gnuTraxGame.getBoardCols());
 		outerPanel.setLayout(new GridLayout(noOfRowsToDraw, noOfColsToDraw));
 		ImagePanel innerPanel;
-		
+
 		if (noOfColsToDraw == 8 && this.gnuTraxGame.getBoardCols() == 8) {
 			colDiff = -1;
 		} else if (noOfRowsToDraw == 8 && this.gnuTraxGame.getBoardRows() == 8) {
@@ -114,8 +112,8 @@ public class GnuTraxGui extends JFrame {
 		for (int i = 0; i < noOfRowsToDraw; i++) {
 			for (int j = 0; j < noOfColsToDraw; j++) {
 				// TODO Why is it needed to swap i and j here??
-				innerPanel = new ImagePanel(tiles[Traxboard.EMPTY].getImage(),
-						this, j-colDiff, i-rowDiff);
+				innerPanel = new ImagePanel(tiles[TraxBoard.EMPTY].getImage(),
+						this, j - colDiff, i - rowDiff);
 				innerPanel.setSize(new Dimension(80, 80));
 				outerPanel.add(innerPanel);
 				board.add(innerPanel);
@@ -126,7 +124,7 @@ public class GnuTraxGui extends JFrame {
 
 		for (int i = 1; i <= this.gnuTraxGame.getBoardRows(); i++) {
 			for (int j = 1; j <= this.gnuTraxGame.getBoardCols(); j++) {
-				board.get((i+rowDiff) * noOfColsToDraw + (j+colDiff)).setImage(
+				board.get((i + rowDiff) * noOfColsToDraw + (j + colDiff)).setImage(
 						tiles[this.gnuTraxGame.getTileAt(i, j)].getImage());
 			}
 		}
@@ -134,39 +132,39 @@ public class GnuTraxGui extends JFrame {
 		this.setVisible(true);
 	}
 
-	private boolean checkForWinner() {
-		if (this.gnuTraxGame.isGameOver() != Traxboard.NOPLAYER) {
+	private boolean checkForWinner(){
+		if (this.gnuTraxGame.isGameOver() != TraxBoard.NOPLAYER) {
 			// Show message box with winner and if you want to
 			// play again
 			switch (this.gnuTraxGame.isGameOver()) {
-			case Traxboard.BLACK:
-				showNewGameDialog("black");
-				break;
-			case Traxboard.WHITE:
-				showNewGameDialog("white");
-				break;
-			default:
-				showNewGameDialog("everyone");
+				case TraxBoard.BLACK:
+					showNewGameDialog("black");
+					break;
+				case TraxBoard.WHITE:
+					showNewGameDialog("white");
+					break;
+				default:
+					showNewGameDialog("everyone");
 			}
 			return true;
 		}
 		return false;
 	}
 
-	private void showNewGameDialog(String winner) {
+	private void showNewGameDialog(String winner){
 		JOptionPane.showMessageDialog(this, "Good game. The winner was "
 				+ winner, "Game Over", JOptionPane.INFORMATION_MESSAGE);
 		showAndChooseAi();
 		newGameBoard();
 	}
 
-	private void makeAiMove() {
+	private void makeAiMove(){
 		new Thread(new Runnable() {
 			@Override
-			public void run() {
+			public void run(){
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override
-					public void run() {
+					public void run(){
 						loading.setVisible(true);
 					}
 				});
@@ -181,7 +179,7 @@ public class GnuTraxGui extends JFrame {
 
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override
-					public void run() {
+					public void run(){
 						loading.setVisible(false);
 						clearBoard();
 						drawBoard();
@@ -194,7 +192,7 @@ public class GnuTraxGui extends JFrame {
 		}).start();
 	}
 
-	public void setMove(int x, int y, Tile tile) {
+	public void setMove(int x, int y, Tile tile){
 		boolean aiMayMove = false;
 		String theMove = position(x, y, tile.getTileType());
 		try {
@@ -221,7 +219,7 @@ public class GnuTraxGui extends JFrame {
 		// System.out.println(this.gnuTraxGame.getTheBoard());
 	}
 
-	public java.util.List<Tile> getPossibleTilesForPosition(int x, int y) {
+	public java.util.List<Tile> getPossibleTilesForPosition(int x, int y){
 		java.util.List<Tile> possibleMoves = new ArrayList<Tile>();
 		java.util.List<Integer> theMoves = this.gnuTraxGame.getPossibleMoves(x,
 				y);
@@ -231,7 +229,7 @@ public class GnuTraxGui extends JFrame {
 		return possibleMoves;
 	}
 
-	private void newGameBoard() {
+	private void newGameBoard(){
 		board.clear();
 		outerPanel = new JPanel();
 		outerPanel.setLayout(new GridLayout(1, 1));
@@ -240,46 +238,46 @@ public class GnuTraxGui extends JFrame {
 		for (int i = 0; i < 1; i++) {
 			for (int j = 0; j < 1; j++) {
 				innerPanel = new ImagePanel(
-						tiles[Traxboard.INVALID].getImage(), this, j, i);
+						tiles[TraxBoard.INVALID].getImage(), this, j, i);
 				outerPanel.add(innerPanel);
 				board.add(innerPanel);
 			}
 		}
-		board.get(0).setImage(tiles[Traxboard.EMPTY].getImage());
+		board.get(0).setImage(tiles[TraxBoard.EMPTY].getImage());
 		if (this.getContentPane().getComponentCount() > 0)
 			this.getContentPane().remove(0);
 		this.getContentPane().add(outerPanel);
 		this.pack();
 	}
 
-	public void addComponentsToPane(final Container pane) {
+	public void addComponentsToPane(final Container pane){
 		tiles = new Tile[8];
 		try {
 
-			tiles[Traxboard.NS] = new Tile(ImageIO.read(getClass()
+			tiles[TraxBoard.NS] = new Tile(ImageIO.read(getClass()
 					.getClassLoader().getResource("images/large/ns.gif")),
-					Traxboard.NS); // 80x80 gif
-			tiles[Traxboard.WE] = new Tile(ImageIO.read(getClass()
+					TraxBoard.NS); // 80x80 gif
+			tiles[TraxBoard.WE] = new Tile(ImageIO.read(getClass()
 					.getClassLoader().getResource("images/large/we.gif")),
-					Traxboard.WE); // 80x80 gif
-			tiles[Traxboard.NW] = new Tile(ImageIO.read(getClass()
+					TraxBoard.WE); // 80x80 gif
+			tiles[TraxBoard.NW] = new Tile(ImageIO.read(getClass()
 					.getClassLoader().getResource("images/large/nw.gif")),
-					Traxboard.NW); // 80x80 gif
-			tiles[Traxboard.NE] = new Tile(ImageIO.read(getClass()
+					TraxBoard.NW); // 80x80 gif
+			tiles[TraxBoard.NE] = new Tile(ImageIO.read(getClass()
 					.getClassLoader().getResource("images/large/ne.gif")),
-					Traxboard.NE); // 80x80 gif
-			tiles[Traxboard.WS] = new Tile(ImageIO.read(getClass()
+					TraxBoard.NE); // 80x80 gif
+			tiles[TraxBoard.WS] = new Tile(ImageIO.read(getClass()
 					.getClassLoader().getResource("images/large/ws.gif")),
-					Traxboard.WS); // 80x80 gif
-			tiles[Traxboard.SE] = new Tile(ImageIO.read(getClass()
+					TraxBoard.WS); // 80x80 gif
+			tiles[TraxBoard.SE] = new Tile(ImageIO.read(getClass()
 					.getClassLoader().getResource("images/large/se.gif")),
-					Traxboard.SE); // 80x80 gif
-			tiles[Traxboard.INVALID] = new Tile(ImageIO.read(getClass()
+					TraxBoard.SE); // 80x80 gif
+			tiles[TraxBoard.INVALID] = new Tile(ImageIO.read(getClass()
 					.getClassLoader().getResource("images/large/invalid.gif")),
-					Traxboard.INVALID); // 80x80 gif
-			tiles[Traxboard.EMPTY] = new Tile(ImageIO.read(getClass()
+					TraxBoard.INVALID); // 80x80 gif
+			tiles[TraxBoard.EMPTY] = new Tile(ImageIO.read(getClass()
 					.getClassLoader().getResource("images/large/blank.gif")),
-					Traxboard.EMPTY); // 80x80 gif
+					TraxBoard.EMPTY); // 80x80 gif
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -288,9 +286,9 @@ public class GnuTraxGui extends JFrame {
 		 * 1)); ImagePanel innerPanel;
 		 * 
 		 * for (int i = 0; i < 1; i++) { for (int j = 0; j < 1; j++) {
-		 * innerPanel = new ImagePanel( tiles[Traxboard.INVALID].getImage(),
+		 * innerPanel = new ImagePanel( tiles[TraxBoard.INVALID].getImage(),
 		 * this, j, i); outerPanel.add(innerPanel); board.add(innerPanel); } }
-		 * board.get(0).setImage(tiles[Traxboard.EMPTY].getImage());
+		 * board.get(0).setImage(tiles[TraxBoard.EMPTY].getImage());
 		 * pane.add(outerPanel);
 		 */
 		newGameBoard();
@@ -301,7 +299,7 @@ public class GnuTraxGui extends JFrame {
 	 * Create the GUI and show it. For thread safety, this method is invoked
 	 * from the event dispatch thread.
 	 */
-	private static void createAndShowGUI() {
+	private static void createAndShowGUI(){
 		// Create and set up the window.
 		GnuTraxGui frame = new GnuTraxGui();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -313,8 +311,8 @@ public class GnuTraxGui extends JFrame {
 		frame.setVisible(true);
 	}
 
-	private void showAndChooseAi() {
-		Object[] possibilities = { "simple (easy)", "uct (hard)", "quit" };
+	private void showAndChooseAi(){
+		Object[] possibilities = {"simple (easy)", "uct (hard)", "quit"};
 		int s = JOptionPane.showOptionDialog(this, "Choose AI:", "New game",
 				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
 				null, possibilities, possibilities[0]);
@@ -323,7 +321,7 @@ public class GnuTraxGui extends JFrame {
 		newGame(((String) possibilities[s]).split(" ")[0]);
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 		} catch (UnsupportedLookAndFeelException e) {
@@ -341,7 +339,7 @@ public class GnuTraxGui extends JFrame {
 		// Schedule a job for the event dispatch thread:
 		// creating and showing this application's GUI.
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
+			public void run(){
 				createAndShowGUI();
 			}
 		});

@@ -1,4 +1,4 @@
-package org.traxgame.gui;
+package home.parham.gui;
 
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;

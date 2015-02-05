@@ -1,4 +1,4 @@
-package org.traxgame.main;
+package home.parham.main;
 
 /* 
  Date: 18th of September 2009
@@ -9,7 +9,7 @@ package org.traxgame.main;
  */
 
 public class ComputerPlayerSimple extends ComputerPlayer {
-	public String computerMove(Traxboard tb) {
+	public String computerMove(TraxBoard tb) {
 		try {
 			return TraxUtil.getRandomMove(tb);
 		} catch (IllegalMoveException e) {

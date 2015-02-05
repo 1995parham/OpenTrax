@@ -1,4 +1,4 @@
-package org.traxgame.main;
+package home.parham.main;
 
 /* 
 
@@ -11,5 +11,5 @@ package org.traxgame.main;
  */
 
 public abstract class ComputerPlayer {
-	public abstract String computerMove(Traxboard tb);
+	public abstract String computerMove(TraxBoard tb);
 }
