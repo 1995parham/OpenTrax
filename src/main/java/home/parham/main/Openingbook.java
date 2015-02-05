@@ -7,7 +7,7 @@
  contact traxplayer@gmail.com for more information about this code
 */
 
-package org.traxgame.main;
+package home.parham.main;
 
 import java.io.*;
 import java.util.*;
@@ -28,13 +28,13 @@ public class Openingbook {
 	public void generateBook(boolean always, boolean never) throws IOException 
 	{
 		String s;
-		Traxboard tb;
+		TraxBoard tb;
 		//int lineno=0;
 		BufferedReader reader = new BufferedReader(new FileReader(new File(inputfile)));
 		if ((always == false) && (never == false)) {
 			while ((s = reader.readLine()) != null) {
 			    	//lineno++;
-				tb = new Traxboard();
+				tb = new TraxBoard();
 				boolean useless = false;
 				boolean resign = false;
 				try {
@@ -48,7 +48,7 @@ public class Openingbook {
 				} catch (IllegalMoveException e) {
 					useless = true;
 				}
-				if (!resign && tb.isGameOver() == Traxboard.NOPLAYER) {
+				if (!resign && tb.isGameOver() == TraxBoard.NOPLAYER) {
 					useless = true;
 				}
 				if (useless) {
@@ -60,7 +60,7 @@ public class Openingbook {
 				} else {
 					gameOverValue = tb.isGameOver();
 				}
-				tb = new Traxboard();
+				tb = new TraxBoard();
 				for (String move : s.split("\\s")) {
 					try {
 						if (move.equalsIgnoreCase("resign")) { break; }
@@ -78,7 +78,7 @@ public class Openingbook {
 		} 
 		if ((always == true) || (never == true)) {
 			while ((s = reader.readLine()) != null) {
-				tb = new Traxboard();
+				tb = new TraxBoard();
 				try {
 					for (String move : s.split("\\s")) {
 						tb.makeMove(move);
@@ -96,7 +96,7 @@ public class Openingbook {
 		reader.close();
 	}
 
-	private void updateBook(Traxboard tb, BookValue bv, int gameOverValue) 
+	private void updateBook(TraxBoard tb, BookValue bv, int gameOverValue) 
 	{ 
 	    /* Need to find the right bookKey if any exist */
             BookKey bk1;
@@ -107,9 +107,9 @@ public class Openingbook {
 		bk1=new BookKey(tb.getBorder(), tb.whoToMove());
 	        if (theBook.get(bk1)!=null) {
 		  switch (gameOverValue) {
-		      case Traxboard.WHITE: bv.white++; break;
-		      case Traxboard.BLACK: bv.black++; break;
-		      case Traxboard.DRAW: bv.draw++; break;
+		      case TraxBoard.WHITE: bv.white++; break;
+		      case TraxBoard.BLACK: bv.black++; break;
+		      case TraxBoard.DRAW: bv.draw++; break;
 		      default: /* This should never happen */
 		        throw new RuntimeException("This should never happen (055)");
 		  }
@@ -120,15 +120,15 @@ public class Openingbook {
 		if (i<4) tb=tb.rotate();
 	    }
             String newBorder=TraxUtil.reverseBorder(tb.getBorder());
-	    // How to handle tb.whoToMove()==Traxboard.NOPLAYER ? Is that a problem ?
-  	    int newWTM=(tb.whoToMove()==Traxboard.WHITE)?Traxboard.BLACK:Traxboard.WHITE; 
+	    // How to handle tb.whoToMove()==TraxBoard.NOPLAYER ? Is that a problem ?
+  	    int newWTM=(tb.whoToMove()==TraxBoard.WHITE)?TraxBoard.BLACK:TraxBoard.WHITE; 
 	    for (int i=1; i<=4; i++) {
 		bk2=new BookKey(newBorder, newWTM);
 	        if (theBook.get(bk2)!=null) {
 		  switch (gameOverValue) {
-		      case Traxboard.WHITE: bv.black++; break;
-		      case Traxboard.BLACK: bv.white++; break;
-		      case Traxboard.DRAW: bv.draw++; break;
+		      case TraxBoard.WHITE: bv.black++; break;
+		      case TraxBoard.BLACK: bv.white++; break;
+		      case TraxBoard.DRAW: bv.draw++; break;
 		      default: // This should never happen 
 		        throw new RuntimeException("This should never happen (056)");
 		  }
@@ -197,7 +197,7 @@ public class Openingbook {
 		return result.toString(); 
 	}
 
-	public BookValue search(Traxboard tb) { 
+	public BookValue search(TraxBoard tb) { 
 	    BookValue result;
 
 			result=theBook.get(new BookKey(tb.getBorder(),tb.whoDidLastMove()));
@@ -212,8 +212,8 @@ public class Openingbook {
 	      if (i<4) tb=tb.rotate();
 	    }
 	    String newBorder;
-	    // How to handle tb.whoToMove()==Traxboard.NOPLAYER ? Is that a problem ?
-  	    int newWTM=(tb.whoToMove()==Traxboard.WHITE)?Traxboard.BLACK:Traxboard.WHITE; 
+	    // How to handle tb.whoToMove()==TraxBoard.NOPLAYER ? Is that a problem ?
+  	    int newWTM=(tb.whoToMove()==TraxBoard.WHITE)?TraxBoard.BLACK:TraxBoard.WHITE; 
 	    for (int i=1; i<=3; i++) {
 	      newBorder=TraxUtil.reverseBorder(tb.getBorder());
 	      result=theBook.get(new BookKey(newBorder,newWTM));
@@ -259,7 +259,7 @@ public class Openingbook {
 		{
 			if (alwaysPlay) return Integer.MAX_VALUE; 
 			if (neverPlay) return Integer.MIN_VALUE;
-			if (wtm==Traxboard.WHITE) return (TraxUtil.getRandom(50)+1000*black/(black+white+draw+1));
+			if (wtm==TraxBoard.WHITE) return (TraxUtil.getRandom(50)+1000*black/(black+white+draw+1));
 			return (TraxUtil.getRandom(50)+1000*white/(black+white+draw+1));
 		}
 
@@ -305,7 +305,7 @@ public class Openingbook {
 
 		public BookKey reverse() 
 		{
-			return new BookKey(TraxUtil.reverseBorder(border),wtm==Traxboard.WHITE?Traxboard.BLACK:Traxboard.WHITE);
+			return new BookKey(TraxUtil.reverseBorder(border),wtm==TraxBoard.WHITE?TraxBoard.BLACK:TraxBoard.WHITE);
 		}
 
 		public BookKey(String border, int wtm) 
@@ -316,7 +316,7 @@ public class Openingbook {
 
 		public BookKey(String border, String wtm) { this(border, Integer.parseInt(wtm)); }
 
-		public BookKey(Traxboard tb) { this(tb.getBorder(), tb.whoToMove()); }
+		public BookKey(TraxBoard tb) { this(tb.getBorder(), tb.whoToMove()); }
 
 		public int hashCode() { return border.hashCode() + wtm; }
 

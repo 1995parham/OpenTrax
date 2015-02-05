@@ -6,7 +6,7 @@
    contact traxplayer@gmail.com for more information about this code
 */
 
-package org.traxgame.main;
+package home.parham.main;
 
 import java.util.*;
 import java.io.*;
@@ -33,7 +33,7 @@ public class ComputerPlayerUct extends ComputerPlayer
 	}
     }
    
-    private String simpleMove(Traxboard tb) {
+    private String simpleMove(TraxBoard tb) {
       int percent=TraxUtil.getRandom(100);
 
       if (tb.getNumOfTiles()==0) {
@@ -44,7 +44,7 @@ public class ComputerPlayerUct extends ComputerPlayer
         }
       }
       if (tb.getNumOfTiles()==1) {
-        if (tb.getAt(1,1)==Traxboard.NW) {
+        if (tb.getAt(1,1)==TraxBoard.NW) {
           if (percent<15) {
             return new String("B1\\");
           }
@@ -54,7 +54,7 @@ public class ComputerPlayerUct extends ComputerPlayer
 	    return new String("B1+");
 	  }
         }
-        if (tb.getAt(1,1)==Traxboard.NS) {
+        if (tb.getAt(1,1)==TraxBoard.NS) {
           if (percent<5) {
             return new String("A0+");
           }
@@ -68,15 +68,15 @@ public class ComputerPlayerUct extends ComputerPlayer
         }
       }
       if (tb.getNumOfTiles()==2) {
-        if (tb.getAt(1,1)==Traxboard.NW) {
-          if (tb.getAt(1,2)==Traxboard.NE) return new String("A2/");
-	  if (tb.getAt(2,1)==Traxboard.WS) return new String("B1/");
+        if (tb.getAt(1,1)==TraxBoard.NW) {
+          if (tb.getAt(1,2)==TraxBoard.NE) return new String("A2/");
+	  if (tb.getAt(2,1)==TraxBoard.WS) return new String("B1/");
         }
       }
       return null;
     }
 
-    private String openingMove(Traxboard tb) {
+    private String openingMove(TraxBoard tb) {
       String bestMove=null;
 
       if (book==null) {
@@ -86,7 +86,7 @@ public class ComputerPlayerUct extends ComputerPlayer
       int bestScore=Integer.MIN_VALUE;
 
       for (String move : tb.uniqueMoves()) {
-	 Traxboard t_copy=new Traxboard(tb);
+	 TraxBoard t_copy=new TraxBoard(tb);
 	 try { t_copy.makeMove(move); }
 	 catch (IllegalMoveException e) {
 	     throw new RuntimeException("This should never happen. (027)");
@@ -108,7 +108,7 @@ public class ComputerPlayerUct extends ComputerPlayer
       return null;
     }
 
-    public String computerMove(Traxboard tb) {
+    public String computerMove(TraxBoard tb) {
         String simple=null;
 
  	simple=simpleMove(tb);
@@ -146,8 +146,8 @@ public class ComputerPlayerUct extends ComputerPlayer
 	return root.getWorse().getMove();
     }
     
-    private int playRandomGame (Traxboard tb) {
-	while (tb.isGameOver()==Traxboard.NOPLAYER) {
+    private int playRandomGame (TraxBoard tb) {
+	while (tb.isGameOver()==TraxBoard.NOPLAYER) {
 	    try { tb.makeMove (TraxUtil.getRandomMove (tb)); }
 	    catch (IllegalMoveException e) { throw new RuntimeException (); }
 	}
@@ -184,7 +184,7 @@ public class ComputerPlayerUct extends ComputerPlayer
 	int result=-1;
 	
 	if (node.getVisits()<5)	{
-	    result=playRandomGame(new Traxboard(node.getPosition()));
+	    result=playRandomGame(new TraxBoard(node.getPosition()));
 	    node.update(result); 
 	    return result;
 	}
@@ -198,7 +198,7 @@ public class ComputerPlayerUct extends ComputerPlayer
 		System.err.println(next);
 		throw new RuntimeException("Doh!");
 	    }
-	    if (next.getPosition().isGameOver()!=Traxboard.NOPLAYER) {
+	    if (next.getPosition().isGameOver()!=TraxBoard.NOPLAYER) {
 		result=next.getPosition().isGameOver();
 		next.update(result);
 		return result;
