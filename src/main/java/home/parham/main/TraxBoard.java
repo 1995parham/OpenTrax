@@ -13,6 +13,8 @@
 
 package home.parham.main;
 
+import home.parham.main.exceptions.IllegalMoveException;
+
 import java.util.ArrayList;
 
 public class TraxBoard {

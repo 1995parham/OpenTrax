@@ -9,6 +9,8 @@
 
 package home.parham.main;
 
+import home.parham.main.exceptions.IllegalMoveException;
+
 import java.io.*;
 import java.util.*;
 

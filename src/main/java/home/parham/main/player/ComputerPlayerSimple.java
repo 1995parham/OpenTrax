@@ -1,4 +1,4 @@
-package home.parham.main;
+package home.parham.main.player;
 
 /* 
  Date: 18th of September 2009
@@ -7,6 +7,10 @@ package home.parham.main;
  (GNU General Public License - http://www.gnu.org/)
  contact traxplayer@gmail.com for more information about this code
  */
+
+import home.parham.main.exceptions.IllegalMoveException;
+import home.parham.main.TraxBoard;
+import home.parham.main.TraxUtil;
 
 public class ComputerPlayerSimple extends ComputerPlayer {
 	public String computerMove(TraxBoard tb) {

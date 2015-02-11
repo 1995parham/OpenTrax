@@ -1,4 +1,4 @@
-package home.parham.main;
+package home.parham.main.player;
 
 /*
 
@@ -9,6 +9,10 @@ package home.parham.main;
  contact traxplayer@gmail.com for more information about this code
 
  */
+
+import home.parham.main.exceptions.IllegalMoveException;
+import home.parham.main.TraxBoard;
+import home.parham.main.TraxUtil;
 
 import java.util.ArrayList;
 

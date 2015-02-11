@@ -10,6 +10,8 @@
 
 package home.parham.main;
 
+import home.parham.main.exceptions.IllegalMoveException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
