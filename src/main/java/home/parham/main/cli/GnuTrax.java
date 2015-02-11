@@ -12,12 +12,13 @@
 */
 package home.parham.main.cli;
 
-import home.parham.main.TraxBoard;
-import home.parham.main.util.TraxUtil;
+import home.parham.main.domain.TraxBoard;
+import home.parham.main.domain.TraxStatus;
 import home.parham.main.exceptions.IllegalMoveException;
 import home.parham.main.player.Player;
 import home.parham.main.player.PlayerSimple;
 import home.parham.main.player.PlayerUct;
+import home.parham.main.util.TraxUtil;
 
 import java.util.ArrayList;
 
@@ -33,7 +34,8 @@ public class GnuTrax {
 
 	private boolean analyzeMode, autodisplay, logv, learning;
 	private boolean ponder, alarmv;
-	private int noise, display, searchDepth, searchTime, computerColour;
+	private int noise, display, searchDepth, searchTime;
+	private TraxStatus computerColour;
 	private String playerName;
 	private TraxBoard traxBoard;
 	private Player player;
@@ -45,7 +47,7 @@ public class GnuTrax {
 		alarmv = true;
 		logv = false;
 		display = 1;
-		computerColour = TraxBoard.BLACK;
+		computerColour = TraxStatus.BLACK;
 		learning = true;
 		searchDepth = 4;
 		searchTime = 180;
@@ -144,11 +146,11 @@ public class GnuTrax {
 		this.searchTime = searchTime;
 	}
 
-	public int getComputerColour(){
+	public TraxStatus getComputerColour(){
 		return computerColour;
 	}
 
-	public void setComputerColour(int computerColour){
+	public void setComputerColour(TraxStatus computerColour){
 		this.computerColour = computerColour;
 	}
 
@@ -177,24 +179,21 @@ public class GnuTrax {
 	}
 
 	private void checkForWin(){
-		int gameValue;
+		TraxStatus gameValue;
 
 		gameValue = traxBoard.isGameOver();
-		if (gameValue == TraxBoard.NOPLAYER)
+		if (gameValue == TraxStatus.NOPLAYER)
 			return;
 		System.out.print("Game over. The result is ");
 		switch (gameValue) {
-			case TraxBoard.DRAW:
+			case DRAW:
 				System.out.println("Draw.");
 				break;
-			case TraxBoard.WHITE:
+			case WHITE:
 				System.out.println("White won.");
 				break;
-			case TraxBoard.BLACK:
+			case BLACK:
 				System.out.println("Black won.");
-				break;
-			default:
-				/* This should never happen */
 				break;
 		}
 	}
@@ -221,21 +220,21 @@ public class GnuTrax {
 		ArrayList<String> command = new ArrayList<String>();
 		while (true) {
 			command.clear();
-			if (traxBoard.whoToMove() == TraxBoard.WHITE)
+			if (traxBoard.whoToMove() == TraxStatus.WHITE)
 				System.out.print("White");
 			else
 				System.out.print("Black");
 
 			System.out.print("():");
 
-			if ((traxBoard.isGameOver() == TraxBoard.NOPLAYER)
+			if ((traxBoard.isGameOver() == TraxStatus.NOPLAYER)
 					&& (traxBoard.whoToMove() == computerColour)) {
 				/* the player must give a move */
 				System.out.println("Thinking ...");
 				command.add(player.move(traxBoard));
 				System.out.println(command.get(0));
 			} else if ((traxBoard.whoToMove() != computerColour)
-					|| (traxBoard.isGameOver() != TraxBoard.NOPLAYER)) {
+					|| (traxBoard.isGameOver() != TraxStatus.NOPLAYER)) {
 				/* the human must give a move or a command */
 				command = TraxUtil.getInput();
 				if (command.size() == 0)

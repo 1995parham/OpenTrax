@@ -10,6 +10,8 @@ package home.parham.main;
 
  */
 
+import home.parham.main.domain.TraxBoard;
+import home.parham.main.domain.TraxStatus;
 import home.parham.main.exceptions.IllegalMoveException;
 import home.parham.main.util.TraxUtil;
 
@@ -20,7 +22,7 @@ public class benchmark {
 
 	public static void main(String[] args){
 		TraxBoard tb;
-		int game_value = TraxBoard.NOPLAYER; // To make the compiler happy
+		TraxStatus game_value = TraxStatus.NOPLAYER; // To make the compiler happy
 		ArrayList<String> move_list;
 		String random_move;
 		int draw = 0, p1 = 0, p2 = 0;
@@ -38,24 +40,22 @@ public class benchmark {
 					tb.makeMove(random_move);
 					game_value = tb.isGameOver();
 					game_length++;
-				} while (game_value == TraxBoard.NOPLAYER);
+				} while (game_value == TraxStatus.NOPLAYER);
 			} catch (IllegalMoveException e) {
 				e.printStackTrace();
 				return;
 			}
 			switch (game_value) {
-				case TraxBoard.DRAW:
+				case DRAW:
 					draw++;
 					break;
-				case TraxBoard.WHITE:
+				case WHITE:
 					p1++;
 					break;
-				case TraxBoard.BLACK:
+				case BLACK:
 					p2++;
 					break;
 				default:
-				/* This should never happen */
-					assert (false);
 			}
 		}
 

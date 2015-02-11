@@ -13,7 +13,7 @@
 
 package home.parham.main.cli;
 
-import home.parham.main.TraxBoard;
+import home.parham.main.domain.TraxStatus;
 
 import java.util.ArrayList;
 
@@ -115,7 +115,7 @@ public class CommandDispatcher {
 		} else if (line.equals("white")) {
 			Commands.userWhite();
 		} else {
-			if (GnuTrax.getInstance().getTraxBoard().isGameOver() == TraxBoard.NOPLAYER)
+			if (GnuTrax.getInstance().getTraxBoard().isGameOver() == TraxStatus.NOPLAYER)
 				GnuTrax.getInstance().gotAMove(line);
 		}
 	}

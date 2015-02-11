@@ -13,7 +13,8 @@
 
 package home.parham.main.cli;
 
-import home.parham.main.TraxBoard;
+import home.parham.main.domain.TraxBoard;
+import home.parham.main.domain.TraxStatus;
 import home.parham.main.util.TraxUtil;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class Commands {
 
 	public static void userAnalyze(){
 		GnuTrax.getInstance().setAnalyzeMode(true);
-		GnuTrax.getInstance().setComputerColour(TraxBoard.NOPLAYER);
+		GnuTrax.getInstance().setComputerColour(TraxStatus.NOPLAYER);
 	}
 
 	public static void userAnnotate(){
@@ -446,7 +447,7 @@ public class Commands {
 
 	public static void userNew(){
 		GnuTrax.getInstance().setTraxBoard(new TraxBoard());
-		GnuTrax.getInstance().setComputerColour(TraxBoard.BLACK);
+		GnuTrax.getInstance().setComputerColour(TraxStatus.BLACK);
 	}
 
 

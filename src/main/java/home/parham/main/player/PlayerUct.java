@@ -9,9 +9,10 @@
 package home.parham.main.player;
 
 import home.parham.main.Openingbook;
-import home.parham.main.TraxBoard;
-import home.parham.main.util.TraxUtil;
+import home.parham.main.domain.TraxBoard;
+import home.parham.main.domain.TraxStatus;
 import home.parham.main.exceptions.IllegalMoveException;
+import home.parham.main.util.TraxUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -148,8 +149,8 @@ public class PlayerUct implements Player {
 		return root.getWorse().getMove();
 	}
 
-	private int playRandomGame(TraxBoard tb){
-		while (tb.isGameOver() == TraxBoard.NOPLAYER) {
+	private TraxStatus playRandomGame(TraxBoard tb){
+		while (tb.isGameOver() == TraxStatus.NOPLAYER) {
 			try {
 				tb.makeMove(TraxUtil.getRandomMove(tb));
 			} catch (IllegalMoveException e) {
@@ -181,12 +182,11 @@ public class PlayerUct implements Player {
 				bestUct = value;
 			}
 		}
-		//System.out.println(bestUct);
 		return children.get(best_index);
 	}
 
-	private int playSimulation(UctNode node){
-		int result = -1;
+	private TraxStatus playSimulation(UctNode node){
+		TraxStatus result;
 
 		if (node.getVisits() < 5) {
 			result = playRandomGame(new TraxBoard(node.getPosition()));
@@ -202,7 +202,7 @@ public class PlayerUct implements Player {
 				System.err.println(next);
 				throw new RuntimeException("Doh!");
 			}
-			if (next.getPosition().isGameOver() != TraxBoard.NOPLAYER) {
+			if (next.getPosition().isGameOver() != TraxStatus.NOPLAYER) {
 				result = next.getPosition().isGameOver();
 				next.update(result);
 				return result;

@@ -10,8 +10,9 @@ package home.parham.main.player;
 
  */
 
+import home.parham.main.domain.TraxBoard;
+import home.parham.main.domain.TraxStatus;
 import home.parham.main.exceptions.IllegalMoveException;
-import home.parham.main.TraxBoard;
 import home.parham.main.util.TraxUtil;
 
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class UctNode {
 		String move;
 
 		children = new ArrayList<UctNode>(10);
-		if (position.isGameOver() != TraxBoard.NOPLAYER) {
+		if (position.isGameOver() != TraxStatus.NOPLAYER) {
 			return;
 		}
 		ArrayList<String> moves = position.uniqueMoves();
@@ -157,21 +158,18 @@ public class UctNode {
 		return children.get(best_index);
 	}
 
-	void update(int result){
+	void update(TraxStatus result){
 		incVisits();
 		switch (result) {
-			case TraxBoard.DRAW:
+			case DRAW:
 				incDraws();
 				break;
-			case TraxBoard.WHITE:
-			case TraxBoard.BLACK:
+			case WHITE:
+			case BLACK:
 				if (result == position.whoToMove()) {
 					incWins();
 				}
 				break;
-			default:
-			/* This should never happen */
-				assert (false);
 		}
 	}
 
