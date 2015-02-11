@@ -9,11 +9,11 @@ package home.parham.main.player;
  */
 
 import home.parham.main.TraxBoard;
-import home.parham.main.TraxUtil;
+import home.parham.main.util.TraxUtil;
 import home.parham.main.exceptions.IllegalMoveException;
 
-public class ComputerPlayerSimple implements ComputerPlayer {
-	public String computerMove(TraxBoard tb){
+public class PlayerSimple implements Player {
+	public String move(TraxBoard tb){
 		try {
 			return TraxUtil.getRandomMove(tb);
 		} catch (IllegalMoveException e) {

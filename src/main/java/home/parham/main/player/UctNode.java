@@ -12,7 +12,7 @@ package home.parham.main.player;
 
 import home.parham.main.exceptions.IllegalMoveException;
 import home.parham.main.TraxBoard;
-import home.parham.main.TraxUtil;
+import home.parham.main.util.TraxUtil;
 
 import java.util.ArrayList;
 

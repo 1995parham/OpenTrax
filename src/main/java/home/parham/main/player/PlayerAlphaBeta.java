@@ -10,16 +10,16 @@ package home.parham.main.player;
 
 import home.parham.main.TraxBoard;
 
-public class ComputerPlayerAlphaBeta implements ComputerPlayer {
+public class PlayerAlphaBeta implements Player {
 	private int whiteCorners;
 	private int blackCorners;
 
-	public ComputerPlayerAlphaBeta(){
+	public PlayerAlphaBeta(){
 		whiteCorners = -1; // undefined
 		blackCorners = -1; // undefined
 	}
 
-	public String computerMove(TraxBoard tb){
+	public String move(TraxBoard tb){
 		return new String();
 	}
 }

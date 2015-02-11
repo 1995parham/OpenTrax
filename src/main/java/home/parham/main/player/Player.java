@@ -15,6 +15,6 @@ package home.parham.main.player;
 
 import home.parham.main.TraxBoard;
 
-public interface ComputerPlayer {
-	public String computerMove(TraxBoard traxBoard);
+public interface Player {
+	public String move(TraxBoard traxBoard);
 }

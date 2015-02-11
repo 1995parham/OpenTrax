@@ -10,6 +10,7 @@
 package home.parham.main;
 
 import home.parham.main.exceptions.IllegalMoveException;
+import home.parham.main.util.TraxUtil;
 
 import java.io.*;
 import java.util.*;
@@ -121,7 +122,7 @@ public class Openingbook {
 		}
 		if (i<4) tb=tb.rotate();
 	    }
-            String newBorder=TraxUtil.reverseBorder(tb.getBorder());
+            String newBorder= TraxUtil.reverseBorder(tb.getBorder());
 	    // How to handle tb.whoToMove()==TraxBoard.NOPLAYER ? Is that a problem ?
   	    int newWTM=(tb.whoToMove()==TraxBoard.WHITE)?TraxBoard.BLACK:TraxBoard.WHITE; 
 	    for (int i=1; i<=4; i++) {

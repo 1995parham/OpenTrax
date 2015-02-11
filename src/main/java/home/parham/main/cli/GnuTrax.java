@@ -13,15 +13,12 @@
 package home.parham.main.cli;
 
 import home.parham.main.TraxBoard;
-import home.parham.main.TraxUtil;
+import home.parham.main.util.TraxUtil;
 import home.parham.main.exceptions.IllegalMoveException;
-import home.parham.main.player.ComputerPlayer;
-import home.parham.main.player.ComputerPlayerSimple;
-import home.parham.main.player.ComputerPlayerUct;
+import home.parham.main.player.Player;
+import home.parham.main.player.PlayerSimple;
+import home.parham.main.player.PlayerUct;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class GnuTrax {
@@ -39,7 +36,7 @@ public class GnuTrax {
 	private int noise, display, searchDepth, searchTime, computerColour;
 	private String playerName;
 	private TraxBoard traxBoard;
-	private ComputerPlayer computerPlayer;
+	private Player player;
 
 
 	private GnuTrax(String computerAlgorithm){
@@ -57,12 +54,12 @@ public class GnuTrax {
 		ponder = true;
 		traxBoard = new TraxBoard();
 		if (computerAlgorithm.equals("simple")) {
-			computerPlayer = new ComputerPlayerSimple();
+			player = new PlayerSimple();
 		}
 		if (computerAlgorithm.equals("uct")) {
-			computerPlayer = new ComputerPlayerUct();
+			player = new PlayerUct();
 		} else {
-			computerPlayer = new ComputerPlayerUct();
+			player = new PlayerUct();
 		}
 	}
 
@@ -171,12 +168,12 @@ public class GnuTrax {
 		this.traxBoard = traxBoard;
 	}
 
-	public ComputerPlayer getComputerPlayer(){
-		return computerPlayer;
+	public Player getPlayer(){
+		return player;
 	}
 
-	public void setComputerPlayer(ComputerPlayer computerPlayer){
-		this.computerPlayer = computerPlayer;
+	public void setPlayer(Player player){
+		this.player = player;
 	}
 
 	private void checkForWin(){
@@ -215,27 +212,6 @@ public class GnuTrax {
 	}
 
 
-	private void pbem(){
-		try {
-			String s;
-			TraxBoard tb = new TraxBoard();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-			while ((s = reader.readLine()) != null) {
-				for (String move : s.split("\\s")) {
-					try {
-						tb.makeMove(move);
-					} catch (IllegalMoveException e) {
-						System.err.println("Illegal move: " + move);
-						System.exit(1);
-					}
-				}
-			}
-			System.out.println(computerPlayer.computerMove(tb));
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
 	public static void main(String[] args){
 		Commands.welcome();
 		GnuTrax.getInstance().run();
@@ -249,17 +225,16 @@ public class GnuTrax {
 				System.out.print("White");
 			else
 				System.out.print("Black");
-			
+
 			System.out.print("():");
-			
+
 			if ((traxBoard.isGameOver() == TraxBoard.NOPLAYER)
 					&& (traxBoard.whoToMove() == computerColour)) {
-				/* the computer must give a move */
+				/* the player must give a move */
 				System.out.println("Thinking ...");
-				command.add(computerPlayer.computerMove(traxBoard));
+				command.add(player.move(traxBoard));
 				System.out.println(command.get(0));
-			}
-			else if ((traxBoard.whoToMove() != computerColour)
+			} else if ((traxBoard.whoToMove() != computerColour)
 					|| (traxBoard.isGameOver() != TraxBoard.NOPLAYER)) {
 				/* the human must give a move or a command */
 				command = TraxUtil.getInput();

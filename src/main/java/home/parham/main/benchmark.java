@@ -11,6 +11,7 @@ package home.parham.main;
  */
 
 import home.parham.main.exceptions.IllegalMoveException;
+import home.parham.main.util.TraxUtil;
 
 import java.util.ArrayList;
 import java.util.Random;

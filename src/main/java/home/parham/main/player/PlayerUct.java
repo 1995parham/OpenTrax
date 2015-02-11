@@ -10,22 +10,22 @@ package home.parham.main.player;
 
 import home.parham.main.Openingbook;
 import home.parham.main.TraxBoard;
-import home.parham.main.TraxUtil;
+import home.parham.main.util.TraxUtil;
 import home.parham.main.exceptions.IllegalMoveException;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ComputerPlayerUct implements ComputerPlayer {
+public class PlayerUct implements Player {
 	private int maxSimulations;
 	private Openingbook book = new Openingbook();
 
-	public ComputerPlayerUct(){
+	public PlayerUct(){
 		//maxSimulations = 10000;
 		this(20000);
 	}
 
-	public ComputerPlayerUct(int maxSimulations){
+	public PlayerUct(int maxSimulations){
 		this.maxSimulations = maxSimulations;
 		try {
 			book.loadBook();
@@ -110,7 +110,7 @@ public class ComputerPlayerUct implements ComputerPlayer {
 		return null;
 	}
 
-	public String computerMove(TraxBoard tb){
+	public String move(TraxBoard tb){
 		String simple = null;
 
 		simple = simpleMove(tb);
