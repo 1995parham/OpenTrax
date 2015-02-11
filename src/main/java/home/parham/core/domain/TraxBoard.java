@@ -3,7 +3,7 @@
  * ======================================
  * [] Project Name : OpenTrax 
  * 
- * [] Package Name : home.parham.main
+ * [] Package Name : home.parham.main.main
  *
  * [] Creation Date : 23-01-2015
  *
@@ -11,9 +11,9 @@
  * =======================================
 */
 
-package home.parham.domain;
+package home.parham.core.domain;
 
-import home.parham.exceptions.IllegalMoveException;
+import home.parham.core.exceptions.IllegalMoveException;
 
 import java.util.ArrayList;
 
@@ -500,7 +500,7 @@ public class TraxBoard {
 	 * notation
 	 *
 	 * @param string: The move
-	 * @throws home.parham.exceptions.IllegalMoveException: exception
+	 * @throws home.parham.core.exceptions.IllegalMoveException: exception
 	 */
 	public void makeMove(String move) throws IllegalMoveException{
 		boolean oldNotation;

@@ -1,4 +1,4 @@
-package home.parham.player;
+package home.parham.core.player;
 
 /* 
  Date: 18th of September 2009
@@ -8,9 +8,9 @@ package home.parham.player;
  contact traxplayer@gmail.com for more information about this code
  */
 
-import home.parham.domain.TraxBoard;
-import home.parham.exceptions.IllegalMoveException;
-import home.parham.util.TraxUtil;
+import home.parham.core.domain.TraxBoard;
+import home.parham.core.exceptions.IllegalMoveException;
+import home.parham.core.util.TraxUtil;
 
 public class PlayerSimple implements Player {
 	public String move(TraxBoard tb){
