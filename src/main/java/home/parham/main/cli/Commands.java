@@ -116,41 +116,21 @@ public class Commands {
 			System.out.print("move......................initiates search (same as go).\n");
 			System.out.print("name......................sets opponent's name.\n");
 			System.out.print("new.......................initialize and start new game.\n");
-			System.out.
-					print
-							("noise n...................no status until n nodes searched.\n");
-			System.out.
-					print
-							("perf.[long]...............times the move generator/make_move.\n");
-			System.out.
-					print
-							("perft.....................tests the move generator/make_move.\n");
-			System.out.
-					print("ponder on|off.............toggle pondering off/on.\n");
-			System.out.
-					print
-							("ponder move...............ponder \"move\" as predicted move.\n");
-			System.out.
-					print
-							("read <filename>...........read moves in [from <filename>].\n");
-			System.out.
-					print
-							("reada <filename>..........read moves in [from <filename>].\n");
-			System.out.
-					print
-							("                          (appends to current game history.)\n");
-			System.out.
-					print("reset n...................reset game to move n.\n");
+			System.out.print("noise n...................no status until n nodes searched.\n");
+			System.out.print("perf.[long]...............times the move generator/make_move.\n");
+			System.out.print("perft.....................tests the move generator/make_move.\n");
+			System.out.print("ponder on|off.............toggle pondering off/on.\n");
+			System.out.print("ponder move...............ponder \"move\" as predicted move.\n");
+			System.out.print("read <filename>...........read moves in [from <filename>].\n");
+			System.out.print("reada <filename>..........read moves in [from <filename>].\n");
+			System.out.print("                          (appends to current game history.)\n");
+			System.out.print("reset n...................reset game to move n.\n");
 			System.out.print("savegame <filename>.......saves game.\n");
-			System.out.
-					print("score.....................print evaluation of position.\n");
-			System.out.
-					print("sd n......................sets absolute search depth.\n");
-			System.out.
-					print("search <move>.............search specified move only.\n");
+			System.out.print("score.....................print evaluation of position.\n");
+			System.out.print("sd n......................sets absolute search depth.\n");
+			System.out.print("search <move>.............search specified move only.\n");
 			System.out.print("settc.....................set time controls.\n");
-			System.out.
-					print("show book.................toggle book statistics.\n");
+			System.out.print("show book.................toggle book statistics.\n");
 			System.out.
 					print("st n......................sets absolute search time.\n");
 			System.out.

@@ -244,7 +244,7 @@ public class GnuTrax {
 	private void run(){
 		ArrayList<String> command = new ArrayList<String>();
 		while (true) {
-			
+			command.clear();
 			if (traxBoard.whoToMove() == TraxBoard.WHITE)
 				System.out.print("White");
 			else
