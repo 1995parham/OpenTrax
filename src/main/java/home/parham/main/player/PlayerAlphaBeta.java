@@ -8,7 +8,7 @@ package home.parham.main.player;
  contact traxplayer@gmail.com for more information about this code
 */
 
-import home.parham.main.TraxBoard;
+import home.parham.main.domain.TraxBoard;
 
 public class PlayerAlphaBeta implements Player {
 	private int whiteCorners;

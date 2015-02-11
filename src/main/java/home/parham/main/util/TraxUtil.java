@@ -13,7 +13,8 @@
 
 package home.parham.main.util;
 
-import home.parham.main.TraxBoard;
+import home.parham.main.domain.TraxBoard;
+import home.parham.main.domain.TraxStatus;
 import home.parham.main.exceptions.IllegalMoveException;
 
 import java.io.BufferedReader;
@@ -49,7 +50,7 @@ public final class TraxUtil {
 
 	public static String getRandomMove(TraxBoard traxBoard) throws IllegalMoveException{
 		int losingMoves = 0;
-		if (traxBoard.isGameOver() != TraxBoard.NOPLAYER) {
+		if (traxBoard.isGameOver() != TraxStatus.NOPLAYER) {
 			return new String();
 		}
 		ArrayList<String> moves = traxBoard.uniqueMoves();
@@ -62,20 +63,20 @@ public final class TraxUtil {
 		for (String move1 : moves) {
 			TraxBoard t_copy = new TraxBoard(traxBoard);
 			t_copy.makeMove(move1);
-			int gameOverValue = t_copy.isGameOver();
+			TraxStatus gameOverValue = t_copy.isGameOver();
 			switch (gameOverValue) {
-				case TraxBoard.WHITE:
-				case TraxBoard.BLACK:
+				case WHITE:
+				case BLACK:
 					if (t_copy.whoDidLastMove() == gameOverValue) {
 						log("Winning move found");
 						return move1;	/* Winning move found */
 					}
-		/* losing move found */
+					/* losing move found */
 					losingMoves++;
 					log("Losing move found");
 					break;
-				case TraxBoard.NOPLAYER:
-				case TraxBoard.DRAW:
+				case NOPLAYER:
+				case DRAW:
 					moves_not_losing.add(move1);
 					log("Not losing move found");
 					log(moves_not_losing.toString());

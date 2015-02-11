@@ -11,7 +11,7 @@
  * =======================================
 */
 
-package home.parham.main;
+package home.parham.main.domain;
 
 import home.parham.main.exceptions.IllegalMoveException;
 
@@ -32,16 +32,16 @@ public class TraxBoard {
 	*/
 
 	private boolean boardEmpty;
-	private int wtm;
+	private TraxStatus wtm;
 	private int[][] board;
-	private int gameover;
-	private int num_of_tiles;
+	private TraxStatus gameover;
+	private int TilesNumber;
 	private int firstrow, lastrow, firstcol, lastcol;
 
 	private boolean boardEmpty_save;
-	private int wtm_save;
+	private TraxStatus wtm_save;
 	private int[][] board_save;
-	private int gameoverSave;
+	private TraxStatus gameoverSave;
 	private int num_of_tiles_save;
 	private int firstrow_save, lastrow_save, firstcol_save, lastcol_save;
 	public boolean debug = false;
@@ -49,7 +49,6 @@ public class TraxBoard {
 	public static final int EMPTY = 0, INVALID = 7,
 			NS = 1, SN = 1, WE = 2, EW = 2, NW = 3, WN = 3, NE = 4, EN = 4, WS = 5,
 			SW = 5, SE = 6, ES = 6;
-	public static final int WHITE = 0, BLACK = 1, DRAW = 2, NOPLAYER = 3, NORESULT = 3;
 
 	private static String[][] col_row_array;
 
@@ -77,7 +76,7 @@ public class TraxBoard {
 	 * @return the number of used tiles
 	 */
 	public int getNumOfTiles(){
-		return num_of_tiles;
+		return TilesNumber;
 	}
 
 	public TraxBoard rotate(){
@@ -106,9 +105,6 @@ public class TraxBoard {
 					case SW:
 						result.board[i][j] = NW;
 						break;
-					default:
-						// This should never happen
-						throw new RuntimeException("This should never happen. (044)");
 				}
 			}
 		}
@@ -135,7 +131,7 @@ public class TraxBoard {
 		wtm_save = wtm;
 		boardEmpty_save = boardEmpty;
 		gameoverSave = gameover;
-		num_of_tiles_save = num_of_tiles;
+		num_of_tiles_save = TilesNumber;
 		firstrow_save = firstrow;
 		firstcol_save = firstcol;
 		lastrow_save = lastrow;
@@ -151,7 +147,7 @@ public class TraxBoard {
 		wtm = wtm_save;
 		boardEmpty = boardEmpty_save;
 		gameover = gameoverSave;
-		num_of_tiles = num_of_tiles_save;
+		TilesNumber = num_of_tiles_save;
 		firstrow = firstrow_save;
 		firstcol = firstcol_save;
 		lastrow = lastrow_save;
@@ -166,9 +162,9 @@ public class TraxBoard {
 	public TraxBoard(){
 		int i, j;
 
-		wtm = WHITE;
-		gameover = NOPLAYER;
-		num_of_tiles = 0;
+		wtm = TraxStatus.WHITE;
+		gameover = TraxStatus.NOPLAYER;
+		TilesNumber = 0;
 		board = new int[17][17];
 		board_save = new int[17][17];
 		for (i = 0; i < 17; i++)
@@ -183,7 +179,7 @@ public class TraxBoard {
 
 		wtm = org.wtm;
 		gameover = org.gameover;
-		num_of_tiles = org.num_of_tiles;
+		TilesNumber = org.TilesNumber;
 		board = new int[17][17];
 		board_save = new int[17][17];
 		for (i = 0; i < 17; i++) {
@@ -213,7 +209,7 @@ public class TraxBoard {
 
 	public void dump(){
 		System.out.println(this);
-		System.out.println("num_of_tiles=" + getNumOfTiles());
+		System.out.println("TilesNumber=" + getNumOfTiles());
 		System.out.println("rowsize=" + getRowSize());
 		System.out.println("colsize=" + getColSize());
 		System.out.println("firstrow=" + firstrow);
@@ -298,7 +294,6 @@ public class TraxBoard {
 		if (boardEmpty)
 			return new String();
 		result.append(cols.substring(0, 5 + 6 * getColSize()));
-		// result.append(cols,0,5+6*getColSize());
 		result.append('\n');
 		for (i = 1; i <= getRowSize(); i++) {
 			for (k = 0; k < 4; k++) {
@@ -515,7 +510,7 @@ public class TraxBoard {
 		char dir;
 		int ohs_up = 0, ohs_down = 0, ohs_right = 0, ohs_left = 0, eks_up = 0, eks_down = 0, eks_right = 0, eks_left = 0;
 
-		if (gameover != NOPLAYER)
+		if (gameover != TraxStatus.NOPLAYER)
 			throw new IllegalMoveException("Game is over.");
 		if (move.length() != 3)
 			throw new IllegalMoveException("not a move.");
@@ -1073,10 +1068,10 @@ public class TraxBoard {
 	public void switchPlayer(){
 		switch (wtm) {
 			case WHITE:
-				wtm = BLACK;
+				wtm = TraxStatus.BLACK;
 				break;
 			case BLACK:
-				wtm = WHITE;
+				wtm = TraxStatus.WHITE;
 				break;
 			default:
 			/* This should never happen */
@@ -1084,19 +1079,19 @@ public class TraxBoard {
 		}
 	}
 
-	public int isGameOver(){
+	public TraxStatus isGameOver(){
 		boolean WhiteWins = false, BlackWins = false;
 		int sp;
 
-		if (gameover != NOPLAYER)
+		if (gameover != TraxStatus.NOPLAYER)
 			return gameover;
-		if (num_of_tiles < 4) {
-			gameover = NOPLAYER;
+		if (TilesNumber < 4) {
+			gameover = TraxStatus.NOPLAYER;
 			return gameover;
 		}
 
 		if (uniqueMoves().size() == 0) {
-			gameover = DRAW;
+			gameover = TraxStatus.DRAW;
 			return gameover;
 		}
 
@@ -1162,14 +1157,14 @@ public class TraxBoard {
 			return gameover;
 		}
 		if (WhiteWins) {
-			gameover = WHITE;
+			gameover = TraxStatus.WHITE;
 			return gameover;
 		}
 		if (BlackWins) {
-			gameover = BLACK;
+			gameover = TraxStatus.BLACK;
 			return gameover;
 		}
-		return NOPLAYER;
+		return TraxStatus.NOPLAYER;
 	}
 
 	public ArrayList<String> uniqueMoves(){
@@ -1195,7 +1190,7 @@ public class TraxBoard {
 		final String col = "@ABCDEFGH";
 		final String row = "012345678";
 
-		if (gameover != NOPLAYER) {
+		if (gameover != TraxStatus.NOPLAYER) {
 			return new ArrayList<String>(0);
 		}
 
@@ -1741,18 +1736,18 @@ public class TraxBoard {
 		return true;
 	}
 
-	public int whoToMove(){
+	public TraxStatus whoToMove(){
 		return wtm;
 	}
 
-	public int whoDidLastMove(){
+	public TraxStatus whoDidLastMove(){
 		if (boardEmpty)
-			return NOPLAYER;
+			return TraxStatus.NOPLAYER;
 		switch (wtm) {
 			case WHITE:
-				return BLACK;
+				return TraxStatus.BLACK;
 			case BLACK:
-				return WHITE;
+				return TraxStatus.WHITE;
 			default:
 				// This should never happen
 				throw new RuntimeException("This should never happen. (017)");
@@ -1771,7 +1766,7 @@ public class TraxBoard {
 		assert (row + col > 0);
 		if (piece == EMPTY) {
 			if (board[firstrow + row - 1][firstcol + col - 1] != EMPTY)
-				num_of_tiles--;
+				TilesNumber--;
 			board[firstrow + row - 1][firstcol + col - 1] = piece;
 			/*
 			 if ((row == getRowSize()) || (col == getColSize()) || (row == 1)
@@ -1787,7 +1782,7 @@ public class TraxBoard {
 				firstcol = 7;
 				lastrow = 7;
 				lastcol = 7;
-				num_of_tiles = 1;
+				TilesNumber = 1;
 				board[firstrow][firstcol] = piece;
 				return;
 			}
@@ -1807,7 +1802,7 @@ public class TraxBoard {
 			if (col > getColSize()) {
 				lastcol += col - getColSize();
 			}
-			num_of_tiles++;
+			TilesNumber++;
 		}
 		board[firstrow + row - 1][firstcol + col - 1] = piece;
 	}
@@ -2146,7 +2141,7 @@ public class TraxBoard {
 		int currentWNum = 1;
 		int currentBNum = 1;
 
-		if (whoDidLastMove() == NOPLAYER)
+		if (whoDidLastMove() == TraxStatus.NOPLAYER)
 			return result;
 		for (i = 1; i < 9; i++) {
 			for (j = 1; j < 9; j++) {
@@ -2559,7 +2554,7 @@ public class TraxBoard {
 			t.makeMove("e2d");
 			t.makeMove("f2\\");
 			t.makeMove("e4s");
-			if (t.isGameOver() != WHITE) {
+			if (t.isGameOver() != TraxStatus.WHITE) {
 				System.err.println("Test 4: FAILED\n");
 				result = false;
 			} else {
