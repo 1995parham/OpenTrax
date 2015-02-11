@@ -10,6 +10,8 @@ package home.parham.main;
 
  */
 
+import home.parham.main.exceptions.IllegalMoveException;
+
 import java.util.ArrayList;
 import java.util.Random;
 

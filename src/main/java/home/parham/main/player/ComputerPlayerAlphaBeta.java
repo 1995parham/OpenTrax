@@ -1,4 +1,4 @@
-package home.parham.main;
+package home.parham.main.player;
 
 /* 
  Date: 23th of October 2009
@@ -7,6 +7,8 @@ package home.parham.main;
  (GNU General Public License - http://www.gnu.org/)
  contact traxplayer@gmail.com for more information about this code
 */
+
+import home.parham.main.TraxBoard;
 
 public class ComputerPlayerAlphaBeta extends ComputerPlayer {
 	private int whiteCorners;
