@@ -14,12 +14,12 @@
 package home.parham.main;
 
 import home.parham.cli.Commands;
-import home.parham.cli.TraxCLI;
+import home.parham.gui.GnuTraxGui;
 
 public class main {
 	public static void main(String args[]){
 		Commands.welcome();
 
-		new TraxCLI().run();
+		GnuTraxGui.createAndShowGUI();
 	}
 }
