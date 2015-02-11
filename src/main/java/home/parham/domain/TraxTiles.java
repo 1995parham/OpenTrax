@@ -14,4 +14,8 @@
 package home.parham.domain;
 
 public enum TraxTiles {
+	EMPTY, INVALID,
+	NS, SN, WE, EW, NW, WN, NE, EN, WS,
+	SW, SE, ES;
+
 }

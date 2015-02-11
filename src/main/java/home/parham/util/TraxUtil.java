@@ -135,32 +135,5 @@ public final class TraxUtil {
 		return result.toString();
 	}
 
-	public static void main(String[] args){
-		startLog();
-
-		TraxBoard tb = new TraxBoard();
-		String move;
-		try {
-			tb.makeMove("a1c");
-			tb.makeMove("b1d");
-			move = getRandomMove(tb);
-			System.out.println(tb + move);
-			tb.makeMove(move);
-			System.out.println(tb);
-			tb = new TraxBoard();
-			tb.makeMove("a1c");
-			tb.makeMove("a1u");
-			System.out.println(tb.getBorder());
-			System.out.println(reverseBorder(tb.getBorder()));
-			move = getRandomMove(tb);
-			System.out.println(tb + move);
-			tb.makeMove(move);
-			System.out.println(tb);
-			System.out.println(tb.getBorder());
-			System.out.println(reverseBorder(tb.getBorder()));
-		} catch (IllegalMoveException e) {
-			throw new AssertionError(e.getMessage());
-		}
-	}
 }
 
