@@ -33,6 +33,16 @@ public class TraxCLI implements Runnable {
 
 		while (true) {
 			command.clear();
+
+			System.out.println(BoardViewer.view(traxBoard));
+
+			if (traxBoard.isGameOver() == TraxStatus.WHITE)
+				System.out.println("While is won");
+			if (traxBoard.isGameOver() == TraxStatus.BLACK)
+				System.out.println("Black is won");
+			if (traxBoard.isGameOver() == TraxStatus.DRAW)
+				System.out.println("Draw");
+
 			if (traxBoard.whoToMove() == TraxStatus.WHITE)
 				System.out.print("White");
 			else
