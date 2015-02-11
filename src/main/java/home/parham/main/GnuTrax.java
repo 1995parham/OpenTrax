@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class GnuTrax {
 
-	public GnuTrax(String computer_algorithem){
+	public GnuTrax(String computerAlgorithm){
 		noise = 100;
 		autodisplay = true;
 		alarmv = true;
@@ -31,13 +31,12 @@ public class GnuTrax {
 		playerName = "";
 		ponder = true;
 		tb = new TraxBoard();
-		if (computer_algorithem.equals("simple")) {
+		if (computerAlgorithm.equals("simple")) {
 			cp = new ComputerPlayerSimple();
 		}
-		if (computer_algorithem.equals("uct")) {
+		if (computerAlgorithm.equals("uct")) {
 			cp = new ComputerPlayerUct();
 		} else {
-			//cp = new ComputerPlayerSimple ();
 			cp = new ComputerPlayerUct();
 		}
 	}
@@ -430,25 +429,15 @@ public class GnuTrax {
 			return;
 		}
 		if (topic.equals("display")) {
-			System.out.print("display:\n");
-			System.out.
-					print("display changes   -> display variation when it changes.\n");
-			System.out.
-					print
-							("display extstats  -> display search extension statistics.\n");
-			System.out.
-					print("display hashstats -> display search hashing statistics.\n");
-			System.out.
-					print("display movenum   -> display move numbers in PV.\n");
-			System.out.
-					print
-							("display moves     -> display moves as they are searched.\n");
-			System.out.
-					print("display stats     -> display basic search statistics.\n");
-			System.out.print("display time      -> display time for moves.\n");
-			System.out.
-					print
-							("display variation -> display variation at end of iteration.\n");
+			System.out.println("display:");
+			System.out.println("display changes   -> display variation when it changes.");
+			System.out.println("display extstats  -> display search extension statistics.");
+			System.out.println("display hashstats -> display search hashing statistics.");
+			System.out.println("display movenum   -> display move numbers in PV.");
+			System.out.println("display moves     -> display moves as they are searched.");
+			System.out.println("display stats     -> display basic search statistics.");
+			System.out.println("display time      -> display time for moves.");
+			System.out.println("display variation -> display variation at end of iteration.");
 			System.out.println();
 			return;
 		}
@@ -518,31 +507,7 @@ public class GnuTrax {
 
 
 	private void userHistory(){
-	/*
-	   String[].size_type numOfMoves;
-       String[].const_iterator iter;
-       int i;
-       int original_width;
-
-       original_width=cout.width();
-       cout.width(2);
-       iter=moveHistory->begin();
-       numOfMoves=moveHistory->size();
-       if (numOfMoves==0) return;
-       System.out.print("  White  Black\n");
-       i=1;
-       while (iter!=moveHistory->end()) {
-       System.out.print("  " << i << " " << (*iter));
-       iter++;
-       if (iter!=moveHistory->end()) {
-       System.out.print("   " << i+1 << " " << (*iter));
-       iter++;
-       }
-       System.out.println();
-       i+=2;
-       }
-       cout.width(original_width);
-     */
+		;
 	}
 
 
@@ -586,10 +551,6 @@ public class GnuTrax {
 	public void userNew(){
 		tb = new TraxBoard();
 		computerColour = TraxBoard.BLACK;
-	/*
-       delete(moveHistory);
-       moveHistory=new String[] ;
-     */
 	}
 
 
@@ -1299,8 +1260,7 @@ public class GnuTrax {
 				System.out.println("Black won.");
 				break;
 			default:
-	/* This should never happen */
-	/*    assert(0); */
+				/* This should never happen */
 				break;
 		}
 	}
@@ -1314,7 +1274,6 @@ public class GnuTrax {
 			return;
 		}
 		System.out.println(tb);
-    /*      (*moveHistory).push_back(theMove); */
 		checkForWin();
 	}
 
@@ -1377,11 +1336,10 @@ public class GnuTrax {
 			else
 				System.out.print("Black");
 			System.out.print("(");
-			//System.out.print(moveHistory.length+1);
 			System.out.print("): ");
 			if ((tb.isGameOver() == TraxBoard.NOPLAYER)
 					&& (tb.whoToMove() == computerColour)) {
-				// the computer must give a move
+				/* the computer must give a move */
 				System.out.println("Thinking ...");
 				line = cp.computerMove(tb);
 				System.out.println(line);
