@@ -10,7 +10,7 @@ package home.parham.main.player;
 
 import home.parham.main.TraxBoard;
 
-public class ComputerPlayerAlphaBeta extends ComputerPlayer {
+public class ComputerPlayerAlphaBeta implements ComputerPlayer {
 	private int whiteCorners;
 	private int blackCorners;
 

@@ -382,31 +382,17 @@ public class Commands {
 		}
 		if (topic.equals("time")) {
 			System.out.print("time:\n");
-			System.out.
-					print
-							("time is used to set the basic search timing controls. The general\n");
+			System.out.print("time is used to set the basic search timing controls. The general\n");
 			System.out.print("form of the command is as follows:\n");
 			System.out.println();
-			System.out.
-					print("      time nmoves/ntime/[nmoves/ntime]/[increment]\n");
+			System.out.print("      time nmoves/ntime/[nmoves/ntime]/[increment]\n");
 			System.out.println();
-			System.out.
-					print
-							("nmoves/ntime represents a traditional first time control when\n");
-			System.out.
-					print
-							("nmoves is an integer representing the number of moves and ntime\n");
-			System.out.
-					print
-							("is the total time allowed for these moves. The [optional]\n");
-			System.out.
-					print
-							("nmoves/ntime is a traditional secondary time control. Increment\n");
-			System.out.
-					print
-							("is a feature which emulates the fischer clock where <increment>\n");
-			System.out.
-					print("is added to the time left after each move is made.\n");
+			System.out.print("nmoves/ntime represents a traditional first time control when\n");
+			System.out.print("nmoves is an integer representing the number of moves and ntime\n");
+			System.out.print("is the total time allowed for these moves. The [optional]\n");
+			System.out.print("nmoves/ntime is a traditional secondary time control. Increment\n");
+			System.out.print("is a feature which emulates the fischer clock where <increment>\n");
+			System.out.print("is added to the time left after each move is made.\n");
 			System.out.println();
 			System.out.
 					print
@@ -493,7 +479,6 @@ public class Commands {
 	}
 
 	public static void userPerft(){
-		;
 	}
 
 	public static void userPonder(ArrayList<String> command){

@@ -8,13 +8,15 @@
 
 package home.parham.main.player;
 
-import home.parham.main.*;
+import home.parham.main.Openingbook;
+import home.parham.main.TraxBoard;
+import home.parham.main.TraxUtil;
 import home.parham.main.exceptions.IllegalMoveException;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ComputerPlayerUct extends ComputerPlayer {
+public class ComputerPlayerUct implements ComputerPlayer {
 	private int maxSimulations;
 	private Openingbook book = new Openingbook();
 
