@@ -2,7 +2,7 @@ package home.parham.core;
 
 /* 
 
- Date: 1th of Januar 2009
+ Date: 1th of January 2009
  version 0.1
  All source under GPL version 2 
  (GNU General Public License - http://www.gnu.org/)
@@ -15,24 +15,18 @@ import home.parham.core.domain.TraxStatus;
 import home.parham.core.exceptions.IllegalMoveException;
 import home.parham.core.util.TraxUtil;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 public class benchmark {
 
 	public static void main(String[] args){
 		TraxBoard tb;
-		TraxStatus game_value = TraxStatus.NOPLAYER; // To make the compiler happy
-		ArrayList<String> move_list;
+		TraxStatus game_value;
 		String random_move;
 		int draw = 0, p1 = 0, p2 = 0;
 		int game_length;
 		final int num_of_games = 10000;
-		int r, i;
-		Random random_generator = new Random();
 
 		game_length = 0;
-		for (i = 0; i < num_of_games; i++) {
+		for (int i = 0; i < num_of_games; i++) {
 			try {
 				tb = new TraxBoard();
 				do {
