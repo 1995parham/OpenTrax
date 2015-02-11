@@ -45,7 +45,7 @@ public class TraxBoard {
 	private int num_of_tiles_save;
 	private int firstrow_save, lastrow_save, firstcol_save, lastcol_save;
 
-	public static final int EMPTY = 0, INVALID = 7,
+	public static final int EMPTY = 0,
 			NS = 1, SN = 1, WE = 2, EW = 2, NW = 3, WN = 3, NE = 4, EN = 4, WS = 5,
 			SW = 5, SE = 6, ES = 6;
 
@@ -272,225 +272,12 @@ public class TraxBoard {
 	 * Given a row and column, the method checks if that (row,col) is occupied
 	 * or free
 	 *
-	 * @param row the row number 1-8
-	 * @param col the column number 1-8
+	 * @param col the row number 1-8
+	 * @param row the column number 1-8
 	 * @return true if the place (row,col) is free or false otherwise
 	 */
 	public boolean isBlank(int row, int col){
 		return (getAt(row, col) == EMPTY);
-	}
-
-	@Override
-	public String toString(){
-		StringBuffer result = new StringBuffer(1000);
-		int i, j, k;
-		int leftpiece, uppiece, upleftpiece;
-		String cols = "     A     B     C     D     E     F     G     H     ";
-		String rows = "1 2 3 4 5 6 7 8 ";
-
-		if (boardEmpty)
-			return new String();
-		result.append(cols.substring(0, 5 + 6 * getColSize()));
-		result.append('\n');
-		for (i = 1; i <= getRowSize(); i++) {
-			for (k = 0; k < 4; k++) {
-				if (k == 2) {
-					result.append(rows.substring(i * 2 - 2, i * 2));
-					// result.append(rows,i*2-2,2);
-				} else {
-					result.append("  ");
-				}
-				for (j = 1; j <= getColSize(); j++) {
-					switch (getAt(i, j)) {
-						case NS:
-							switch (k) {
-								case 0:
-									result.append("+--o--");
-									break;
-								case 1:
-									result.append("|  o  ");
-									break;
-								case 2:
-									result.append("######");
-									break;
-								case 3:
-									result.append("|  o  ");
-									break;
-							}
-							break;
-						case WE:
-							switch (k) {
-								case 0:
-									result.append("+--#--");
-									break;
-								case 1:
-									result.append("|  #  ");
-									break;
-								case 2:
-									result.append("ooo#oo");
-									break;
-								case 3:
-									result.append("|  #  ");
-									break;
-							}
-							break;
-						case NW:
-							switch (k) {
-								case 0:
-									result.append("+--o--");
-									break;
-								case 1:
-									result.append("| o   ");
-									break;
-								case 2:
-									result.append("oo   #");
-									break;
-								case 3:
-									result.append("|   # ");
-									break;
-							}
-							break;
-						case NE:
-							switch (k) {
-								case 0:
-									result.append("+--o--");
-									break;
-								case 1:
-									result.append("|   o ");
-									break;
-								case 2:
-									result.append("##   o");
-									break;
-								case 3:
-									result.append("| #   ");
-									break;
-							}
-							break;
-						case SW:
-							switch (k) {
-								case 0:
-									result.append("+--#--");
-									break;
-								case 1:
-									result.append("|   # ");
-									break;
-								case 2:
-									result.append("oo   #");
-									break;
-								case 3:
-									result.append("| o   ");
-									break;
-							}
-							break;
-						case SE:
-							switch (k) {
-								case 0:
-									result.append("+--#--");
-									break;
-								case 1:
-									result.append("| #   ");
-									break;
-								case 2:
-									result.append("##   o");
-									break;
-								case 3:
-									result.append("|   o ");
-									break;
-							}
-							break;
-						case EMPTY:
-							uppiece = getAt(i - 1, j);
-							leftpiece = getAt(i, j - 1);
-							upleftpiece = getAt(i - 1, j - 1);
-							switch (k) {
-								case 0:
-									if ((uppiece == SN) || (uppiece == SW)
-											|| (uppiece == SE)) {
-										result.append("+--o--");
-										break;
-									}
-									if ((uppiece == WE) || (uppiece == WN)
-											|| (uppiece == EN)) {
-										result.append("+--#--");
-										break;
-									}
-									if ((upleftpiece != EMPTY) || (leftpiece != EMPTY)) {
-										result.append("+     ");
-										break;
-									}
-									result.append("      ");
-									break;
-								case 1:
-									if (leftpiece == EMPTY)
-										result.append("      ");
-									else
-										result.append("|     ");
-									break;
-								case 2:
-									if (leftpiece == EMPTY)
-										result.append("      ");
-									if ((leftpiece == EW) || (leftpiece == EN)
-											|| (leftpiece == ES))
-										result.append("o     ");
-									if ((leftpiece == NS) || (leftpiece == NW)
-											|| (leftpiece == SW))
-										result.append("#     ");
-									break;
-								case 3:
-									if (leftpiece == EMPTY)
-										result.append("      ");
-									else
-										result.append("|     ");
-									break;
-							}
-							break;
-					} // switch (getAt(i,j));
-				} // for (j)
-
-				upleftpiece = getAt(i - 1, j - 1);
-				leftpiece = getAt(i, j - 1);
-				switch (k) {
-					case 0:
-						if ((upleftpiece != EMPTY) || (leftpiece != EMPTY))
-							result.append("+");
-						break;
-					case 1:
-						if (leftpiece != EMPTY)
-							result.append("|");
-						break;
-					case 2:
-						if ((leftpiece == EW) || (leftpiece == EN)
-								|| (leftpiece == ES))
-							result.append("o");
-						if ((leftpiece == NS) || (leftpiece == NW)
-								|| (leftpiece == SW))
-							result.append("#");
-						break;
-					case 3:
-						if (leftpiece != EMPTY)
-							result.append("|");
-						break;
-				}
-				result.append("\n");
-			}
-		}
-		result.append("  ");
-		for (j = 1; j <= getColSize(); j++) {
-			leftpiece = getAt(getRowSize(), j - 1);
-			uppiece = getAt(getRowSize(), j);
-			if ((uppiece == EMPTY) && (leftpiece == EMPTY))
-				result.append("      ");
-			if ((uppiece == EMPTY) && (leftpiece != EMPTY))
-				result.append("+     ");
-			if ((uppiece == SN) || (uppiece == SW) || (uppiece == SE))
-				result.append("+--o--");
-			if ((uppiece == WE) || (uppiece == WN) || (uppiece == NE))
-				result.append("+--#--");
-		}
-		if (getAt(getRowSize(), getColSize()) != EMPTY)
-			result.append("+");
-		result.append("\n");
-		return result.toString();
 	}
 
 	/**
@@ -499,8 +286,8 @@ public class TraxBoard {
 	 * the very old notation (used until 1986?) which is incompatible with old
 	 * notation
 	 *
-	 * @param string: The move
-	 * @throws home.parham.core.exceptions.IllegalMoveException: exception
+	 * @param move: The move
+	 * @throws home.parham.core.exceptions.IllegalMoveException
 	 */
 	public void makeMove(String move) throws IllegalMoveException{
 		boolean oldNotation;

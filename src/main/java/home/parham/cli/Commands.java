@@ -533,13 +533,9 @@ public class Commands {
 		}
 		if (topic.equals("conditions")) {
 			System.out.print("        GNU GENERAL PUBLIC LICENSE\n");
-			System.out.
-					print
-							("   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION\n");
+			System.out.print("   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION\n");
 			System.out.println();
-			System.out.
-					print
-							("  0. This License applies to any program or other work which contains\n");
+			System.out.print("  0. This License applies to any program or other work which contains\n");
 			System.out.
 					print
 							("a notice placed by the copyright holder saying it may be distributed\n");

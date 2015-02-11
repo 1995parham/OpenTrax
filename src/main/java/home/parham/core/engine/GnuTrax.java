@@ -154,36 +154,14 @@ public class GnuTrax {
 		this.traxBoard = traxBoard;
 	}
 
-	private void checkForWin(){
-		TraxStatus gameValue;
-
-		gameValue = traxBoard.isGameOver();
-		if (gameValue == TraxStatus.NOPLAYER)
-			return;
-		System.out.print("Game over. The result is ");
-		switch (gameValue) {
-			case DRAW:
-				System.out.println("Draw.");
-				break;
-			case WHITE:
-				System.out.println("White won.");
-				break;
-			case BLACK:
-				System.out.println("Black won.");
-				break;
-		}
-	}
-
 
 	public void gotAMove(String theMove){
 		try {
 			traxBoard.makeMove(theMove);
 		} catch (IllegalMoveException e) {
-			System.out.println(theMove + ":  " + e);
+			System.err.println(theMove + ":  " + e);
 			return;
 		}
-		System.out.println(traxBoard);
-		checkForWin();
 	}
 
 }

@@ -17,6 +17,10 @@ import home.parham.core.domain.TraxBoard;
 
 public final class BoardViewer {
 
+	public static final int EMPTY = 0,
+			NS = 1, SN = 1, WE = 2, EW = 2, NW = 3, WN = 3, NE = 4, EN = 4, WS = 5,
+			SW = 5, SE = 6, ES = 6;
+
 	public static String view(TraxBoard board){
 		StringBuffer result = new StringBuffer(1000);
 		int i, j, k;
@@ -183,8 +187,8 @@ public final class BoardViewer {
 					}
 				}
 
-				upleftpiece = getAt(i - 1, j - 1);
-				leftpiece = getAt(i, j - 1);
+				upleftpiece = board.getAt(i - 1, j - 1);
+				leftpiece = board.getAt(i, j - 1);
 				switch (k) {
 					case 0:
 						if ((upleftpiece != EMPTY) || (leftpiece != EMPTY))
