@@ -108,7 +108,7 @@ public class Openingbook {
 					bv.neverPlay = never;
 					theBook.put(bk, bv);
 				} catch (IllegalMoveException e) {
-					;
+					e.printStackTrace();
 				}
 			}
 		}
@@ -144,7 +144,7 @@ public class Openingbook {
 			if (i < 4) tb = tb.rotate();
 		}
 		String newBorder = TraxUtil.reverseBorder(tb.getBorder());
-		/*TODO How to handle tb.whoToMove()==TraxBoard.NOPLAYER ? Is that a problem ? */
+		/*TODO How to handle tb.whoToMove() == TraxBoard.NOPLAYER ? Is that a problem ? */
 		TraxStatus newWTM = (tb.whoToMove() == TraxStatus.WHITE) ? TraxStatus.BLACK : TraxStatus.WHITE;
 		for (int i = 1; i <= 4; i++) {
 			bk2 = new BookKey(newBorder, newWTM);
@@ -203,10 +203,6 @@ public class Openingbook {
 		reader.close();
 	}
 
-	private void saveBook() throws IOException{
-		saveBook(7);
-	}
-
 	private void saveBook(int threshold) throws IOException{
 		BufferedWriter writer = new BufferedWriter(new FileWriter(new File("games/book.bin")));
 		for (Map.Entry<BookKey, BookValue> entry : theBook.entrySet()) {
@@ -230,50 +226,6 @@ public class Openingbook {
 
 		result = theBook.get(new BookKey(tb.getBorder(), tb.whoDidLastMove()));
 		return result;
-
-			/*
-		for (int i=1; i<=4; i++) {
-	      result=theBook.get(new BookKey(tb.getBorder(),tb.whoToMove()));
-	      if (result!=null) { 
-		  return result;
-	      }
-	      if (i<4) tb=tb.rotate();
-	    }
-	    String newBorder;
-	    // How to handle tb.whoToMove()==TraxBoard.NOPLAYER ? Is that a problem ?
-  	    int newWTM=(tb.whoToMove()==TraxBoard.WHITE)?TraxBoard.BLACK:TraxBoard.WHITE; 
-	    for (int i=1; i<=3; i++) {
-	      newBorder=TraxUtil.reverseBorder(tb.getBorder());
-	      result=theBook.get(new BookKey(newBorder,newWTM));
-	      if (result!=null) {
-		  return result;
-	      }
-	      tb=tb.rotate();
-	    }
-	    newBorder=TraxUtil.reverseBorder(tb.getBorder());
-	    return theBook.get(new BookKey(newBorder, newWTM)); 
-			*/
-	}
-
-	public static void main(String[] args){
-		Openingbook o = new Openingbook();
-		try {
-			o.setInputfile("games/alwaysplay.trx");
-			o.generateBook(true, false);
-			o.setInputfile("games/neverplay.trx");
-			o.generateBook(false, true);
-			o.setInputfile("games/Trax.trx");
-			o.generateBook();
-			o.saveBook();
-		} catch (Exception e) {
-			System.err.println(e);
-		}
-		try {
-			o.loadBook("disk");
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-		System.out.println("size of book: " + o.size());
 	}
 
 	public class BookValue {
