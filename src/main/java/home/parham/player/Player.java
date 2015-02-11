@@ -11,9 +11,9 @@
  * =======================================
 */
 
-package home.parham.main.player;
+package home.parham.player;
 
-import home.parham.main.domain.TraxBoard;
+import home.parham.domain.TraxBoard;
 
 public interface Player {
 	public String move(TraxBoard traxBoard);

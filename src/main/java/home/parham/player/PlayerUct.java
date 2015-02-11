@@ -6,13 +6,13 @@
    contact traxplayer@gmail.com for more information about this code
 */
 
-package home.parham.main.player;
+package home.parham.player;
 
-import home.parham.main.Openingbook;
-import home.parham.main.domain.TraxBoard;
-import home.parham.main.domain.TraxStatus;
-import home.parham.main.exceptions.IllegalMoveException;
-import home.parham.main.util.TraxUtil;
+import home.parham.Openingbook;
+import home.parham.domain.TraxBoard;
+import home.parham.domain.TraxStatus;
+import home.parham.exceptions.IllegalMoveException;
+import home.parham.util.TraxUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;

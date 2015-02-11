@@ -11,11 +11,11 @@
  * =======================================
 */
 
-package home.parham.main.cli;
+package home.parham.cli;
 
-import home.parham.main.domain.TraxBoard;
-import home.parham.main.domain.TraxStatus;
-import home.parham.main.util.TraxUtil;
+import home.parham.domain.TraxBoard;
+import home.parham.domain.TraxStatus;
+import home.parham.util.TraxUtil;
 
 import java.util.ArrayList;
 import java.util.Date;

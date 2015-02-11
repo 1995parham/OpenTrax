@@ -11,7 +11,7 @@
  * =======================================
 */
 
-package home.parham.main.exceptions;
+package home.parham.exceptions;
 
 
 public class IllegalMoveException extends Exception {

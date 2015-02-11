@@ -11,8 +11,7 @@
  * =======================================
 */
 
-package home.parham.main.domain;
+package home.parham.domain;
 
-public enum TraxStatus {
-	WHITE, BLACK, DRAW, NOPLAYER;
+public enum TraxTiles {
 }

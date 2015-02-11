@@ -11,11 +11,11 @@
  * =======================================
 */
 
-package home.parham.main.util;
+package home.parham.util;
 
-import home.parham.main.domain.TraxBoard;
-import home.parham.main.domain.TraxStatus;
-import home.parham.main.exceptions.IllegalMoveException;
+import home.parham.domain.TraxBoard;
+import home.parham.domain.TraxStatus;
+import home.parham.exceptions.IllegalMoveException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
