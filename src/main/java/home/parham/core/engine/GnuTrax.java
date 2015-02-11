@@ -3,24 +3,18 @@
  * ======================================
  * [] Project Name : OpenTrax
  *
- * [] Package Name : home.parham.main.cli
+ * [] Package Name : home.parham.main.main.cli
  *
  * [] Creation Date : 11-02-2015
  *
  * [] Created By : Parham Alvani (parham.alvani@gmail.com)
  * =======================================
 */
-package home.parham.cli;
+package home.parham.core.engine;
 
-import home.parham.domain.TraxBoard;
-import home.parham.domain.TraxStatus;
-import home.parham.exceptions.IllegalMoveException;
-import home.parham.player.Player;
-import home.parham.player.PlayerSimple;
-import home.parham.player.PlayerUct;
-import home.parham.util.TraxUtil;
-
-import java.util.ArrayList;
+import home.parham.core.domain.TraxBoard;
+import home.parham.core.domain.TraxStatus;
+import home.parham.core.exceptions.IllegalMoveException;
 
 public class GnuTrax {
 
@@ -28,7 +22,7 @@ public class GnuTrax {
 
 	public static GnuTrax getInstance(){
 		if (instance == null)
-			instance = new GnuTrax("simple");
+			instance = new GnuTrax();
 		return instance;
 	}
 
@@ -38,10 +32,8 @@ public class GnuTrax {
 	private TraxStatus computerColour;
 	private String playerName;
 	private TraxBoard traxBoard;
-	private Player player;
 
-
-	private GnuTrax(String computerAlgorithm){
+	private GnuTrax(){
 		noise = 100;
 		autodisplay = true;
 		alarmv = true;
@@ -55,14 +47,6 @@ public class GnuTrax {
 		playerName = "";
 		ponder = true;
 		traxBoard = new TraxBoard();
-		if (computerAlgorithm.equals("simple")) {
-			player = new PlayerSimple();
-		}
-		if (computerAlgorithm.equals("uct")) {
-			player = new PlayerUct();
-		} else {
-			player = new PlayerUct();
-		}
 	}
 
 
@@ -170,14 +154,6 @@ public class GnuTrax {
 		this.traxBoard = traxBoard;
 	}
 
-	public Player getPlayer(){
-		return player;
-	}
-
-	public void setPlayer(Player player){
-		this.player = player;
-	}
-
 	private void checkForWin(){
 		TraxStatus gameValue;
 
@@ -210,37 +186,4 @@ public class GnuTrax {
 		checkForWin();
 	}
 
-
-	public static void main(String[] args){
-		Commands.welcome();
-		GnuTrax.getInstance().run();
-	}
-
-	private void run(){
-		ArrayList<String> command = new ArrayList<String>();
-		while (true) {
-			command.clear();
-			if (traxBoard.whoToMove() == TraxStatus.WHITE)
-				System.out.print("White");
-			else
-				System.out.print("Black");
-
-			System.out.print("():");
-
-			if ((traxBoard.isGameOver() == TraxStatus.NOPLAYER)
-					&& (traxBoard.whoToMove() == computerColour)) {
-				/* the player must give a move */
-				System.out.println("Thinking ...");
-				command.add(player.move(traxBoard));
-				System.out.println(command.get(0));
-			} else if ((traxBoard.whoToMove() != computerColour)
-					|| (traxBoard.isGameOver() != TraxStatus.NOPLAYER)) {
-				/* the human must give a move or a command */
-				command = TraxUtil.getInput();
-				if (command.size() == 0)
-					continue;        /* read more input */
-			}
-			CommandDispatcher.dispatch(command);
-		}
-	}
 }

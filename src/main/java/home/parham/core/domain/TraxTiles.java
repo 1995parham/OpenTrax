@@ -3,7 +3,7 @@
  * ======================================
  * [] Project Name : OpenTrax 
  * 
- * [] Package Name : home.parham.main.domain
+ * [] Package Name : home.parham.main.main.domain
  *
  * [] Creation Date : 11-02-2015
  *
@@ -11,7 +11,7 @@
  * =======================================
 */
 
-package home.parham.domain;
+package home.parham.core.domain;
 
 public enum TraxTiles {
 	EMPTY, INVALID,

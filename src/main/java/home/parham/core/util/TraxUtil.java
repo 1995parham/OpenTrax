@@ -3,7 +3,7 @@
  * ======================================
  * [] Project Name : OpenTrax 
  * 
- * [] Package Name : home.parham.main.util
+ * [] Package Name : home.parham.main.main.util
  *
  * [] Creation Date : 11-02-2015
  *
@@ -11,11 +11,11 @@
  * =======================================
 */
 
-package home.parham.util;
+package home.parham.core.util;
 
-import home.parham.domain.TraxBoard;
-import home.parham.domain.TraxStatus;
-import home.parham.exceptions.IllegalMoveException;
+import home.parham.core.domain.TraxBoard;
+import home.parham.core.domain.TraxStatus;
+import home.parham.core.exceptions.IllegalMoveException;
 
 import java.io.BufferedReader;
 import java.io.IOException;

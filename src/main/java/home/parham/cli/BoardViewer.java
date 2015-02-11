@@ -13,7 +13,7 @@
 
 package home.parham.cli;
 
-import home.parham.domain.TraxBoard;
+import home.parham.core.domain.TraxBoard;
 
 public final class BoardViewer {
 

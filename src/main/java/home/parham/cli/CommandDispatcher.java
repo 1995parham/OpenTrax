@@ -3,7 +3,7 @@
  * ======================================
  * [] Project Name : OpenTrax 
  * 
- * [] Package Name : home.parham.main.cli
+ * [] Package Name : home.parham.main.main.cli
  *
  * [] Creation Date : 11-02-2015
  *
@@ -13,7 +13,8 @@
 
 package home.parham.cli;
 
-import home.parham.domain.TraxStatus;
+import home.parham.core.domain.TraxStatus;
+import home.parham.core.engine.GnuTrax;
 
 import java.util.ArrayList;
 

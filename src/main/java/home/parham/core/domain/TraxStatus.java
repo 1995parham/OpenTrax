@@ -3,7 +3,7 @@
  * ======================================
  * [] Project Name : OpenTrax 
  * 
- * [] Package Name : home.parham.main.player
+ * [] Package Name : home.parham.main.main.domain
  *
  * [] Creation Date : 11-02-2015
  *
@@ -11,10 +11,8 @@
  * =======================================
 */
 
-package home.parham.player;
+package home.parham.core.domain;
 
-import home.parham.domain.TraxBoard;
-
-public interface Player {
-	public String move(TraxBoard traxBoard);
+public enum TraxStatus {
+	WHITE, BLACK, DRAW, NOPLAYER;
 }

@@ -7,12 +7,12 @@
  contact traxplayer@gmail.com for more information about this code
 */
 
-package home.parham;
+package home.parham.core;
 
-import home.parham.domain.TraxBoard;
-import home.parham.domain.TraxStatus;
-import home.parham.exceptions.IllegalMoveException;
-import home.parham.util.TraxUtil;
+import home.parham.core.domain.TraxBoard;
+import home.parham.core.domain.TraxStatus;
+import home.parham.core.exceptions.IllegalMoveException;
+import home.parham.core.util.TraxUtil;
 
 import java.io.*;
 import java.util.HashMap;

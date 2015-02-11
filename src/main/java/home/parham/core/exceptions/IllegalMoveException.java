@@ -3,7 +3,7 @@
  * ======================================
  * [] Project Name : OpenTrax 
  * 
- * [] Package Name : home.parham.main
+ * [] Package Name : home.parham.main.main
  *
  * [] Creation Date : 23-01-2015
  *
@@ -11,7 +11,7 @@
  * =======================================
 */
 
-package home.parham.exceptions;
+package home.parham.core.exceptions;
 
 
 public class IllegalMoveException extends Exception {
