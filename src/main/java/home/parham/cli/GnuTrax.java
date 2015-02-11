@@ -10,15 +10,15 @@
  * [] Created By : Parham Alvani (parham.alvani@gmail.com)
  * =======================================
 */
-package home.parham.main.cli;
+package home.parham.cli;
 
-import home.parham.main.domain.TraxBoard;
-import home.parham.main.domain.TraxStatus;
-import home.parham.main.exceptions.IllegalMoveException;
-import home.parham.main.player.Player;
-import home.parham.main.player.PlayerSimple;
-import home.parham.main.player.PlayerUct;
-import home.parham.main.util.TraxUtil;
+import home.parham.domain.TraxBoard;
+import home.parham.domain.TraxStatus;
+import home.parham.exceptions.IllegalMoveException;
+import home.parham.player.Player;
+import home.parham.player.PlayerSimple;
+import home.parham.player.PlayerUct;
+import home.parham.util.TraxUtil;
 
 import java.util.ArrayList;
 

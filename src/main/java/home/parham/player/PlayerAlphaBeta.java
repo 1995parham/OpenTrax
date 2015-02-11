@@ -1,4 +1,4 @@
-package home.parham.main.player;
+package home.parham.player;
 
 /* 
  Date: 23th of October 2009
@@ -8,7 +8,7 @@ package home.parham.main.player;
  contact traxplayer@gmail.com for more information about this code
 */
 
-import home.parham.main.domain.TraxBoard;
+import home.parham.domain.TraxBoard;
 
 public class PlayerAlphaBeta implements Player {
 	private int whiteCorners;

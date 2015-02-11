@@ -1,4 +1,4 @@
-package home.parham.main;
+package home.parham;
 
 /* 
 
@@ -10,10 +10,10 @@ package home.parham.main;
 
  */
 
-import home.parham.main.domain.TraxBoard;
-import home.parham.main.domain.TraxStatus;
-import home.parham.main.exceptions.IllegalMoveException;
-import home.parham.main.util.TraxUtil;
+import home.parham.domain.TraxBoard;
+import home.parham.domain.TraxStatus;
+import home.parham.exceptions.IllegalMoveException;
+import home.parham.util.TraxUtil;
 
 import java.util.ArrayList;
 import java.util.Random;

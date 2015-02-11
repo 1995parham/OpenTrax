@@ -11,9 +11,9 @@
  * =======================================
 */
 
-package home.parham.main.domain;
+package home.parham.domain;
 
-import home.parham.main.exceptions.IllegalMoveException;
+import home.parham.exceptions.IllegalMoveException;
 
 import java.util.ArrayList;
 

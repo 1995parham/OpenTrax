@@ -11,9 +11,9 @@
  * =======================================
 */
 
-package home.parham.main.cli;
+package home.parham.cli;
 
-import home.parham.main.domain.TraxStatus;
+import home.parham.domain.TraxStatus;
 
 import java.util.ArrayList;
 
