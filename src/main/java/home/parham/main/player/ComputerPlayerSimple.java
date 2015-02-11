@@ -8,12 +8,12 @@ package home.parham.main.player;
  contact traxplayer@gmail.com for more information about this code
  */
 
-import home.parham.main.exceptions.IllegalMoveException;
 import home.parham.main.TraxBoard;
 import home.parham.main.TraxUtil;
+import home.parham.main.exceptions.IllegalMoveException;
 
-public class ComputerPlayerSimple extends ComputerPlayer {
-	public String computerMove(TraxBoard tb) {
+public class ComputerPlayerSimple implements ComputerPlayer {
+	public String computerMove(TraxBoard tb){
 		try {
 			return TraxUtil.getRandomMove(tb);
 		} catch (IllegalMoveException e) {

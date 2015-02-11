@@ -2,21 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bb0f919f-dad9-4224-b622-579adb4adc2f" name="Default" comment="GUI removed.CLI complete.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/home/parham/main/cli/CommandDispatcher.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/home/parham/main/cli/Commands.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/home/parham/main/cli/GnuTrax.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/home/parham/main/GnuTrax.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/home/parham/main/ComputerPlayer.java" afterPath="$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayer.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/home/parham/main/ComputerPlayerAlphaBeta.java" afterPath="$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayerAlphaBeta.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/home/parham/main/ComputerPlayerSimple.java" afterPath="$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayerSimple.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/home/parham/main/ComputerPlayerUct.java" afterPath="$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayerUct.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/home/parham/main/IllegalMoveException.java" afterPath="$PROJECT_DIR$/src/main/java/home/parham/main/exceptions/IllegalMoveException.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/home/parham/main/UctNode.java" afterPath="$PROJECT_DIR$/src/main/java/home/parham/main/player/UctNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/home/parham/main/Openingbook.java" afterPath="$PROJECT_DIR$/src/main/java/home/parham/main/Openingbook.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/home/parham/main/TraxBoard.java" afterPath="$PROJECT_DIR$/src/main/java/home/parham/main/TraxBoard.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/home/parham/main/TraxUtil.java" afterPath="$PROJECT_DIR$/src/main/java/home/parham/main/TraxUtil.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/home/parham/main/benchmark.java" afterPath="$PROJECT_DIR$/src/main/java/home/parham/main/benchmark.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/home/parham/main/cli/Commands.java" afterPath="$PROJECT_DIR$/src/main/java/home/parham/main/cli/Commands.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayer.java" afterPath="$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayerAlphaBeta.java" afterPath="$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayerAlphaBeta.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayerSimple.java" afterPath="$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayerSimple.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayerUct.java" afterPath="$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayerUct.java" />
     </list>
     <ignored path="OpenTrax.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -42,11 +32,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="GnuTrax.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GnuTrax.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/home/parham/main/cli/GnuTrax.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8532609" vertical-offset="3260" max-vertical-offset="3996">
-              <caret line="272" column="0" selection-start-line="272" selection-start-column="0" selection-end-line="272" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2990" max-vertical-offset="3996">
+              <caret line="257" column="51" selection-start-line="257" selection-start-column="51" selection-end-line="257" selection-end-column="51" />
               <folding>
                 <element signature="e#0#5821#0" expanded="true" />
                 <element signature="imports" expanded="true" />
@@ -56,13 +46,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Commands.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Commands.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/home/parham/main/cli/Commands.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="486" max-vertical-offset="19458">
-              <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.95108694" vertical-offset="6356" max-vertical-offset="19224">
+              <caret line="394" column="23" selection-start-line="394" selection-start-column="23" selection-end-line="394" selection-end-column="23" />
               <folding>
-                <element signature="e#0#38845#0" expanded="true" />
+                <element signature="e#0#38745#0" expanded="true" />
+                <element signature="imports" expanded="true" />
                 <element signature="e#982#983#0" expanded="true" />
                 <element signature="e#1019#1020#0" expanded="true" />
                 <element signature="e#1289#1290#0" expanded="true" />
@@ -90,12 +81,15 @@
         <option value="$PROJECT_DIR$/src/main/java/home/parham/gui/ImagePanel.java" />
         <option value="$PROJECT_DIR$/src/main/java/home/parham/main/benchmark.java" />
         <option value="$PROJECT_DIR$/src/main/java/home/parham/main/GnuTrax.java" />
-        <option value="$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayerUct.java" />
         <option value="$PROJECT_DIR$/src/main/java/home/parham/main/player/UctNode.java" />
         <option value="$PROJECT_DIR$/src/main/java/home/parham/main/TraxBoard.java" />
-        <option value="$PROJECT_DIR$/src/main/java/home/parham/main/cli/Commands.java" />
         <option value="$PROJECT_DIR$/src/main/java/home/parham/main/cli/GnuTrax.java" />
         <option value="$PROJECT_DIR$/src/main/java/home/parham/main/cli/CommandDispatcher.java" />
+        <option value="$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayerAlphaBeta.java" />
+        <option value="$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayerSimple.java" />
+        <option value="$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayerUct.java" />
+        <option value="$PROJECT_DIR$/src/main/java/home/parham/main/cli/Commands.java" />
       </list>
     </option>
   </component>
@@ -558,7 +552,7 @@
       <workItem from="1423122691791" duration="14000" />
       <workItem from="1423123747092" duration="1122000" />
       <workItem from="1423125800777" duration="102000" />
-      <workItem from="1423631492802" duration="7037000" />
+      <workItem from="1423631492802" duration="7817000" />
     </task>
     <task id="LOCAL-00001" summary="Project converted into idea project.">
       <created>1421966164952</created>
@@ -570,7 +564,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10673000" />
+    <option name="totallyTimeSpent" value="11453000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -711,27 +705,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayerAlphaBeta.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="522">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="378">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayerSimple.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.63092786" vertical-offset="0" max-vertical-offset="485">
-          <caret line="17" column="9" selection-start-line="17" selection-start-column="9" selection-end-line="17" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider editor-type-id="MarkdownPreviewEditor">
         <state />
@@ -739,29 +712,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.02538787" vertical-offset="0" max-vertical-offset="709">
           <caret line="1" column="39" selection-start-line="1" selection-start-column="39" selection-end-line="1" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/home/parham/main/player/UctNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5625" vertical-offset="0" max-vertical-offset="3582">
-          <caret line="23" column="39" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#602#603#0" expanded="true" />
-            <element signature="e#635#636#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayerUct.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29347825" vertical-offset="2016" max-vertical-offset="3942">
-          <caret line="124" column="33" selection-start-line="124" selection-start-column="33" selection-end-line="124" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#5135#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -785,18 +735,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/home/parham/main/TraxBoard.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="6.373444" vertical-offset="4302" max-vertical-offset="48600">
-          <caret line="514" column="17" selection-start-line="514" selection-start-column="17" selection-end-line="514" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1690#1691#0" expanded="true" />
-            <element signature="e#1720#1721#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="uml://JAVA/home.parham.main.cli.GnuTrax">
       <provider selected="true" editor-type-id="UmlEditorProvider">
         <state>
@@ -815,20 +753,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/home/parham/main/cli/Commands.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="19458">
-          <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#38845#0" expanded="true" />
-            <element signature="e#982#983#0" expanded="true" />
-            <element signature="e#1019#1020#0" expanded="true" />
-            <element signature="e#1289#1290#0" expanded="true" />
-            <element signature="e#1310#1311#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/home/parham/main/cli/CommandDispatcher.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.14673913" vertical-offset="0" max-vertical-offset="2286">
@@ -839,14 +763,86 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/home/parham/main/TraxBoard.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.614108" vertical-offset="26295" max-vertical-offset="48564">
+          <caret line="935" column="17" selection-start-line="935" selection-start-column="17" selection-end-line="935" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.48913044" vertical-offset="0" max-vertical-offset="736">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#448#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/home/parham/main/player/UctNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5625" vertical-offset="0" max-vertical-offset="3546">
+          <caret line="23" column="39" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayerUct.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.9891305" vertical-offset="3260" max-vertical-offset="3996">
+          <caret line="18" column="41" selection-start-line="18" selection-start-column="41" selection-end-line="18" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#5217#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayerSimple.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29347825" vertical-offset="0" max-vertical-offset="736">
+          <caret line="14" column="44" selection-start-line="14" selection-start-column="44" selection-end-line="14" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/home/parham/main/player/ComputerPlayerAlphaBeta.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29347825" vertical-offset="0" max-vertical-offset="736">
+          <caret line="12" column="47" selection-start-line="12" selection-start-column="47" selection-end-line="12" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/home/parham/main/cli/GnuTrax.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8532609" vertical-offset="3260" max-vertical-offset="3996">
-          <caret line="272" column="0" selection-start-line="272" selection-start-column="0" selection-end-line="272" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2990" max-vertical-offset="3996">
+          <caret line="257" column="51" selection-start-line="257" selection-start-column="51" selection-end-line="257" selection-end-column="51" />
           <folding>
             <element signature="e#0#5821#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#5020#5028#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/home/parham/main/cli/Commands.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.95108694" vertical-offset="6356" max-vertical-offset="19224">
+          <caret line="394" column="23" selection-start-line="394" selection-start-column="23" selection-end-line="394" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#38745#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#982#983#0" expanded="true" />
+            <element signature="e#1019#1020#0" expanded="true" />
+            <element signature="e#1289#1290#0" expanded="true" />
+            <element signature="e#1310#1311#0" expanded="true" />
           </folding>
         </state>
       </provider>

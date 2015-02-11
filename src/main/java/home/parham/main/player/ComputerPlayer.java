@@ -1,17 +1,20 @@
+/*
+ * In The Name Of God
+ * ======================================
+ * [] Project Name : OpenTrax 
+ * 
+ * [] Package Name : home.parham.main.player
+ *
+ * [] Creation Date : 11-02-2015
+ *
+ * [] Created By : Parham Alvani (parham.alvani@gmail.com)
+ * =======================================
+*/
+
 package home.parham.main.player;
-
-/* 
-
- Date: 3th of Januar 2009
- version 0.1
- All source under GPL version 2 
- (GNU General Public License - http://www.gnu.org/)
- contact traxplayer@gmail.com for more information about this code
-
- */
 
 import home.parham.main.TraxBoard;
 
-public abstract class ComputerPlayer {
-	public abstract String computerMove(TraxBoard tb);
+public interface ComputerPlayer {
+	public String computerMove(TraxBoard traxBoard);
 }
