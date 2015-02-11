@@ -133,16 +133,10 @@ public class Commands {
 			System.out.print("search <move>.............search specified move only.\n");
 			System.out.print("settc.....................set time controls.\n");
 			System.out.print("show book.................toggle book statistics.\n");
-			System.out.
-					print("st n......................sets absolute search time.\n");
-			System.out.
-					print
-							("test <file> [N]...........test a suite of problems. [help]\n");
-			System.out.
-					print("time......................time controls. [help]\n");
-			System.out.
-					print
-							("trace n...................display search tree below depth n.\n");
+			System.out.print("st n......................sets absolute search time.\n");
+			System.out.print("test <file> [N]...........test a suite of problems. [help]\n");
+			System.out.print("time......................time controls. [help]\n");
+			System.out.print("trace n...................display search tree below depth n.\n");
 			System.out.print("white.....................sets white to move.\n");
 			System.out.println();
 			return;
@@ -401,33 +395,32 @@ public class Commands {
 
 
 	public static void userHash(ArrayList<String> command){
-		;
+
 	}
 
 
 	public static void userHistory(){
-		;
+
 	}
 
 
 	public static void userImport(ArrayList<String> command){
-		;
+
 	}
 
 	public static void userInfo(){
-		;
 	}
 
 	public static void userInput(ArrayList<String> command){
-		;
+
 	}
 
 	public static void userLearn(ArrayList<String> command){
-		;
+
 	}
 
 	public static void userLoad(ArrayList<String> command){
-		;
+
 	}
 
 	public static void userLog(ArrayList<String> command){
@@ -443,7 +436,7 @@ public class Commands {
 	}
 
 	public static void userName(ArrayList<String> command){
-		;
+
 	}
 
 	public static void userNew(){
@@ -453,7 +446,7 @@ public class Commands {
 
 
 	public static void userNoise(ArrayList<String> command){
-		;
+
 	}
 
 	public static void userPerf(ArrayList<String> command){

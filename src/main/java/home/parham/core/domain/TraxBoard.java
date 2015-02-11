@@ -1701,11 +1701,6 @@ public class TraxBoard {
 			}
 		}
 		putAt(brow, bcol, piece);
-		/*
-		 * result&=(forcedMove(brow-1,bcol )); result&=(forcedMove(brow+1,bcol
-		 * )); result&=(forcedMove(brow ,bcol-1)); result&=(forcedMove(brow
-		 * ,bcol+1)); return result;
-		 */
 		if (forcedMove(brow - 1, bcol) == false) {
 			return false;
 		}
@@ -1906,7 +1901,7 @@ public class TraxBoard {
 					entry = 'e';
 					break;
 				default:
-				/* This should never happen */
+					/* This should never happen */
 					throw new RuntimeException("This should never happen. (020)");
 			}
 		}
@@ -1923,8 +1918,6 @@ public class TraxBoard {
 		char direction;
 		int[][] wnum = new int[9][9]; // every white line gets a number
 		int[][] bnum = new int[9][9];
-		int currentWNum = 1;
-		int currentBNum = 1;
 
 		if (whoDidLastMove() == TraxStatus.NOPLAYER)
 			return result;
@@ -1950,24 +1943,11 @@ public class TraxBoard {
 						case SW:
 						case WE:
 							result += 'W';
-					/*
-					 * if (needNumbers) { if (wnum[i][j]==0) { icopy=i; jcopy=j;
-					 * updateLine('w','w',icopy,jcopy); wnum[i][j]=currentWNum;
-					 * wnum[icopy][jcopy]=currentWNum; currentWNum++; }
-					 * snprintf(dummy,4,"%d",wnum[i][j]); result+=dummy; }
-					 */
 							break;
 						case NS:
 						case NE:
 						case SE:
 							result += 'B';
-					/*
-					 * if (needNumbers) { if (bnum[i][j]==0) { icopy=i; jcopy=j;
-					 * updateLine('b','w',icopy,jcopy); bnum[i][j]=currentBNum;
-					 * bnum[icopy][jcopy]=currentBNum; currentBNum++; }
-					 * result+=(char)bnum[icopy][jcopy];
-					 * snprintf(dummy,4,"%d",bnum[i][j]); result+=dummy; }
-					 */
 							break;
 						default:
 					/* This should never happen */
@@ -2173,96 +2153,95 @@ public class TraxBoard {
 			case 0:
 				return result;
 			case 1:
-				result.add(new Integer(TraxBoard.NW));
-				result.add(new Integer(TraxBoard.NS));
-				result.add(new Integer(TraxBoard.NE));
+				result.add(TraxBoard.NW);
+				result.add(TraxBoard.NS);
+				result.add(TraxBoard.NE);
 				return result;
 			case 128:
-				result.add(new Integer(TraxBoard.WS));
-				result.add(new Integer(TraxBoard.NS));
-				result.add(new Integer(TraxBoard.WN));
+				result.add(TraxBoard.WS);
+				result.add(TraxBoard.NS);
+				result.add(TraxBoard.WN);
 				return result;
 			case 2:
-				result.add(new Integer(TraxBoard.SW));
-				result.add(new Integer(TraxBoard.SE));
-				result.add(new Integer(TraxBoard.SN));
+				result.add(TraxBoard.SW);
+				result.add(TraxBoard.SE);
+				result.add(TraxBoard.SN);
 				return result;
 			case 32:
-				result.add(new Integer(TraxBoard.WE));
-				result.add(new Integer(TraxBoard.WN));
-				result.add(new Integer(TraxBoard.NE));
+				result.add(TraxBoard.WE);
+				result.add(TraxBoard.WN);
+				result.add(TraxBoard.NE);
 				return result;
 			case 8:
-				result.add(new Integer(TraxBoard.EW));
-				result.add(new Integer(TraxBoard.ES));
-				result.add(new Integer(TraxBoard.EN));
+				result.add(TraxBoard.EW);
+				result.add(TraxBoard.ES);
+				result.add(TraxBoard.EN);
 				return result;
 			case 4:
-				result.add(new Integer(TraxBoard.WE));
-				result.add(new Integer(TraxBoard.WS));
-				result.add(new Integer(TraxBoard.WN));
+				result.add(TraxBoard.WE);
+				result.add(TraxBoard.WS);
+				result.add(TraxBoard.WN);
 				return result;
 			case 64:
-				result.add(new Integer(TraxBoard.NS));
-				result.add(new Integer(TraxBoard.NE));
-				result.add(new Integer(TraxBoard.SE));
+				result.add(TraxBoard.NS);
+				result.add(TraxBoard.NE);
+				result.add(TraxBoard.SE);
 				return result;
 			case 16:
-				result.add(new Integer(TraxBoard.WE));
-				result.add(new Integer(TraxBoard.WS));
-				result.add(new Integer(TraxBoard.SE));
+				result.add(TraxBoard.WE);
+				result.add(TraxBoard.WS);
+				result.add(TraxBoard.SE);
 				return result;
 			case 36:
-				result.add(new Integer(TraxBoard.WN));
-				result.add(new Integer(TraxBoard.WE));
+				result.add(TraxBoard.WN);
+				result.add(TraxBoard.WE);
 				return result;
 			case 66:
-				result.add(new Integer(TraxBoard.SN));
-				result.add(new Integer(TraxBoard.SE));
+				result.add(TraxBoard.SN);
+				result.add(TraxBoard.SE);
 				return result;
 			case 132:
-				result.add(new Integer(TraxBoard.WN));
-				result.add(new Integer(TraxBoard.WS));
+				result.add(TraxBoard.WN);
+				result.add(TraxBoard.WS);
 				return result;
 			case 72:
-				result.add(new Integer(TraxBoard.EN));
-				result.add(new Integer(TraxBoard.ES));
+				result.add(TraxBoard.EN);
+				result.add(TraxBoard.ES);
 				return result;
 			case 65:
-				result.add(new Integer(TraxBoard.NS));
-				result.add(new Integer(TraxBoard.NE));
+				result.add(TraxBoard.NS);
+				result.add(TraxBoard.NE);
 				return result;
 			case 20:
-				result.add(new Integer(TraxBoard.WE));
-				result.add(new Integer(TraxBoard.WS));
+				result.add(TraxBoard.WE);
+				result.add(TraxBoard.WS);
 				return result;
 			case 33:
-				result.add(new Integer(TraxBoard.NW));
-				result.add(new Integer(TraxBoard.NE));
+				result.add(TraxBoard.NW);
+				result.add(TraxBoard.NE);
 				return result;
 			case 18:
-				result.add(new Integer(TraxBoard.SW));
-				result.add(new Integer(TraxBoard.SE));
+				result.add(TraxBoard.SW);
+				result.add(TraxBoard.SE);
 				return result;
 			case 129:
-				result.add(new Integer(TraxBoard.NW));
-				result.add(new Integer(TraxBoard.NS));
+				result.add(TraxBoard.NW);
+				result.add(TraxBoard.NS);
 				return result;
 			case 24:
-				result.add(new Integer(TraxBoard.EW));
-				result.add(new Integer(TraxBoard.ES));
+				result.add(TraxBoard.EW);
+				result.add(TraxBoard.ES);
 				return result;
 			case 40:
-				result.add(new Integer(TraxBoard.EW));
-				result.add(new Integer(TraxBoard.EN));
+				result.add(TraxBoard.EW);
+				result.add(TraxBoard.EN);
 				return result;
 			case 130:
-				result.add(new Integer(TraxBoard.SN));
-				result.add(new Integer(TraxBoard.SW));
+				result.add(TraxBoard.SN);
+				result.add(TraxBoard.SW);
 				return result;
 			default:
-				// This should never happen
-				throw new RuntimeException("This should never happen. (009)");
+				return null;
 		}
 	}
 
