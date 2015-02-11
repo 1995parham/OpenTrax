@@ -16,16 +16,18 @@ package home.parham.main;
 import java.util.ArrayList;
 
 public class TraxBoard {
-	// Piece description...
-	//
-	// 0 1 2 3 4 5 6
-	//
-	// . . . . o . . x . . o . . o . . x . . x .
-	//
-	// . . x x o o o / x x \ o o \ x x / o
-	//
-	// . . . . o . . x . . x . . x . . o . . o .
-	// the direction of the white lines and their number
+	/* 
+	 * Piece description...
+	 *
+	 * 0 1 2 3 4 5 6
+	 *
+	 * . . . . o . . x . . o . . o . . x . . x .
+	 *
+	 * . . x x o o o / x x \ o o \ x x / o
+	 *
+	 * . . . . o . . x . . x . . x . . o . . o .
+	 * the direction of the white lines and their number
+	*/
 
 	private boolean boardEmpty;
 	private int wtm;
@@ -37,7 +39,7 @@ public class TraxBoard {
 	private boolean boardEmpty_save;
 	private int wtm_save;
 	private int[][] board_save;
-	private int gameover_save;
+	private int gameoverSave;
 	private int num_of_tiles_save;
 	private int firstrow_save, lastrow_save, firstcol_save, lastcol_save;
 	public boolean debug = false;
@@ -130,7 +132,7 @@ public class TraxBoard {
 	private void saveState(){
 		wtm_save = wtm;
 		boardEmpty_save = boardEmpty;
-		gameover_save = gameover;
+		gameoverSave = gameover;
 		num_of_tiles_save = num_of_tiles;
 		firstrow_save = firstrow;
 		firstcol_save = firstcol;
@@ -146,7 +148,7 @@ public class TraxBoard {
 	private void restoreState(){
 		wtm = wtm_save;
 		boardEmpty = boardEmpty_save;
-		gameover = gameover_save;
+		gameover = gameoverSave;
 		num_of_tiles = num_of_tiles_save;
 		firstrow = firstrow_save;
 		firstcol = firstcol_save;
@@ -500,17 +502,12 @@ public class TraxBoard {
 	/**
 	 * Try to make the specified move. If it is legal, then update the board.
 	 * Accepts upper-case and lower-case letters, old and new notation but not
-	 * the very old notation (used until 1986?) which is incompatibel with old
+	 * the very old notation (used until 1986?) which is incompatible with old
 	 * notation
 	 *
 	 * @param move The move
 	 */
 	public void makeMove(String move) throws IllegalMoveException{
-		// updates the board etc. if it was a legal move
-		// accepts upper-case & lower-case letters
-		// and old&new notation but not the very old
-		// notation (used until 1986?) which is incompatibel with old notation
-
 		boolean oldNotation;
 		int col, row, neighbor;
 		char dir;
@@ -572,7 +569,7 @@ public class TraxBoard {
 				oldNotation = false;
 				break;
 			default:
-				throw new IllegalMoveException("unknown direction.");
+				throw new IllegalMoveException("Unknown Direction.");
 		}
 
 		if (oldNotation) {
@@ -585,13 +582,13 @@ public class TraxBoard {
 		}
 
 		if (col == 0 && row == 0)
-			throw new IllegalMoveException("no neighbors.");
+			throw new IllegalMoveException("No Neighbors.");
 		if ((row == 0) && (!canMoveDown()))
-			throw new IllegalMoveException("illegal row.");
+			throw new IllegalMoveException("Illegal Row.");
 		if ((col == 0) && (!canMoveRight()))
-			throw new IllegalMoveException("illegal column.");
+			throw new IllegalMoveException("Illegal Column.");
 		if (!isBlank(row, col))
-			throw new IllegalMoveException("occupied." + move + " illegal");
+			throw new IllegalMoveException("Occupied." + move + " Illegal");
 
 		saveState();
 		int up = getAt(row - 1, col), down = getAt(row + 1, col), left = getAt(
@@ -618,7 +615,7 @@ public class TraxBoard {
 
 		switch (neighbor) {
 			case 0:
-				throw new IllegalMoveException("no neighbors.");
+				throw new IllegalMoveException("No Neighbors.");
 			case 1:
 				switch (dir) {
 					case '/':
@@ -636,7 +633,7 @@ public class TraxBoard {
 					case 'U':
 					case 'C':
 					case 'D':
-						throw new IllegalMoveException("illegal direction.");
+						throw new IllegalMoveException("Illegal Direction.");
 					default:
 				/* This should never happen */
 						throw new RuntimeException("This should never happen. (003)");

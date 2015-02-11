@@ -1,4 +1,4 @@
-package org.traxgame.main;
+package home.parham.main;
 
 /* 
 
@@ -16,8 +16,8 @@ import java.util.Random;
 public class benchmark {
 
 	public static void main(String[] args){
-		Traxboard tb;
-		int game_value = Traxboard.NOPLAYER; // To make the compiler happy
+		TraxBoard tb;
+		int game_value = TraxBoard.NOPLAYER; // To make the compiler happy
 		ArrayList<String> move_list;
 		String random_move;
 		int draw = 0, p1 = 0, p2 = 0;
@@ -29,25 +29,25 @@ public class benchmark {
 		game_length = 0;
 		for (i = 0; i < num_of_games; i++) {
 			try {
-				tb = new Traxboard();
+				tb = new TraxBoard();
 				do {
 					random_move = TraxUtil.getRandomMove(tb);
 					tb.makeMove(random_move);
 					game_value = tb.isGameOver();
 					game_length++;
-				} while (game_value == Traxboard.NOPLAYER);
+				} while (game_value == TraxBoard.NOPLAYER);
 			} catch (IllegalMoveException e) {
 				e.printStackTrace();
 				return;
 			}
 			switch (game_value) {
-				case Traxboard.DRAW:
+				case TraxBoard.DRAW:
 					draw++;
 					break;
-				case Traxboard.WHITE:
+				case TraxBoard.WHITE:
 					p1++;
 					break;
-				case Traxboard.BLACK:
+				case TraxBoard.BLACK:
 					p2++;
 					break;
 				default:
