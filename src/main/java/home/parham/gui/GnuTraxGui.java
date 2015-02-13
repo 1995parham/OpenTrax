@@ -9,25 +9,24 @@ import home.parham.core.player.PlayerSimple;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GnuTraxGui extends JFrame {
 
 	private Tile[] tiles;
 	private JPanel outerPanel;
-	private java.util.List<ImagePanel> board;
-	private Loading loading;
-	TraxBoard traxBoard;
-	Player player;
+	private List<ImagePanel> board;
+	private TraxBoard traxBoard;
+	private Player player;
 
 	public GnuTraxGui(){
 		super("GnuTrax 1.0");
 		setResizable(false);
 		setPreferredSize(new Dimension(800, 480));
-		loading = new Loading(this);
-		loading.setVisible(false);
 		board = new ArrayList<ImagePanel>();
 		newGame();
 	}
@@ -168,33 +167,18 @@ public class GnuTraxGui extends JFrame {
 		newBoard();
 	}
 
-	private void makeAiMove(){
-		new Thread(new Runnable() {
-			@Override
-			public void run(){
-				SwingUtilities.invokeLater(new Runnable() {
-					@Override
-					public void run(){
-						loading.setVisible(true);
-					}
-				});
+	private void makeAIMove(){
+		this.setEnabled(false);
 
-				String aiMove = player.move(traxBoard);
-				GnuTrax.getInstance().gotAMove(aiMove);
+		String AIMove = player.move(traxBoard);
+		GnuTrax.getInstance().gotAMove(AIMove);
 
-				SwingUtilities.invokeLater(new Runnable() {
-					@Override
-					public void run(){
-						loading.setVisible(false);
-						clearBoard();
-						drawBoard();
-						repaint();
-						checkForWinner();
-					}
-				});
-			}
+		clearBoard();
+		drawBoard();
+		repaint();
+		checkForWinner();
 
-		}).start();
+		this.setEnabled(true);
 	}
 
 	public void setMove(int x, int y, Tile tile){
@@ -211,15 +195,15 @@ public class GnuTraxGui extends JFrame {
 		if (checkForWinner())
 			return;
 		if (aiMayMove) {
-			makeAiMove();
+			makeAIMove();
 			if (checkForWinner())
 				return;
 		}
 	}
 
-	public java.util.List<Tile> getPossibleTilesForPosition(int x, int y){
-		java.util.List<Tile> possibleMoves = new ArrayList<Tile>();
-		java.util.List<Integer> theMoves = traxBoard.getLegalTiles(x,
+	public List<Tile> getPossibleTilesForPosition(int x, int y){
+		List<Tile> possibleMoves = new ArrayList<Tile>();
+		List<Integer> theMoves = traxBoard.getLegalTiles(x,
 				y);
 		for (Integer move : theMoves) {
 			possibleMoves.add(tiles[move.intValue()]);
@@ -238,7 +222,7 @@ public class GnuTraxGui extends JFrame {
 		this.setContentPane(outerPanel);
 
 		ImagePanel innerPanel;
-		
+
 		innerPanel = new ImagePanel(tiles[TraxBoard.EMPTY].getImage(), this, 0, 0);
 		int x = this.getPreferredSize().width / 2 - 40;
 		int y = this.getPreferredSize().height / 2 - 40;
