@@ -47,7 +47,6 @@ public class GnuTraxGui extends JFrame {
 
 	private String getRowColForPos(int x, int y){
 		StringBuilder sb = new StringBuilder();
-		// System.out.println("POS: x: " + x + " Y: " + y);
 		switch (x) {
 			case 0:
 				sb.append("@");
@@ -84,13 +83,12 @@ public class GnuTraxGui extends JFrame {
 				sb.append("\\");
 				break;
 		}
-		// System.out.println(sb.toString());
 		return sb.toString();
 	}
 
 	private void clearBoard(){
-		for (ImagePanel ip : board) {
-			ip.setImage(tiles[TraxBoard.EMPTY].getImage());
+		for (ImagePanel imagePanel : board) {
+			imagePanel.setImage(tiles[TraxBoard.EMPTY].getImage());
 		}
 	}
 
@@ -100,12 +98,18 @@ public class GnuTraxGui extends JFrame {
 
 	private void drawBoard(){
 		int colDiff = 0, rowDiff = 0;
-		this.setVisible(false);
-		outerPanel = new JPanel();
-		board.clear();
+
 		int noOfRowsToDraw = noToDraw(traxBoard.getRowSize());
 		int noOfColsToDraw = noToDraw(traxBoard.getColSize());
-		outerPanel.setLayout(new GridLayout(noOfRowsToDraw, noOfColsToDraw));
+
+		SpringLayout springLayout = new SpringLayout();
+
+		board.clear();
+
+		outerPanel = new JPanel();
+		outerPanel.setLayout(springLayout);
+		outerPanel.setBackground(new Color(0, 100, 0));
+
 		ImagePanel innerPanel;
 
 		if (noOfColsToDraw == 8 && traxBoard.getColSize() == 8) {
@@ -116,24 +120,25 @@ public class GnuTraxGui extends JFrame {
 
 		for (int i = 0; i < noOfRowsToDraw; i++) {
 			for (int j = 0; j < noOfColsToDraw; j++) {
-				// TODO Why is it needed to swap i and j here??
-				innerPanel = new ImagePanel(tiles[TraxBoard.EMPTY].getImage(),
-						this, j - colDiff, i - rowDiff);
+				innerPanel = new ImagePanel(tiles[TraxBoard.EMPTY].getImage(), this, j - colDiff, i - rowDiff);
+				int x = this.getPreferredSize().width / 2 - 40 * noOfRowsToDraw;
+				int y = this.getPreferredSize().height / 2 - 40 * noOfColsToDraw;
+				springLayout.putConstraint(SpringLayout.NORTH, innerPanel, y + (j - colDiff) * 80, SpringLayout.NORTH, outerPanel);
+				springLayout.putConstraint(SpringLayout.WEST, innerPanel, x + (i - rowDiff) * 80, SpringLayout.WEST, outerPanel);
 				outerPanel.add(innerPanel);
 				board.add(innerPanel);
 			}
 		}
-		this.getContentPane().remove(0);
-		this.getContentPane().add(outerPanel);
 
 		for (int i = 1; i <= traxBoard.getRowSize(); i++) {
 			for (int j = 1; j <= traxBoard.getColSize(); j++) {
-				board.get((i + rowDiff) * noOfColsToDraw + (j + colDiff)).setImage(
-						tiles[traxBoard.getAt(i, j)].getImage());
+				board.get((i + rowDiff) * noOfColsToDraw + (j + colDiff)).setImage(tiles[traxBoard.getAt(i, j)].getImage());
+				board.get((i + rowDiff) * noOfColsToDraw + (j + colDiff)).repaint();
 			}
 		}
-		this.pack();
-		this.setVisible(true);
+
+		this.setContentPane(outerPanel);
+		SwingUtilities.updateComponentTreeUI(this);
 	}
 
 	private boolean checkForWinner(){
@@ -160,7 +165,7 @@ public class GnuTraxGui extends JFrame {
 	private void showNewGameDialog(String winner){
 		JOptionPane.showMessageDialog(this, "Good game. The winner was "
 				+ winner, "Game Over", JOptionPane.INFORMATION_MESSAGE);
-		newGameBoard();
+		newBoard();
 	}
 
 	private void makeAiMove(){
@@ -222,58 +227,43 @@ public class GnuTraxGui extends JFrame {
 		return possibleMoves;
 	}
 
-	private void newGameBoard(){
-		board.clear();
-		outerPanel = new JPanel();
-		outerPanel.setLayout(new GridLayout(1, 1));
-		ImagePanel innerPanel;
+	private void newBoard(){
+		SpringLayout springLayout = new SpringLayout();
 
-		for (int i = 0; i < 1; i++) {
-			for (int j = 0; j < 1; j++) {
-				innerPanel = new ImagePanel(
-						tiles[TraxBoard.INVALID].getImage(), this, j, i);
-				outerPanel.add(innerPanel);
-				board.add(innerPanel);
-			}
-		}
-		board.get(0).setImage(tiles[TraxBoard.EMPTY].getImage());
-		if (this.getContentPane().getComponentCount() > 0)
-			this.getContentPane().remove(0);
-		this.getContentPane().add(outerPanel);
-		this.pack();
+		board.clear();
+
+		outerPanel = new JPanel();
+		outerPanel.setLayout(springLayout);
+		outerPanel.setBackground(new Color(0, 100, 0));
+		this.setContentPane(outerPanel);
+
+		ImagePanel innerPanel;
+		
+		innerPanel = new ImagePanel(tiles[TraxBoard.EMPTY].getImage(), this, 0, 0);
+		int x = this.getPreferredSize().width / 2 - 40;
+		int y = this.getPreferredSize().height / 2 - 40;
+		springLayout.putConstraint(SpringLayout.NORTH, innerPanel, y, SpringLayout.NORTH, outerPanel);
+		springLayout.putConstraint(SpringLayout.WEST, innerPanel, x, SpringLayout.WEST, outerPanel);
+		outerPanel.add(innerPanel);
+		board.add(innerPanel);
 	}
 
-	public void addComponentsToPane(final Container pane){
+	public void setTiles(){
 		tiles = new Tile[8];
 		try {
-			tiles[TraxBoard.NS] = new Tile(ImageIO.read(getClass()
-					.getClassLoader().getResource("images/large/ns.gif")),
-					TraxBoard.NS); // 80x80 gif
-			tiles[TraxBoard.WE] = new Tile(ImageIO.read(getClass()
-					.getClassLoader().getResource("images/large/we.gif")),
-					TraxBoard.WE); // 80x80 gif
-			tiles[TraxBoard.NW] = new Tile(ImageIO.read(getClass()
-					.getClassLoader().getResource("images/large/nw.gif")),
-					TraxBoard.NW); // 80x80 gif
-			tiles[TraxBoard.NE] = new Tile(ImageIO.read(getClass()
-					.getClassLoader().getResource("images/large/ne.gif")),
-					TraxBoard.NE); // 80x80 gif
-			tiles[TraxBoard.WS] = new Tile(ImageIO.read(getClass()
-					.getClassLoader().getResource("images/large/ws.gif")),
-					TraxBoard.WS); // 80x80 gif
-			tiles[TraxBoard.SE] = new Tile(ImageIO.read(getClass()
-					.getClassLoader().getResource("images/large/se.gif")),
-					TraxBoard.SE); // 80x80 gif
-			tiles[TraxBoard.INVALID] = new Tile(ImageIO.read(getClass()
-					.getClassLoader().getResource("images/large/invalid.gif")),
-					TraxBoard.INVALID); // 80x80 gif
-			tiles[TraxBoard.EMPTY] = new Tile(ImageIO.read(getClass()
-					.getClassLoader().getResource("images/large/blank.gif")),
-					TraxBoard.EMPTY); // 80x80 gif
+			/* 80x80 gif */
+			tiles[TraxBoard.NS] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/large/ns.gif")), TraxBoard.NS);
+			tiles[TraxBoard.WE] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/large/we.gif")), TraxBoard.WE);
+			tiles[TraxBoard.NW] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/large/nw.gif")), TraxBoard.NW);
+			tiles[TraxBoard.NE] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/large/ne.gif")), TraxBoard.NE);
+			tiles[TraxBoard.WS] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/large/ws.gif")), TraxBoard.WS);
+			tiles[TraxBoard.SE] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/large/se.gif")), TraxBoard.SE);
+			tiles[TraxBoard.INVALID] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/large/invalid.gif")), TraxBoard.INVALID);
+			tiles[TraxBoard.EMPTY] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/large/blank.gif")), TraxBoard.EMPTY);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		newGameBoard();
+		newBoard();
 	}
 
 	/**
@@ -284,7 +274,7 @@ public class GnuTraxGui extends JFrame {
 		GnuTraxGui frame = new GnuTraxGui();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Set up the content pane.
-		frame.addComponentsToPane(frame.getContentPane());
+		frame.setTiles();
 		// Display the window.
 		frame.pack();
 		frame.setLocationByPlatform(true);
