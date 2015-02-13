@@ -1,7 +1,11 @@
 package home.parham.gui;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.util.List;
 import java.awt.image.BufferedImage;
 
 public class ImagePanel extends JPanel {
@@ -20,7 +24,7 @@ public class ImagePanel extends JPanel {
 	}
 
 	public void showMovesDialog(){
-		java.util.List<Tile> possibleMoves = gnuTrax.getPossibleTilesForPosition(this.x, this.y);
+		List<Tile> possibleMoves = gnuTrax.getPossibleTilesForPosition(this.x, this.y);
 		ChooseTile ct = new ChooseTile(this.gnuTrax, possibleMoves);
 		ct.setVisible(true);
 		if (ct.getChosenMove() != -1) {
