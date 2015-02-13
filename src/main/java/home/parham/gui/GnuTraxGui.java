@@ -119,7 +119,6 @@ public class GnuTraxGui extends JFrame {
 				// TODO Why is it needed to swap i and j here??
 				innerPanel = new ImagePanel(tiles[TraxBoard.EMPTY].getImage(),
 						this, j - colDiff, i - rowDiff);
-				innerPanel.setSize(new Dimension(80, 80));
 				outerPanel.add(innerPanel);
 				board.add(innerPanel);
 			}
