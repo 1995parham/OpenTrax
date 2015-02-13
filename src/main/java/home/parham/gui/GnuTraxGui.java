@@ -148,23 +148,23 @@ public class GnuTraxGui extends JFrame {
 			*/
 			switch (traxBoard.isGameOver()) {
 				case BLACK:
-					showNewGameDialog("black");
+					showEndGameDialog("black");
 					break;
 				case WHITE:
-					showNewGameDialog("white");
+					showEndGameDialog("white");
 					break;
 				default:
-					showNewGameDialog("everyone");
+					showEndGameDialog("everyone");
 			}
 			return true;
 		}
 		return false;
 	}
 
-	private void showNewGameDialog(String winner){
+	private void showEndGameDialog(String winner){
 		JOptionPane.showMessageDialog(this, "Good game. The winner was "
 				+ winner, "Game Over", JOptionPane.INFORMATION_MESSAGE);
-		newBoard();
+		System.exit(0);
 	}
 
 	private void makeAIMove(){
