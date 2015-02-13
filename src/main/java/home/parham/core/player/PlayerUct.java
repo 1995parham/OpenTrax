@@ -152,7 +152,7 @@ public class PlayerUct implements Player {
 	private TraxStatus playRandomGame(TraxBoard tb){
 		while (tb.isGameOver() == TraxStatus.NOPLAYER) {
 			try {
-				tb.makeMove(TraxUtil.getRandomMove(tb));
+				tb.makeMove(PlayerSimple.getRandomMove(tb));
 			} catch (IllegalMoveException e) {
 				throw new RuntimeException();
 			}

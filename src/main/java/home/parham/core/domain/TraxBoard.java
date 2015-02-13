@@ -979,7 +979,13 @@ public class TraxBoard {
 			return new ArrayList<String>(0);
 		}
 
-		if (boardEmpty == true) { // empty board only these two moves
+		/*
+		 * Empty board only have
+		 * 1) @0/
+		 * 2) @0+
+		 * moves.
+		*/
+		if (boardEmpty) {
 			Moves.add("@0/");
 			Moves.add("@0+");
 			Moves.trimToSize();
@@ -1208,8 +1214,7 @@ public class TraxBoard {
 						}
 						default:
 							// This should never happen
-							throw new RuntimeException(
-									"This should never happen(029)");
+							throw new RuntimeException("This should never happen(029)");
 					}
 				}
 			}
