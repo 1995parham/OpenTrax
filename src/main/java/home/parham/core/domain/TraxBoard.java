@@ -180,9 +180,7 @@ public class TraxBoard {
 		lastrow_save = lastrow;
 		lastcol_save = lastcol;
 		for (int i = 0; i < 17; i++) {
-			for (int j = 0; j < 17; j++) {
-				board_save[i][j] = board[i][j];
-			}
+			System.arraycopy(board[i], 0, board_save[i], 0, 17);
 		}
 	}
 
@@ -196,9 +194,7 @@ public class TraxBoard {
 		lastrow = lastrow_save;
 		lastcol = lastcol_save;
 		for (int i = 0; i < 17; i++) {
-			for (int j = 0; j < 17; j++) {
-				board[i][j] = board_save[i][j];
-			}
+			System.arraycopy(board_save[i], 0, board[i], 0, 17);
 		}
 	}
 
@@ -210,63 +206,6 @@ public class TraxBoard {
 		return ((getNumOfTiles() == 0) ? 0 : 1 + (lastcol - firstcol));
 	}
 
-	public void dump(){
-		System.out.println(this);
-		System.out.println("tilesNumber=" + getNumOfTiles());
-		System.out.println("rowsize=" + getRowSize());
-		System.out.println("colsize=" + getColSize());
-		System.out.println("firstRow=" + firstRow);
-		System.out.println("firstcol=" + firstcol);
-		System.out.println("lastrow=" + lastrow);
-		System.out.println("lastcol=" + lastcol);
-		System.out.print("gameover=");
-		switch (gameover) {
-			case WHITE:
-				System.out.println("WHITE");
-				break;
-			case BLACK:
-				System.out.println("BLACK");
-				break;
-			case DRAW:
-				System.out.println("DRAW");
-				break;
-			case NOPLAYER:
-				System.out.println("NOPLAYER");
-				break;
-		}
-		if (boardEmpty)
-			System.out.println("boardEmpty=true");
-		else
-			System.out.println("boardEmpty=false");
-		System.out.print("wtm=");
-		switch (wtm) {
-			case WHITE:
-				System.out.println("WHITE");
-				break;
-			case BLACK:
-				System.out.println("BLACK");
-				break;
-			case DRAW:
-				System.out.println("DRAW");
-				break;
-			case NOPLAYER:
-				System.out.println("NOPLAYER");
-				break;
-		}
-		System.out.println("   0123456789ABCDEFG");
-		for (int i = 0; i < 17; i++) {
-			if (i > 9) {
-				System.out.print(i + ":");
-			} else {
-				System.out.print("0" + i + ":");
-			}
-			for (int j = 0; j < 17; j++) {
-				System.out.print(board[i][j]);
-			}
-			System.out.println();
-		}
-
-	}
 
 	/**
 	 * Given a row and column, the method checks if that (row,col) is occupied
@@ -290,13 +229,13 @@ public class TraxBoard {
 	 */
 	public void makeMove(TraxMove move) throws IllegalMoveException{
 		int col, row, neighbor;
-		char dir;
+		char tile;
 		int ohs_up = 0, ohs_down = 0, ohs_right = 0, ohs_left = 0, eks_up = 0, eks_down = 0, eks_right = 0, eks_left = 0;
 
 		move.validate();
 		col = move.getColumn();
 		row = move.getRow();
-		dir = move.getTile();
+		tile = move.getTile();
 
 		if (gameover != TraxStatus.NOPLAYER)
 			throw new IllegalMoveException("Game is over.", move);
@@ -346,14 +285,14 @@ public class TraxBoard {
 		if (right == ES || right == NS || right == EN)
 			eks_right = 1;
 
-		neighbor = 1 * ohs_up + 2 * ohs_down + 4 * ohs_left + 8 * ohs_right
+		neighbor = ohs_up + 2 * ohs_down + 4 * ohs_left + 8 * ohs_right
 				+ 16 * eks_up + 32 * eks_down + 64 * eks_left + 128 * eks_right;
 
 		switch (neighbor) {
 			case 0:
 				throw new IllegalMoveException("No Neighbors.");
 			case 1:
-				switch (dir) {
+				switch (tile) {
 					case '/':
 						putAt(row, col, NW);
 						break;
@@ -368,9 +307,8 @@ public class TraxBoard {
 				}
 				break;
 			case 2:
-				switch (dir) {
+				switch (tile) {
 					case '/':
-					case 'R':
 						putAt(row, col, SE);
 						break;
 					case '\\':
@@ -391,7 +329,7 @@ public class TraxBoard {
 				}
 				break;
 			case 4:
-				switch (dir) {
+				switch (tile) {
 					case '/':
 					case 'U':
 						putAt(row, col, WN);
@@ -414,7 +352,7 @@ public class TraxBoard {
 				}
 				break;
 			case 8:
-				switch (dir) {
+				switch (tile) {
 					case '/':
 					case 'D':
 						putAt(row, col, ES);
@@ -437,7 +375,7 @@ public class TraxBoard {
 				}
 				break;
 			case 16:
-				switch (dir) {
+				switch (tile) {
 					case '/':
 					case 'L':
 						putAt(row, col, SE);
@@ -460,7 +398,7 @@ public class TraxBoard {
 				}
 				break;
 			case 18:
-				switch (dir) {
+				switch (tile) {
 					case '/':
 					case 'R':
 						putAt(row, col, SE);
@@ -481,7 +419,7 @@ public class TraxBoard {
 				}
 				break;
 			case 20:
-				switch (dir) {
+				switch (tile) {
 					case '/':
 					case 'L':
 					case 'U':
@@ -502,7 +440,7 @@ public class TraxBoard {
 				}
 				break;
 			case 24:
-				switch (dir) {
+				switch (tile) {
 					case '/':
 					case 'L':
 					case 'C':
@@ -523,7 +461,7 @@ public class TraxBoard {
 				}
 				break;
 			case 32:
-				switch (dir) {
+				switch (tile) {
 					case '/':
 					case 'R':
 						putAt(row, col, NW);
@@ -546,7 +484,7 @@ public class TraxBoard {
 				}
 				break;
 			case 33:
-				switch (dir) {
+				switch (tile) {
 					case '/':
 					case 'L':
 						putAt(row, col, NW);
@@ -567,203 +505,203 @@ public class TraxBoard {
 				}
 				break;
 			case 36:
-				if (dir == '/')
+				if (tile == '/')
 					putAt(row, col, NW);
-				if (dir == '\\')
+				if (tile == '\\')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == '+')
+				if (tile == '+')
 					putAt(row, col, WE);
-				if (dir == 'S')
+				if (tile == 'S')
 					putAt(row, col, WE);
-				if (dir == 'C')
+				if (tile == 'C')
 					putAt(row, col, WN);
-				if (dir == 'L')
+				if (tile == 'L')
 					throw new IllegalMoveException(move + " illegal direction.");
-				if (dir == 'R')
+				if (tile == 'R')
 					putAt(row, col, WN);
-				if (dir == 'U')
+				if (tile == 'U')
 					putAt(row, col, WN);
-				if (dir == 'D')
+				if (tile == 'D')
 					throw new IllegalMoveException("illegal direction.");
 				break;
 			case 40:
-				if (dir == '/')
+				if (tile == '/')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == '\\')
+				if (tile == '\\')
 					putAt(row, col, EN);
-				if (dir == '+')
+				if (tile == '+')
 					putAt(row, col, EW);
-				if (dir == 'S')
+				if (tile == 'S')
 					putAt(row, col, WE);
-				if (dir == 'C')
+				if (tile == 'C')
 					putAt(row, col, NE);
-				if (dir == 'L')
+				if (tile == 'L')
 					putAt(row, col, NE);
-				if (dir == 'R')
+				if (tile == 'R')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == 'U')
+				if (tile == 'U')
 					putAt(row, col, NE);
-				if (dir == 'D')
+				if (tile == 'D')
 					throw new IllegalMoveException("illegal direction.");
 				break;
 			case 64:
-				if (dir == '/')
+				if (tile == '/')
 					putAt(row, col, ES);
-				if (dir == '\\')
+				if (tile == '\\')
 					putAt(row, col, EN);
-				if (dir == '+')
+				if (tile == '+')
 					putAt(row, col, NS);
-				if (dir == 'S')
+				if (tile == 'S')
 					putAt(row, col, NS);
-				if (dir == 'C')
+				if (tile == 'C')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == 'L')
+				if (tile == 'L')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == 'R')
+				if (tile == 'R')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == 'U')
+				if (tile == 'U')
 					putAt(row, col, SE);
-				if (dir == 'D')
+				if (tile == 'D')
 					putAt(row, col, NE);
 				break;
 			case 65:
-				if (dir == '/')
+				if (tile == '/')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == '\\')
+				if (tile == '\\')
 					putAt(row, col, NE);
-				if (dir == '+')
+				if (tile == '+')
 					putAt(row, col, NS);
-				if (dir == 'S')
+				if (tile == 'S')
 					putAt(row, col, NS);
-				if (dir == 'C')
+				if (tile == 'C')
 					putAt(row, col, NE);
-				if (dir == 'L')
+				if (tile == 'L')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == 'R')
+				if (tile == 'R')
 					putAt(row, col, NE);
-				if (dir == 'U')
+				if (tile == 'U')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == 'D')
+				if (tile == 'D')
 					putAt(row, col, NE);
 				break;
 			case 66:
-				if (dir == '/')
+				if (tile == '/')
 					putAt(row, col, SE);
-				if (dir == '\\')
+				if (tile == '\\')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == '+')
+				if (tile == '+')
 					putAt(row, col, SN);
-				if (dir == 'S')
+				if (tile == 'S')
 					putAt(row, col, SN);
-				if (dir == 'C')
+				if (tile == 'C')
 					putAt(row, col, SE);
-				if (dir == 'L')
+				if (tile == 'L')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == 'R')
+				if (tile == 'R')
 					putAt(row, col, SE);
-				if (dir == 'U')
+				if (tile == 'U')
 					putAt(row, col, SE);
-				if (dir == 'D')
+				if (tile == 'D')
 					throw new IllegalMoveException("illegal direction.");
 				break;
 			case 72:
-				if (dir == '/')
+				if (tile == '/')
 					putAt(row, col, ES);
-				if (dir == '\\')
+				if (tile == '\\')
 					putAt(row, col, EN);
-				if (dir == '+')
+				if (tile == '+')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == 'S')
+				if (tile == 'S')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == 'C')
+				if (tile == 'C')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == 'L')
+				if (tile == 'L')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == 'R')
+				if (tile == 'R')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == 'U')
+				if (tile == 'U')
 					putAt(row, col, NE);
-				if (dir == 'D')
+				if (tile == 'D')
 					putAt(row, col, SE);
 				break;
 			case 128:
-				if (dir == '/')
+				if (tile == '/')
 					putAt(row, col, WN);
-				if (dir == '\\')
+				if (tile == '\\')
 					putAt(row, col, WS);
-				if (dir == '+')
+				if (tile == '+')
 					putAt(row, col, NS);
-				if (dir == 'S')
+				if (tile == 'S')
 					putAt(row, col, NS);
-				if (dir == 'C')
+				if (tile == 'C')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == 'L')
+				if (tile == 'L')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == 'R')
+				if (tile == 'R')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == 'U')
+				if (tile == 'U')
 					putAt(row, col, WS);
-				if (dir == 'D')
+				if (tile == 'D')
 					putAt(row, col, WN);
 				break;
 			case 129:
-				if (dir == '/')
+				if (tile == '/')
 					putAt(row, col, NW);
-				if (dir == '\\')
+				if (tile == '\\')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == '+')
+				if (tile == '+')
 					putAt(row, col, NS);
-				if (dir == 'S')
+				if (tile == 'S')
 					putAt(row, col, NS);
-				if (dir == 'C')
+				if (tile == 'C')
 					putAt(row, col, NW);
-				if (dir == 'L')
+				if (tile == 'L')
 					putAt(row, col, NW);
-				if (dir == 'R')
+				if (tile == 'R')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == 'U')
+				if (tile == 'U')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == 'D')
+				if (tile == 'D')
 					putAt(row, col, NW);
 				break;
 			case 130:
-				if (dir == '/')
+				if (tile == '/')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == '\\')
+				if (tile == '\\')
 					putAt(row, col, SW);
-				if (dir == '+')
+				if (tile == '+')
 					putAt(row, col, SN);
-				if (dir == 'S')
+				if (tile == 'S')
 					putAt(row, col, SN);
-				if (dir == 'C')
+				if (tile == 'C')
 					putAt(row, col, SW);
-				if (dir == 'L')
+				if (tile == 'L')
 					putAt(row, col, SW);
-				if (dir == 'R')
+				if (tile == 'R')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == 'U')
+				if (tile == 'U')
 					putAt(row, col, SW);
-				if (dir == 'D')
+				if (tile == 'D')
 					throw new IllegalMoveException("illegal direction.");
 				break;
 			case 132:
-				if (dir == '/')
+				if (tile == '/')
 					putAt(row, col, WN);
-				if (dir == '\\')
+				if (tile == '\\')
 					putAt(row, col, WS);
-				if (dir == '+')
+				if (tile == '+')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == 'S')
+				if (tile == 'S')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == 'C')
+				if (tile == 'C')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == 'L')
+				if (tile == 'L')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == 'R')
+				if (tile == 'R')
 					throw new IllegalMoveException("illegal direction.");
-				if (dir == 'U')
+				if (tile == 'U')
 					putAt(row, col, WN);
-				if (dir == 'D')
+				if (tile == 'D')
 					putAt(row, col, WS);
 				break;
 			default:

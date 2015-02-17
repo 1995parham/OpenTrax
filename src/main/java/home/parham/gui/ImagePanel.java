@@ -1,12 +1,12 @@
 package home.parham.gui;
 
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.util.List;
 import java.awt.image.BufferedImage;
+import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
 
 public class ImagePanel extends JPanel {
 	private BufferedImage image;
@@ -34,10 +34,6 @@ public class ImagePanel extends JPanel {
 
 	public void setImage(BufferedImage image){
 		this.image = image;
-	}
-
-	public BufferedImage getImage(){
-		return this.image;
 	}
 
 	protected void paintComponent(Graphics g){
