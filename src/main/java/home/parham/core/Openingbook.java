@@ -10,6 +10,7 @@
 package home.parham.core;
 
 import home.parham.core.domain.TraxBoard;
+import home.parham.core.domain.TraxMove;
 import home.parham.core.domain.TraxStatus;
 import home.parham.core.exceptions.IllegalMoveException;
 import home.parham.core.util.TraxUtil;
@@ -56,7 +57,7 @@ public class Openingbook {
 							resign = true;
 							break;
 						}
-						tb.makeMove(move);
+						tb.makeMove(new TraxMove(move));
 					}
 				} catch (IllegalMoveException e) {
 					useless = true;
@@ -79,7 +80,7 @@ public class Openingbook {
 						if (move.equalsIgnoreCase("resign")) {
 							break;
 						}
-						tb.makeMove(move);
+						tb.makeMove(new TraxMove(move));
 					} catch (IllegalMoveException e) {
 						// This should never happen
 						throw new RuntimeException(e);
@@ -98,7 +99,7 @@ public class Openingbook {
 				tb = new TraxBoard();
 				try {
 					for (String move : s.split("\\s")) {
-						tb.makeMove(move);
+						tb.makeMove(new TraxMove(move));
 					}
 					BookKey bk = new BookKey(tb.getBorder(), tb.whoDidLastMove());
 

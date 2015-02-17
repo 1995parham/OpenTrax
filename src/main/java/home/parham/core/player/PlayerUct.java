@@ -10,6 +10,7 @@ package home.parham.core.player;
 
 import home.parham.core.Openingbook;
 import home.parham.core.domain.TraxBoard;
+import home.parham.core.domain.TraxMove;
 import home.parham.core.domain.TraxStatus;
 import home.parham.core.exceptions.IllegalMoveException;
 import home.parham.core.util.TraxUtil;
@@ -90,7 +91,7 @@ public class PlayerUct implements Player {
 		for (String move : tb.uniqueMoves()) {
 			TraxBoard t_copy = new TraxBoard(tb);
 			try {
-				t_copy.makeMove(move);
+				t_copy.makeMove(new TraxMove(move));
 			} catch (IllegalMoveException e) {
 				throw new RuntimeException("This should never happen. (027)");
 			}
@@ -152,7 +153,7 @@ public class PlayerUct implements Player {
 	private TraxStatus playRandomGame(TraxBoard tb){
 		while (tb.isGameOver() == TraxStatus.NOPLAYER) {
 			try {
-				tb.makeMove(PlayerSimple.getRandomMove(tb));
+				tb.makeMove(new TraxMove(PlayerSimple.getRandomMove(tb)));
 			} catch (IllegalMoveException e) {
 				throw new RuntimeException();
 			}
