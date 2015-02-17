@@ -12,6 +12,7 @@
 */
 package home.parham.core.engine;
 
+import home.parham.cli.BoardViewer;
 import home.parham.core.domain.TraxBoard;
 import home.parham.core.domain.TraxMove;
 import home.parham.core.domain.TraxStatus;

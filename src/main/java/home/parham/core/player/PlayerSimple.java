@@ -12,18 +12,18 @@ import home.parham.core.domain.TraxBoard;
 import home.parham.core.domain.TraxMove;
 import home.parham.core.domain.TraxStatus;
 import home.parham.core.exceptions.IllegalMoveException;
-
 import java.util.ArrayList;
 import java.util.Random;
 
 public class PlayerSimple implements Player {
 	public String move(TraxBoard tb){
+		String move = null;
 		try {
-			return getRandomMove(tb);
+			move = getRandomMove(tb);
 		} catch (IllegalMoveException e) {
-			e.printStackTrace();
-			throw new RuntimeException();
+			System.err.println("[" + e.getMove() + "] : " + e.getMessage());
 		}
+		return move;
 	}
 
 	public static String getRandomMove(TraxBoard traxBoard) throws IllegalMoveException{
