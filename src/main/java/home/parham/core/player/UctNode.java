@@ -11,6 +11,7 @@ package home.parham.core.player;
  */
 
 import home.parham.core.domain.TraxBoard;
+import home.parham.core.domain.TraxMove;
 import home.parham.core.domain.TraxStatus;
 import home.parham.core.exceptions.IllegalMoveException;
 import home.parham.core.util.TraxUtil;
@@ -82,7 +83,7 @@ public class UctNode {
 			move = moves.get(i);
 			TraxBoard tcopy = new TraxBoard(position);
 			try {
-				tcopy.makeMove(move);
+				tcopy.makeMove(new TraxMove(move));
 			} catch (IllegalMoveException e) {
 				e.printStackTrace();
 				throw new RuntimeException();
@@ -197,8 +198,8 @@ public class UctNode {
 	public static void main(String[] args){
 		try {
 			TraxBoard tb = new TraxBoard();
-			tb.makeMove("a1s");
-			tb.makeMove("b1s");
+			tb.makeMove(new TraxMove("a1s"));
+			tb.makeMove(new TraxMove("b1s"));
 			UctNode n = new UctNode(tb);
 			System.out.println(tb);
 			n.createChildren();

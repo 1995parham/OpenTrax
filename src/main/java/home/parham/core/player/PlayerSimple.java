@@ -9,6 +9,7 @@ package home.parham.core.player;
  */
 
 import home.parham.core.domain.TraxBoard;
+import home.parham.core.domain.TraxMove;
 import home.parham.core.domain.TraxStatus;
 import home.parham.core.exceptions.IllegalMoveException;
 
@@ -39,7 +40,7 @@ public class PlayerSimple implements Player {
 
 		for (String move1 : moves) {
 			TraxBoard t_copy = new TraxBoard(traxBoard);
-			t_copy.makeMove(move1);
+			t_copy.makeMove(new TraxMove(move1));
 			TraxStatus gameOverValue = t_copy.isGameOver();
 			switch (gameOverValue) {
 				case WHITE:

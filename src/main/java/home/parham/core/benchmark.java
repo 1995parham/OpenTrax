@@ -11,6 +11,7 @@ package home.parham.core;
  */
 
 import home.parham.core.domain.TraxBoard;
+import home.parham.core.domain.TraxMove;
 import home.parham.core.domain.TraxStatus;
 import home.parham.core.exceptions.IllegalMoveException;
 import home.parham.core.player.PlayerSimple;
@@ -32,7 +33,7 @@ public class benchmark {
 				tb = new TraxBoard();
 				do {
 					random_move = PlayerSimple.getRandomMove(tb);
-					tb.makeMove(random_move);
+					tb.makeMove(new TraxMove(random_move));
 					game_value = tb.isGameOver();
 					game_length++;
 				} while (game_value == TraxStatus.NOPLAYER);

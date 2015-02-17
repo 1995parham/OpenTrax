@@ -14,7 +14,6 @@
 package home.parham.core.domain;
 
 import home.parham.core.exceptions.IllegalMoveException;
-
 import java.util.ArrayList;
 
 public class TraxBoard {
@@ -62,6 +61,47 @@ public class TraxBoard {
 				col_row_array[i - '@'][j - '0'] = new String(str);
 			}
 		}
+	}
+
+
+	public TraxBoard(){
+		int i, j;
+
+		wtm = TraxStatus.WHITE;
+		gameover = TraxStatus.NOPLAYER;
+		tilesNumber = 0;
+		board = new int[17][17];
+		board_save = new int[17][17];
+		for (i = 0; i < 17; i++)
+			for (j = 0; j < 17; j++)
+				board[i][j] = EMPTY;
+		boardEmpty = true;
+
+	}
+
+	public TraxBoard(TraxBoard org){
+		int i, j;
+
+		wtm = org.wtm;
+		gameover = org.gameover;
+		tilesNumber = org.tilesNumber;
+		board = new int[17][17];
+		board_save = new int[17][17];
+		for (i = 0; i < 17; i++) {
+			for (j = 0; j < 17; j++) {
+				this.board[i][j] = org.board[i][j];
+				this.board_save[i][j] = org.board_save[i][j];
+			}
+		}
+		firstRow = org.firstRow;
+		firstcol = org.firstcol;
+		lastrow = org.lastrow;
+		lastcol = org.lastcol;
+		firstrow_save = org.firstrow_save;
+		firstcol_save = org.firstcol_save;
+		lastrow_save = org.lastrow_save;
+		lastcol_save = org.lastcol_save;
+		boardEmpty = org.boardEmpty;
 	}
 
 	public boolean isBoardEmpty(){
@@ -162,46 +202,6 @@ public class TraxBoard {
 		}
 	}
 
-	public TraxBoard(){
-		int i, j;
-
-		wtm = TraxStatus.WHITE;
-		gameover = TraxStatus.NOPLAYER;
-		tilesNumber = 0;
-		board = new int[17][17];
-		board_save = new int[17][17];
-		for (i = 0; i < 17; i++)
-			for (j = 0; j < 17; j++)
-				board[i][j] = EMPTY;
-		boardEmpty = true;
-
-	}
-
-	public TraxBoard(TraxBoard org){
-		int i, j;
-
-		wtm = org.wtm;
-		gameover = org.gameover;
-		tilesNumber = org.tilesNumber;
-		board = new int[17][17];
-		board_save = new int[17][17];
-		for (i = 0; i < 17; i++) {
-			for (j = 0; j < 17; j++) {
-				this.board[i][j] = org.board[i][j];
-				this.board_save[i][j] = org.board_save[i][j];
-			}
-		}
-		firstRow = org.firstRow;
-		firstcol = org.firstcol;
-		lastrow = org.lastrow;
-		lastcol = org.lastcol;
-		firstrow_save = org.firstrow_save;
-		firstcol_save = org.firstcol_save;
-		lastrow_save = org.lastrow_save;
-		lastcol_save = org.lastcol_save;
-		boardEmpty = org.boardEmpty;
-	}
-
 	public int getRowSize(){
 		return ((getNumOfTiles() == 0) ? 0 : 1 + (lastrow - firstRow));
 	}
@@ -282,99 +282,52 @@ public class TraxBoard {
 
 	/**
 	 * Try to make the specified move. If it is legal, then update the board.
-	 * Accepts upper-case and lower-case letters, old and new notation but not
-	 * the very old notation (used until 1986?) which is incompatible with old
-	 * notation
+	 * Accepts upper-case and lower-case letters.
+	 * Just new notation accepted.
 	 *
 	 * @param move: The move
 	 * @throws home.parham.core.exceptions.IllegalMoveException
 	 */
-	public void makeMove(String move) throws IllegalMoveException{
-		boolean oldNotation;
+	public void makeMove(TraxMove move) throws IllegalMoveException{
 		int col, row, neighbor;
 		char dir;
 		int ohs_up = 0, ohs_down = 0, ohs_right = 0, ohs_left = 0, eks_up = 0, eks_down = 0, eks_right = 0, eks_left = 0;
 
+		move.validate();
+		col = move.getColumn();
+		row = move.getRow();
+		dir = move.getTile();
+
 		if (gameover != TraxStatus.NOPLAYER)
-			throw new IllegalMoveException("Game is over.");
-		if (move.length() != 3)
-			throw new IllegalMoveException("not a move.");
-		move = move.toUpperCase();
+			throw new IllegalMoveException("Game is over.", move);
+
 		if (boardEmpty) {
-			if (move.equals("A1C") || move.equals("@0/")) {
-				putAt(1, 1, NW);
-				switchPlayer();
-				return;
-			}
-			if (move.equals("A1S") || move.equals("@0+")) {
+			if (move.equals("@0+")) {
 				putAt(1, 1, NS);
 				switchPlayer();
 				return;
 			}
-			throw new IllegalMoveException(
-					"Only A1C,A1S,@0/ and @0+ accepted as first move. Got "
-							+ move);
-		}
-
-		// handle the old notation 1A special case (changing 1A -> A0)
-		if (move.startsWith("1A")) {
-			col = 1;
-			row = 0;
-			// col=(int)'A'-(int)'@';
-			// row=(int)'0'-'0';
-		} else {
-			col = move.charAt(0) - '@';
-			row = move.charAt(1) - '0';
-			// col=(int)move[0]-(int)'@';
-			// row=(int)move[1]-(int)'0';
-		}
-		if ((col < 0) || (col > 8))
-			throw new IllegalMoveException("Illegal column.");
-		if ((row < 0) || (row > 8))
-			throw new IllegalMoveException("Illegal row.");
-		if (col == 0 && row == 0)
-			throw new IllegalMoveException("no neighbors.");
-
-		dir = move.charAt(2);
-		switch (dir) {
-			case 'C':
-			case 'S':
-			case 'U':
-			case 'L':
-			case 'R':
-			case 'D':
-				oldNotation = true;
-				break;
-			case '/':
-			case '+':
-			case '\\':
-				oldNotation = false;
-				break;
-			default:
-				throw new IllegalMoveException("Unknown Direction.");
-		}
-
-		if (oldNotation) {
-			if (!isBlank(row, col)) {
-				if (col == 1)
-					col--;
-				else if (row == 1)
-					row--;
+			if (move.equals("@0/")) {
+				putAt(1, 1, NW);
+				switchPlayer();
+				return;
 			}
+			throw new IllegalMoveException("Only @0/ and @0+ accepted as first move.", move);
 		}
 
-		if (col == 0 && row == 0)
-			throw new IllegalMoveException("No Neighbors.");
 		if ((row == 0) && (!canMoveDown()))
 			throw new IllegalMoveException("Illegal Row.");
 		if ((col == 0) && (!canMoveRight()))
 			throw new IllegalMoveException("Illegal Column.");
 		if (!isBlank(row, col))
-			throw new IllegalMoveException("Occupied." + move + " Illegal");
+			throw new IllegalMoveException("Occupied.", move);
 
 		saveState();
-		int up = getAt(row - 1, col), down = getAt(row + 1, col), left = getAt(
-				row, col - 1), right = getAt(row, col + 1);
+
+		int up = getAt(row - 1, col);
+		int down = getAt(row + 1, col);
+		int left = getAt(row, col - 1);
+		int right = getAt(row, col + 1);
 
 		if (up == SN || up == SE || up == SW)
 			ohs_up = 1;
@@ -392,6 +345,7 @@ public class TraxBoard {
 			ohs_right = 1;
 		if (right == ES || right == NS || right == EN)
 			eks_right = 1;
+
 		neighbor = 1 * ohs_up + 2 * ohs_down + 4 * ohs_left + 8 * ohs_right
 				+ 16 * eks_up + 32 * eks_down + 64 * eks_left + 128 * eks_right;
 
@@ -401,24 +355,16 @@ public class TraxBoard {
 			case 1:
 				switch (dir) {
 					case '/':
-					case 'L':
 						putAt(row, col, NW);
 						break;
 					case '\\':
-					case 'R':
 						putAt(row, col, NE);
 						break;
 					case '+':
-					case 'S':
 						putAt(row, col, NS);
 						break;
-					case 'U':
-					case 'C':
-					case 'D':
-						throw new IllegalMoveException("Illegal Direction.");
 					default:
-				/* This should never happen */
-						throw new RuntimeException("This should never happen. (003)");
+						throw new IllegalMoveException("Illegal Direction.");
 				}
 				break;
 			case 2:

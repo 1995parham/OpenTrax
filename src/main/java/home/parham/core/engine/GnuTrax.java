@@ -13,6 +13,7 @@
 package home.parham.core.engine;
 
 import home.parham.core.domain.TraxBoard;
+import home.parham.core.domain.TraxMove;
 import home.parham.core.domain.TraxStatus;
 import home.parham.core.exceptions.IllegalMoveException;
 
@@ -157,9 +158,9 @@ public class GnuTrax {
 
 	public void gotAMove(String theMove){
 		try {
-			traxBoard.makeMove(theMove);
+			traxBoard.makeMove(new TraxMove(theMove));
 		} catch (IllegalMoveException e) {
-			System.err.println(theMove + ":  " + e);
+			System.err.println(theMove + "[ " + e.getMove() + "]" + " : " + e.getMessage());
 			return;
 		}
 	}
