@@ -17,18 +17,6 @@ import home.parham.core.exceptions.IllegalMoveException;
 import java.util.ArrayList;
 
 public class TraxBoard {
-	/* 
-	 * Piece description...
-	 *
-	 * 0 1 2 3 4 5 6
-	 *
-	 * . . . . o . . x . . o . . o . . x . . x .
-	 *
-	 * . . x x o o o / x x \ o o \ x x / o
-	 *
-	 * . . . . o . . x . . x . . x . . o . . o .
-	 * the direction of the white lines and their number
-	*/
 
 	private boolean boardEmpty;
 	private TraxStatus wtm;
@@ -312,20 +300,13 @@ public class TraxBoard {
 						putAt(row, col, SE);
 						break;
 					case '\\':
-					case 'L':
 						putAt(row, col, SW);
 						break;
 					case '+':
-					case 'S':
 						putAt(row, col, NS);
 						break;
-					case 'C':
-					case 'U':
-					case 'D':
-						throw new IllegalMoveException("illegal direction.");
 					default:
-				/* This should never happen */
-						throw new RuntimeException("This should never happen. (026)");
+						throw new IllegalMoveException("illegal direction.");
 				}
 				break;
 			case 4:
@@ -906,8 +887,8 @@ public class TraxBoard {
 		lrsym = isLeftRightMirror();
 		udsym = isUpDownMirror();
 		rsym = isRotateMirror();
-		iBegin = (canMoveDown() == true) ? 0 : 1;
-		jBegin = (canMoveRight() == true) ? 0 : 1;
+		iBegin = (canMoveDown()) ? 0 : 1;
+		jBegin = (canMoveRight()) ? 0 : 1;
 		iEnd = (getRowSize() < 8) ? getRowSize() + 1 : 8;
 		jEnd = (getColSize() < 8) ? getColSize() + 1 : 8;
 		if (lrsym)

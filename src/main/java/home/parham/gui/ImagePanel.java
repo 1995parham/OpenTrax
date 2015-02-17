@@ -3,24 +3,29 @@ package home.parham.gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import javax.swing.BorderFactory;
-import javax.swing.JPanel;
+import javax.swing.JComponent;
 
-public class ImagePanel extends JPanel {
-	private BufferedImage image;
+public class ImagePanel extends JComponent {
+	public static final long serialVersionUID = 14362462L;
+
 	private GnuTraxGui gnuTrax;
 	private int x, y;
+	private Image image;
 
 	ImagePanel(BufferedImage image, GnuTraxGui gnuTrax, int x, int y){
 		this.setImage(image);
 		this.gnuTrax = gnuTrax;
-		this.addMouseListener(new ImageClickHandler());
-		this.setPreferredSize((new Dimension(80, 80)));
-		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		this.x = x;
 		this.y = y;
+
+		this.addMouseListener(new ImageClickHandler());
+		this.setPreferredSize((new Dimension(80, 80)));
 	}
 
 	public void showMovesDialog(){
@@ -34,12 +39,40 @@ public class ImagePanel extends JPanel {
 
 	public void setImage(BufferedImage image){
 		this.image = image;
+		repaint();
 	}
 
-	protected void paintComponent(Graphics g){
-		super.paintComponent(g);
+	@Override
+	public void paint(Graphics g){
+		super.paint(g);
+		g.setColor(Color.white);
+		g.fillRect(0, 0, 80, 80);
 		g.drawImage(image, 0, 0, this);
 	}
 
-	public static final long serialVersionUID = 14362462L;
+	private class ImageClickHandler implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e){
+			ImagePanel.this.showMovesDialog();
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e){
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e){
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e){
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e){
+		}
+
+	}
+
 }
