@@ -174,38 +174,32 @@ public class GnuTraxGui extends JFrame {
 
 		clearBoard();
 		drawBoard();
-		repaint();
 		checkForWinner();
 
 		this.setEnabled(true);
 	}
 
 	public void setMove(int x, int y, Tile tile){
-		boolean aiMayMove = false;
 		String theMove = position(x, y, tile.getTileType());
 		GnuTrax.getInstance().gotAMove(theMove);
-		drawBoard();
-		board.get(y * noToDraw(traxBoard.getColSize()) + x)
-				.setImage(tile.getImage());
+		board.get(y * noToDraw(traxBoard.getColSize()) + x).setImage(tile.getImage());
 		clearBoard();
 		drawBoard();
-		aiMayMove = true;
-		this.repaint();
 		if (checkForWinner())
 			return;
-		if (aiMayMove) {
-			makeAIMove();
-			if (checkForWinner())
-				return;
-		}
+
+		makeAIMove();
+
+		checkForWinner();
 	}
 
 	public List<Tile> getPossibleTilesForPosition(int x, int y){
 		List<Tile> possibleMoves = new ArrayList<Tile>();
-		List<Integer> theMoves = traxBoard.getLegalTiles(x,
-				y);
+		List<Integer> theMoves = traxBoard.getLegalTiles(x, y);
+		if (theMoves == null)
+			return possibleMoves;
 		for (Integer move : theMoves) {
-			possibleMoves.add(tiles[move.intValue()]);
+			possibleMoves.add(tiles[move]);
 		}
 		return possibleMoves;
 	}
@@ -253,12 +247,12 @@ public class GnuTraxGui extends JFrame {
 	 * Create the GUI and show it. For thread safety, this method is invoked
 	 */
 	public static void createAndShowGUI(){
-		// Create and set up the window.
+		/* Create and set up the window. */
 		GnuTraxGui frame = new GnuTraxGui();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// Set up the content pane.
+		/* Set up the content pane. */
 		frame.setTiles();
-		// Display the window.
+		/* Display the window. */
 		frame.pack();
 		frame.setLocationByPlatform(true);
 		frame.setVisible(true);

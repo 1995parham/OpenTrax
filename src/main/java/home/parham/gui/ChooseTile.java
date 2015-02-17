@@ -13,9 +13,9 @@ public class ChooseTile extends JDialog {
 
 	public ChooseTile(JFrame owner, List<Tile> possibleMoves){
 		super(owner, "Choose Move", true);
-		
+
 		this.setLocationRelativeTo(owner);
-		
+
 		buttons = new JPanel();
 		chosenMove = -1;
 		buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));

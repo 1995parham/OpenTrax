@@ -27,109 +27,14 @@ public class GnuTrax {
 		return instance;
 	}
 
-	private boolean analyzeMode, autodisplay, logv, learning;
-	private boolean ponder, alarmv;
-	private int noise, display, searchDepth, searchTime;
 	private TraxStatus computerColour;
-	private String playerName;
 	private TraxBoard traxBoard;
 
 	private GnuTrax(){
-		noise = 100;
-		autodisplay = true;
-		alarmv = true;
-		logv = false;
-		display = 1;
 		computerColour = TraxStatus.BLACK;
-		learning = true;
-		searchDepth = 4;
-		searchTime = 180;
-		analyzeMode = false;
-		playerName = "";
-		ponder = true;
 		traxBoard = new TraxBoard();
 	}
 
-
-	public boolean isAnalyzeMode(){
-		return analyzeMode;
-	}
-
-	public void setAnalyzeMode(boolean analyzeMode){
-		this.analyzeMode = analyzeMode;
-	}
-
-	public boolean isAutodisplay(){
-		return autodisplay;
-	}
-
-	public void setAutodisplay(boolean autodisplay){
-		this.autodisplay = autodisplay;
-	}
-
-	public boolean isLogv(){
-		return logv;
-	}
-
-	public void setLogv(boolean logv){
-		this.logv = logv;
-	}
-
-	public boolean isLearning(){
-		return learning;
-	}
-
-	public void setLearning(boolean learning){
-		this.learning = learning;
-	}
-
-	public boolean isPonder(){
-		return ponder;
-	}
-
-	public void setPonder(boolean ponder){
-		this.ponder = ponder;
-	}
-
-	public boolean isAlarmv(){
-		return alarmv;
-	}
-
-	public void setAlarmv(boolean alarmv){
-		this.alarmv = alarmv;
-	}
-
-	public int getNoise(){
-		return noise;
-	}
-
-	public void setNoise(int noise){
-		this.noise = noise;
-	}
-
-	public int getDisplay(){
-		return display;
-	}
-
-	public void setDisplay(int display){
-		this.display = display;
-	}
-
-	public int getSearchDepth(){
-		return searchDepth;
-	}
-
-	public void setSearchDepth(int searchDepth){
-		this.searchDepth = searchDepth;
-	}
-
-	public int getSearchTime(){
-		return searchTime;
-	}
-
-	public void setSearchTime(int searchTime){
-		this.searchTime = searchTime;
-	}
 
 	public TraxStatus getComputerColour(){
 		return computerColour;
@@ -137,14 +42,6 @@ public class GnuTrax {
 
 	public void setComputerColour(TraxStatus computerColour){
 		this.computerColour = computerColour;
-	}
-
-	public String getPlayerName(){
-		return playerName;
-	}
-
-	public void setPlayerName(String playerName){
-		this.playerName = playerName;
 	}
 
 	public TraxBoard getTraxBoard(){
@@ -159,9 +56,9 @@ public class GnuTrax {
 	public void gotAMove(String theMove){
 		try {
 			traxBoard.makeMove(new TraxMove(theMove));
+			System.err.println(theMove);
 		} catch (IllegalMoveException e) {
-			System.err.println(theMove + "[ " + e.getMove() + "]" + " : " + e.getMessage());
-			return;
+			System.err.println("[ " + e.getMove() + "]" + " : " + e.getMessage());
 		}
 	}
 

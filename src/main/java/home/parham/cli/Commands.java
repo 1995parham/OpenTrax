@@ -17,7 +17,6 @@ import home.parham.core.domain.TraxBoard;
 import home.parham.core.domain.TraxStatus;
 import home.parham.core.engine.GnuTrax;
 import home.parham.core.util.TraxUtil;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -28,7 +27,6 @@ public class Commands {
 	}
 
 	public static void userAnalyze(){
-		GnuTrax.getInstance().setAnalyzeMode(true);
 		GnuTrax.getInstance().setComputerColour(TraxStatus.NOPLAYER);
 	}
 
