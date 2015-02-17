@@ -51,7 +51,7 @@ public class ChooseTile extends JDialog {
 		button.setBorder(null);
 		button.setSize(90, 90);
 		button.setIcon(new ImageIcon(possibleMove.getImage()));
-		button.setName("" + pos);
+		button.setName(Integer.toString(pos));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				ChooseTile.this.setVisible(false);

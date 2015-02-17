@@ -56,9 +56,8 @@ public class TraxMove {
 		return move;
 	}
 
-	@Override
-	public boolean equals(Object obj){
-		return move.equals(obj);
+	public boolean equals(String obj){
+		return move.equalsIgnoreCase(obj);
 	}
 
 	public void validate() throws IllegalMoveException{

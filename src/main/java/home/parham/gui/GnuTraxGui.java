@@ -6,14 +6,13 @@ import home.parham.core.domain.TraxStatus;
 import home.parham.core.engine.GnuTrax;
 import home.parham.core.player.Player;
 import home.parham.core.player.PlayerSimple;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 public class GnuTraxGui extends JFrame {
 
