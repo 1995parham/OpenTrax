@@ -119,10 +119,10 @@ public class GnuTraxGui extends JFrame {
 		for (int i = 0; i < noOfRowsToDraw; i++) {
 			for (int j = 0; j < noOfColsToDraw; j++) {
 				innerPanel = new ImagePanel(tiles[TraxBoard.EMPTY].getImage(), this, j - colDiff, i - rowDiff);
-				int x = this.getPreferredSize().width / 2 - 40 * noOfRowsToDraw;
-				int y = this.getPreferredSize().height / 2 - 40 * noOfColsToDraw;
-				springLayout.putConstraint(SpringLayout.NORTH, innerPanel, y + (j - colDiff) * 80, SpringLayout.NORTH, outerPanel);
-				springLayout.putConstraint(SpringLayout.WEST, innerPanel, x + (i - rowDiff) * 80, SpringLayout.WEST, outerPanel);
+				int y = this.getPreferredSize().width / 2 - 40 * noOfRowsToDraw;
+				int x = this.getPreferredSize().height / 2 - 40 * noOfColsToDraw;
+				springLayout.putConstraint(SpringLayout.WEST, innerPanel, y + (j - colDiff) * 80, SpringLayout.WEST, outerPanel);
+				springLayout.putConstraint(SpringLayout.NORTH, innerPanel, x + (i - rowDiff) * 80, SpringLayout.NORTH, outerPanel);
 				outerPanel.add(innerPanel);
 				board.add(innerPanel);
 			}
