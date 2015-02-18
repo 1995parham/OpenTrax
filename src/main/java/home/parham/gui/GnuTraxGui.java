@@ -66,7 +66,7 @@ public class GnuTraxGui extends JFrame {
 
 	private String position(int x, int y, int tileType){
 		StringBuilder sb = new StringBuilder();
-		sb.append(getRowColForPos(x, y));
+		sb.append(getRowColForPos(y, x));
 		switch (tileType) {
 			case TraxBoard.NS:
 			case TraxBoard.EW:
@@ -116,13 +116,14 @@ public class GnuTraxGui extends JFrame {
 			rowDiff = -1;
 		}
 
+		int y = this.getPreferredSize().width / 2 - 40 * noOfColsToDraw;
+		int x = this.getPreferredSize().height / 2 - 40 * noOfRowsToDraw;
+
 		for (int i = 0; i < noOfRowsToDraw; i++) {
 			for (int j = 0; j < noOfColsToDraw; j++) {
 				innerPanel = new ImagePanel(tiles[TraxBoard.EMPTY].getImage(), this, i - rowDiff, j - colDiff);
-				int y = this.getPreferredSize().width / 2 - 40 * noOfRowsToDraw;
-				int x = this.getPreferredSize().height / 2 - 40 * noOfColsToDraw;
-				springLayout.putConstraint(SpringLayout.WEST, innerPanel, y + (j - colDiff) * 80, SpringLayout.WEST, outerPanel);
-				springLayout.putConstraint(SpringLayout.NORTH, innerPanel, x + (i - rowDiff) * 80, SpringLayout.NORTH, outerPanel);
+				springLayout.putConstraint(SpringLayout.WEST, innerPanel, y + j * 80, SpringLayout.WEST, outerPanel);
+				springLayout.putConstraint(SpringLayout.NORTH, innerPanel, x + i * 80, SpringLayout.NORTH, outerPanel);
 				outerPanel.add(innerPanel);
 				board.add(innerPanel);
 			}
@@ -182,7 +183,7 @@ public class GnuTraxGui extends JFrame {
 	public void setMove(int x, int y, Tile tile){
 		String theMove = position(x, y, tile.getTileType());
 		GnuTrax.getInstance().gotAMove(theMove);
-		board.get(y * noToDraw(traxBoard.getColSize()) + x).setImage(tile.getImage());
+		board.get(x * noToDraw(traxBoard.getColSize()) + y).setImage(tile.getImage());
 		clearBoard();
 		drawBoard();
 		if (checkForWinner())
