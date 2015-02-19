@@ -26,7 +26,7 @@ public class TraxCLI implements Runnable {
 	@Override
 	public void run(){
 		TraxBoard traxBoard = GnuTrax.getInstance().getTraxBoard();
-		TraxStatus computerColour = GnuTrax.getInstance().getComputerColour();
+		TraxStatus computerColour = GnuTrax.getInstance().getSecondPlayerStatus();
 		Player player = new PlayerSimple();
 
 		ArrayList<String> command = new ArrayList<String>();

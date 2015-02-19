@@ -21,6 +21,7 @@ public class GnuTraxGui extends JFrame {
 	private List<ImagePanel> board;
 	private TraxBoard traxBoard;
 	private Player player;
+	private boolean haveAI;
 
 	public GnuTraxGui(){
 		super("GnuTrax 1.0");
@@ -32,7 +33,18 @@ public class GnuTraxGui extends JFrame {
 
 	private void newGame(){
 		Commands.userNew();
-		player = new PlayerSimple();
+
+		ChoosePlayer playerChooser = new ChoosePlayer(this);
+		playerChooser.setVisible(true);
+		int op = playerChooser.getChoosenOption();
+		if (op == 1) {
+			haveAI = true;
+			player = new PlayerSimple();
+		} else if (op == 0) {
+			haveAI = false;
+			player = null;
+		}
+
 		traxBoard = GnuTrax.getInstance().getTraxBoard();
 		if (board != null && board.size() > 0) {
 			for (int i = 0; i < 1; i++) {
@@ -189,7 +201,8 @@ public class GnuTraxGui extends JFrame {
 		if (checkForWinner())
 			return;
 
-		makeAIMove();
+		if (haveAI)
+			makeAIMove();
 
 		checkForWinner();
 	}

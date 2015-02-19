@@ -27,7 +27,7 @@ public class Commands {
 	}
 
 	public static void userAnalyze(){
-		GnuTrax.getInstance().setComputerColour(TraxStatus.NOPLAYER);
+		GnuTrax.getInstance().setSecondPlayerStatus(TraxStatus.NOPLAYER);
 	}
 
 	public static void userAnnotate(){
@@ -73,7 +73,7 @@ public class Commands {
 	}
 
 	public static void userGo(){
-		GnuTrax.getInstance().setComputerColour(GnuTrax.getInstance().getTraxBoard().whoToMove());
+		GnuTrax.getInstance().setSecondPlayerStatus(GnuTrax.getInstance().getTraxBoard().whoToMove());
 	}
 
 	public static void userHelp(ArrayList<String> command){
@@ -439,7 +439,7 @@ public class Commands {
 
 	public static void userNew(){
 		GnuTrax.getInstance().setTraxBoard(new TraxBoard());
-		GnuTrax.getInstance().setComputerColour(TraxStatus.BLACK);
+		GnuTrax.getInstance().setSecondPlayerStatus(TraxStatus.BLACK);
 	}
 
 
