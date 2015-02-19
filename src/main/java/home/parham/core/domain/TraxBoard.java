@@ -54,25 +54,16 @@ public class TraxBoard {
 
 
 	public TraxBoard(){
-		int i, j;
-
 		wtm = TraxStatus.WHITE;
 		gameover = TraxStatus.NOPLAYER;
 		tilesNumber = 0;
 		board = new BoardArray();
-		// board = new int[17][17];
 		board_save = new BoardArray();
-		//board_save = new int[17][17];
-		//for (i = 0; i < 17; i++)
-		//	for (j = 0; j < 17; j++)
-		//		board[i][j] = EMPTY;
 		boardEmpty = true;
 
 	}
 
 	public TraxBoard(TraxBoard org){
-		int i, j;
-
 		wtm = org.wtm;
 		gameover = org.gameover;
 		tilesNumber = org.tilesNumber;
@@ -699,7 +690,6 @@ public class TraxBoard {
 		// and symmetries (hopefully)
 
 		ArrayList<String> Moves = new ArrayList<String>(100); // 50 might be enough
-		String AMove;
 		int i, j, k;
 		int dl, dr, ur, ul, rr;
 		int[][] neighbors = new int[10][10]; // which neighbors - default all
@@ -711,7 +701,6 @@ public class TraxBoard {
 		// default all values false
 		int ohs_up, ohs_down, ohs_right, ohs_left, eks_up, eks_down, eks_right, eks_left;
 		int up, down, left, right;
-		int ohs, eks;
 		int iBegin, jBegin, iEnd, jEnd;
 		boolean lrsym, udsym, rsym;
 
@@ -811,9 +800,7 @@ public class TraxBoard {
 					else if (right != EMPTY)
 						eks_right = 1;
 
-					ohs = ohs_up + ohs_down + ohs_left + ohs_right;
-					eks = eks_up + eks_down + eks_left + eks_right;
-					neighbors[i][j] = 1 * ohs_up + 2 * ohs_down + 4 * ohs_left
+					neighbors[i][j] = ohs_up + 2 * ohs_down + 4 * ohs_left
 							+ 8 * ohs_right + 16 * eks_up + 32 * eks_down + 64
 							* eks_left + 128 * eks_right;
 				}
@@ -1433,220 +1420,12 @@ public class TraxBoard {
 			}
 		}
 		putAt(brow, bcol, piece);
-		if (!forcedMove(brow - 1, bcol)) {
-			return false;
-		}
-		if (!forcedMove(brow + 1, bcol)) {
-			return false;
-		}
-		if (!forcedMove(brow, bcol - 1)) {
-			return false;
-		}
-		if (!forcedMove(brow, bcol + 1)) {
-			return false;
-		}
-		return true;
-	}
-
-	private void updateLine(char colour, char entry, int row, int col){
-		int theNum;
-
-		while (true) {
-			theNum = 0;
-			if (colour == 'w')
-				theNum = 1024;
-			switch (entry) {
-				case 'w':
-					theNum += 512;
-					break;
-				case 'e':
-					theNum += 256;
-					break;
-				case 's':
-					theNum += 128;
-					break;
-				case 'n':
-					theNum += 64;
-					break;
-				default:
-					// This should never happen
-					throw new RuntimeException("This should never happen. (018)");
-			}
-			switch (getAt(row, col)) {
-				case NS:
-					theNum += 32;
-					break;
-				case WE:
-					theNum += 16;
-					break;
-				case NW:
-					theNum += 8;
-					break;
-				case NE:
-					theNum += 4;
-					break;
-				case SW:
-					theNum += 2;
-					break;
-				case SE:
-					theNum += 1;
-					break;
-				default:
-					// This should never happen
-					throw new RuntimeException("This should never happen. (019)");
-			}
-			switch (theNum) {
-				case 1024 + 512 + 16:
-					if (getAt(row, col + 1) == EMPTY)
-						return;
-					col++;
-					break;
-				case 1024 + 512 + 8:
-					if (getAt(row - 1, col) == EMPTY)
-						return;
-					row--;
-					entry = 's';
-					break;
-				case 1024 + 512 + 2:
-					if (getAt(row + 1, col) == EMPTY)
-						return;
-					row++;
-					entry = 'n';
-					break;
-				case 1024 + 256 + 16:
-					if (getAt(row, col - 1) == EMPTY)
-						return;
-					col--;
-					break;
-				case 1024 + 256 + 4:
-					if (getAt(row - 1, col) == EMPTY)
-						return;
-					row--;
-					entry = 's';
-					break;
-				case 1024 + 256 + 1:
-					if (getAt(row + 1, col) == EMPTY)
-						return;
-					row++;
-					entry = 'n';
-					break;
-				case 1024 + 128 + 32:
-					if (getAt(row - 1, col) == EMPTY)
-						return;
-					row--;
-					break;
-				case 1024 + 128 + 2:
-					if (getAt(row, col - 1) == EMPTY)
-						return;
-					col--;
-					entry = 'e';
-					break;
-				case 1024 + 128 + 1:
-					if (getAt(row, col + 1) == EMPTY)
-						return;
-					col++;
-					entry = 'w';
-					break;
-				case 1024 + 64 + 32:
-					if (getAt(row + 1, col) == EMPTY)
-						return;
-					row++;
-					break;
-				case 1024 + 64 + 8:
-					if (getAt(row, col - 1) == EMPTY)
-						return;
-					col--;
-					entry = 'e';
-					break;
-				case 1024 + 64 + 4:
-					if (getAt(row, col + 1) == EMPTY)
-						return;
-					col++;
-					entry = 'w';
-					break;
-				case 512 + 32:
-					if (getAt(row, col + 1) == EMPTY)
-						return;
-					col++;
-					break;
-				case 512 + 4:
-					if (getAt(row + 1, col) == EMPTY)
-						return;
-					row++;
-					entry = 'n';
-					break;
-				case 512 + 1:
-					if (getAt(row - 1, col) == EMPTY)
-						return;
-					row--;
-					entry = 's';
-					break;
-				case 256 + 32:
-					if (getAt(row - 1, col) == EMPTY)
-						return;
-					row--;
-					break;
-				case 256 + 8:
-					if (getAt(row, col + 1) == EMPTY)
-						return;
-					row++;
-					entry = 'n';
-					break;
-				case 256 + 2:
-					if (getAt(row - 1, col) == EMPTY)
-						return;
-					row--;
-					entry = 's';
-					break;
-				case 128 + 16:
-					if (getAt(row - 1, col) == EMPTY)
-						return;
-					row--;
-					break;
-				case 128 + 8:
-					if (getAt(row, col + 1) == EMPTY)
-						return;
-					col++;
-					entry = 'w';
-					break;
-				case 128 + 4:
-					if (getAt(row, col - 1) == EMPTY)
-						return;
-					col--;
-					entry = 'e';
-					break;
-				case 64 + 16:
-					if (getAt(row + 1, col) == EMPTY)
-						return;
-					row++;
-					break;
-				case 64 + 2:
-					if (getAt(row, col + 1) == EMPTY)
-						return;
-					col++;
-					entry = 'w';
-					break;
-				case 64 + 1:
-					if (getAt(row, col - 1) == EMPTY)
-						return;
-					col--;
-					entry = 'e';
-					break;
-				default:
-					/* This should never happen */
-					throw new RuntimeException("This should never happen. (020)");
-			}
-		}
+		return forcedMove(brow - 1, bcol) && forcedMove(brow + 1, bcol) && forcedMove(brow, bcol - 1) && forcedMove(brow, bcol + 1);
 	}
 
 	public String getBorder(){
-		return this.getBorder(false);
-	}
-
-	public String getBorder(boolean needNumbers){
-		String result = new String();
-		char[] dummy = new char[4];
-		int i, j, k, starti, startj, icopy, jcopy;
+		String result = "";
+		int i, j, starti, startj;
 		char direction;
 		int[][] wnum = new int[9][9]; // every white line gets a number
 		int[][] bnum = new int[9][9];
@@ -1706,23 +1485,12 @@ public class TraxBoard {
 						case NE:
 						case ES:
 							result += 'W';
-					/*
-					 * if (needNumbers) { if (wnum[i][j]==0) { icopy=i; jcopy=j;
-					 * updateLine('w','e',icopy,jcopy); wnum[i][j]=currentWNum;
-					 * wnum[icopy][jcopy]=currentWNum; currentWNum++; }
-					 * snprintf(dummy,4,"%d",wnum[i][j]); result+=dummy; }
-					 */
+
 							break;
 						case WS:
 						case SN:
 						case NW:
 							result += 'B';
-					/*
-					 * if (needNumbers) { if (bnum[i][j]==0) { icopy=i; jcopy=j;
-					 * updateLine('b','e',icopy,jcopy); bnum[i][j]=currentBNum;
-					 * bnum[icopy][jcopy]=currentBNum; currentBNum++; }
-					 * snprintf(dummy,4,"%d",bnum[i][j]); result+=dummy; }
-					 */
 							break;
 						default:
 					/* This should never happen */
@@ -1749,23 +1517,11 @@ public class TraxBoard {
 						case SN:
 						case NE:
 							result += 'W';
-					/*
-					 * if (needNumbers) { if (wnum[i][j]==0) { icopy=i; jcopy=j;
-					 * updateLine('w','n',icopy,jcopy); wnum[i][j]=currentWNum;
-					 * wnum[icopy][jcopy]=currentWNum; currentWNum++; }
-					 * snprintf(dummy,4,"%d",wnum[i][j]); result+=dummy; }
-					 */
 							break;
 						case WE:
 						case SE:
 						case SW:
 							result += 'B';
-					/*
-					 * if (needNumbers) { if (bnum[i][j]==0) { icopy=i; jcopy=j;
-					 * updateLine('b','n',icopy,jcopy); bnum[i][j]=currentBNum;
-					 * bnum[icopy][jcopy]=currentBNum; currentBNum++; }
-					 * snprintf(dummy,4,"%d",bnum[i][j]); result+=dummy; }
-					 */
 							break;
 						default:
 					/* This should never happen */
@@ -1794,23 +1550,11 @@ public class TraxBoard {
 						case SE:
 						case SW:
 							result += 'W';
-					/*
-					 * if (needNumbers) { if (wnum[i][j]==0) { icopy=i; jcopy=j;
-					 * updateLine('w','s',icopy,jcopy); wnum[i][j]=currentWNum;
-					 * wnum[icopy][jcopy]=currentWNum; currentWNum++; }
-					 * snprintf(dummy,4,"%d",wnum[i][j]); result+=dummy; }
-					 */
 							break;
 						case NE:
 						case NW:
 						case WE:
 							result += 'B';
-					/*
-					 * if (needNumbers) { if (bnum[i][j]==0) { icopy=i; jcopy=j;
-					 * updateLine('b','s',icopy,jcopy); bnum[i][j]=currentBNum;
-					 * bnum[icopy][jcopy]=currentBNum; currentBNum++; }
-					 * snprintf(dummy,4,"%d",bnum[i][j]); result+=dummy; }
-					 */
 							break;
 						default:
 					/* This should never happen */
@@ -1877,7 +1621,7 @@ public class TraxBoard {
 
 	public ArrayList<Integer> getLegalTiles(int x, int y){
 		ArrayList<Integer> result = new ArrayList<Integer>();
-		if (this.boardEmpty) {
+		if (boardEmpty) {
 			result.add(TraxBoard.NW);
 			result.add(TraxBoard.NS);
 		}

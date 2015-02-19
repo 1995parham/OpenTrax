@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.util.List;
-import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 
 public class ImagePanel extends JComponent {
@@ -25,7 +24,7 @@ public class ImagePanel extends JComponent {
 		this.y = y;
 
 		this.addMouseListener(new ImageClickHandler());
-		this.setPreferredSize((new Dimension(80, 80)));
+		this.setPreferredSize((new Dimension(60, 60)));
 	}
 
 	public void showMovesDialog(){
@@ -46,7 +45,7 @@ public class ImagePanel extends JComponent {
 	public void paint(Graphics g){
 		super.paint(g);
 		g.setColor(Color.white);
-		g.fillRect(0, 0, 80, 80);
+		g.fillRect(0, 0, 60, 60);
 		g.drawImage(image, 0, 0, this);
 	}
 

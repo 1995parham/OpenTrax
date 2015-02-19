@@ -128,14 +128,14 @@ public class GnuTraxGui extends JFrame {
 			rowDiff = -1;
 		}
 
-		int y = this.getPreferredSize().width / 2 - 40 * noOfColsToDraw;
-		int x = this.getPreferredSize().height / 2 - 40 * noOfRowsToDraw;
+		int y = this.getPreferredSize().width / 2 - 30 * noOfColsToDraw;
+		int x = this.getPreferredSize().height / 2 - 30 * noOfRowsToDraw;
 
 		for (int i = 0; i < noOfRowsToDraw; i++) {
 			for (int j = 0; j < noOfColsToDraw; j++) {
 				innerPanel = new ImagePanel(tiles[TraxBoard.EMPTY].getImage(), this, i - rowDiff, j - colDiff);
-				springLayout.putConstraint(SpringLayout.WEST, innerPanel, y + j * 80, SpringLayout.WEST, outerPanel);
-				springLayout.putConstraint(SpringLayout.NORTH, innerPanel, x + i * 80, SpringLayout.NORTH, outerPanel);
+				springLayout.putConstraint(SpringLayout.WEST, innerPanel, y + j * 60, SpringLayout.WEST, outerPanel);
+				springLayout.putConstraint(SpringLayout.NORTH, innerPanel, x + i * 60, SpringLayout.NORTH, outerPanel);
 				outerPanel.add(innerPanel);
 				board.add(innerPanel);
 			}
@@ -231,8 +231,8 @@ public class GnuTraxGui extends JFrame {
 		ImagePanel innerPanel;
 
 		innerPanel = new ImagePanel(tiles[TraxBoard.EMPTY].getImage(), this, 0, 0);
-		int x = this.getPreferredSize().width / 2 - 40;
-		int y = this.getPreferredSize().height / 2 - 40;
+		int x = this.getPreferredSize().width / 2 - 30;
+		int y = this.getPreferredSize().height / 2 - 30;
 		springLayout.putConstraint(SpringLayout.NORTH, innerPanel, y, SpringLayout.NORTH, outerPanel);
 		springLayout.putConstraint(SpringLayout.WEST, innerPanel, x, SpringLayout.WEST, outerPanel);
 		outerPanel.add(innerPanel);
@@ -242,15 +242,15 @@ public class GnuTraxGui extends JFrame {
 	public void setTiles(){
 		tiles = new Tile[8];
 		try {
-			/* 80x80 gif */
-			tiles[TraxBoard.NS] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/large/ns.gif")), TraxBoard.NS);
-			tiles[TraxBoard.WE] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/large/we.gif")), TraxBoard.WE);
-			tiles[TraxBoard.NW] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/large/nw.gif")), TraxBoard.NW);
-			tiles[TraxBoard.NE] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/large/ne.gif")), TraxBoard.NE);
-			tiles[TraxBoard.WS] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/large/ws.gif")), TraxBoard.WS);
-			tiles[TraxBoard.SE] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/large/se.gif")), TraxBoard.SE);
-			tiles[TraxBoard.INVALID] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/large/invalid.gif")), TraxBoard.INVALID);
-			tiles[TraxBoard.EMPTY] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/large/blank.gif")), TraxBoard.EMPTY);
+			/* 60x60 gif */
+			tiles[TraxBoard.NS] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/medium/ns.gif")), TraxBoard.NS);
+			tiles[TraxBoard.WE] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/medium/we.gif")), TraxBoard.WE);
+			tiles[TraxBoard.NW] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/medium/nw.gif")), TraxBoard.NW);
+			tiles[TraxBoard.NE] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/medium/ne.gif")), TraxBoard.NE);
+			tiles[TraxBoard.WS] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/medium/ws.gif")), TraxBoard.WS);
+			tiles[TraxBoard.SE] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/medium/se.gif")), TraxBoard.SE);
+			tiles[TraxBoard.INVALID] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/medium/invalid.gif")), TraxBoard.INVALID);
+			tiles[TraxBoard.EMPTY] = new Tile(ImageIO.read(getClass().getClassLoader().getResource("images/medium/blank.gif")), TraxBoard.EMPTY);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
