@@ -12,7 +12,6 @@
 */
 package home.parham.core.engine;
 
-import home.parham.cli.BoardViewer;
 import home.parham.core.domain.TraxBoard;
 import home.parham.core.domain.TraxMove;
 import home.parham.core.domain.TraxStatus;
@@ -28,21 +27,12 @@ public class GnuTrax {
 		return instance;
 	}
 
-	private TraxStatus computerColour;
 	private TraxBoard traxBoard;
+	private TraxStatus secondPlayerStatus;
+
 
 	private GnuTrax(){
-		computerColour = TraxStatus.BLACK;
 		traxBoard = new TraxBoard();
-	}
-
-
-	public TraxStatus getComputerColour(){
-		return computerColour;
-	}
-
-	public void setComputerColour(TraxStatus computerColour){
-		this.computerColour = computerColour;
 	}
 
 	public TraxBoard getTraxBoard(){
@@ -53,6 +43,13 @@ public class GnuTrax {
 		this.traxBoard = traxBoard;
 	}
 
+	public TraxStatus getSecondPlayerStatus(){
+		return secondPlayerStatus;
+	}
+
+	public void setSecondPlayerStatus(TraxStatus secondPlayerStatus){
+		this.secondPlayerStatus = secondPlayerStatus;
+	}
 
 	public void gotAMove(String theMove){
 		try {
