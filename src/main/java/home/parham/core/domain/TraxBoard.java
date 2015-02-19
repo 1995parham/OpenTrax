@@ -20,14 +20,15 @@ public class TraxBoard {
 
 	private boolean boardEmpty;
 	private TraxStatus wtm;
-	private int[][] board;
+	/* private int[][] board; */
+	private BoardArray board;
 	private TraxStatus gameover;
 	private int tilesNumber;
 	private int firstRow, lastrow, firstcol, lastcol;
 
 	private boolean boardEmpty_save;
 	private TraxStatus wtm_save;
-	private int[][] board_save;
+	private BoardArray board_save;
 	private TraxStatus gameoverSave;
 	private int num_of_tiles_save;
 	private int firstrow_save, lastrow_save, firstcol_save, lastcol_save;
@@ -58,11 +59,13 @@ public class TraxBoard {
 		wtm = TraxStatus.WHITE;
 		gameover = TraxStatus.NOPLAYER;
 		tilesNumber = 0;
-		board = new int[17][17];
-		board_save = new int[17][17];
-		for (i = 0; i < 17; i++)
-			for (j = 0; j < 17; j++)
-				board[i][j] = EMPTY;
+		board = new BoardArray();
+		// board = new int[17][17];
+		board_save = new BoardArray();
+		//board_save = new int[17][17];
+		//for (i = 0; i < 17; i++)
+		//	for (j = 0; j < 17; j++)
+		//		board[i][j] = EMPTY;
 		boardEmpty = true;
 
 	}
@@ -73,14 +76,10 @@ public class TraxBoard {
 		wtm = org.wtm;
 		gameover = org.gameover;
 		tilesNumber = org.tilesNumber;
-		board = new int[17][17];
-		board_save = new int[17][17];
-		for (i = 0; i < 17; i++) {
-			for (j = 0; j < 17; j++) {
-				this.board[i][j] = org.board[i][j];
-				this.board_save[i][j] = org.board_save[i][j];
-			}
-		}
+
+		board = new BoardArray(org.board);
+		board_save = new BoardArray(org.board_save);
+
 		firstRow = org.firstRow;
 		firstcol = org.firstcol;
 		lastrow = org.lastrow;
@@ -112,29 +111,31 @@ public class TraxBoard {
 
 	public TraxBoard rotate(){
 		TraxBoard result = new TraxBoard(this);
-		for (int i = 0; i < 17; i++) {
-			for (int j = 0; j < 17; j++) {
-				switch (board[16 - j][i]) {
+
+		int size = result.board.size();
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				switch (board.get(size - 1 - j, i)) {
 					case NS:
-						result.board[i][j] = WE;
+						result.board.put(i, j, TraxTiles.WE);
 						break;
 					case WE:
-						result.board[i][j] = NS;
+						result.board.put(i, j, TraxTiles.NS);
 						break;
 					case EMPTY:
-						result.board[i][j] = EMPTY;
+						result.board.put(i, j, TraxTiles.EMPTY);
 						break;
 					case NW:
-						result.board[i][j] = NE;
+						result.board.put(i, j, TraxTiles.NE);
 						break;
 					case NE:
-						result.board[i][j] = SE;
+						result.board.put(i, j, TraxTiles.SE);
 						break;
 					case SE:
-						result.board[i][j] = SW;
+						result.board.put(i, j, TraxTiles.SW);
 						break;
 					case SW:
-						result.board[i][j] = NW;
+						result.board.put(i, j, TraxTiles.NW);
 						break;
 				}
 			}
@@ -144,16 +145,23 @@ public class TraxBoard {
 	}
 
 	private void setCorners(){
+		int size = board.size();
+
 		firstRow = -1;
 		firstcol = -1;
 		lastcol = -1;
 		lastrow = -1;
-		for (int i = 0; i < 17; i++) {
-			for (int j = 0; j < 17; j++) {
-				if ((firstRow < 0) && (board[i][j] != EMPTY)) firstRow = i;
-				if ((lastrow < 0) && (board[16 - i][j] != EMPTY)) lastrow = 16 - i;
-				if ((firstcol < 0) && (board[j][i] != EMPTY)) firstcol = i;
-				if ((lastcol < 0) && (board[j][16 - i] != EMPTY)) lastcol = 16 - i;
+
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				if ((firstRow < 0) && (board.get(i, j) != TraxTiles.EMPTY))
+					firstRow = i;
+				if ((lastrow < 0) && (board.get(size - 1 - i, j) != TraxTiles.EMPTY))
+					lastrow = 16 - i;
+				if ((firstcol < 0) && (board.get(j, i) != TraxTiles.EMPTY))
+					firstcol = i;
+				if ((lastcol < 0) && (board.get(j, size - 1 - i) != TraxTiles.EMPTY))
+					lastcol = 16 - i;
 			}
 		}
 	}
@@ -167,9 +175,7 @@ public class TraxBoard {
 		firstcol_save = firstcol;
 		lastrow_save = lastrow;
 		lastcol_save = lastcol;
-		for (int i = 0; i < 17; i++) {
-			System.arraycopy(board[i], 0, board_save[i], 0, 17);
-		}
+		board_save = new BoardArray(board);
 	}
 
 	private void restoreState(){
@@ -181,9 +187,7 @@ public class TraxBoard {
 		firstcol = firstcol_save;
 		lastrow = lastrow_save;
 		lastcol = lastcol_save;
-		for (int i = 0; i < 17; i++) {
-			System.arraycopy(board_save[i], 0, board[i], 0, 17);
-		}
+		board = new BoardArray(board_save);
 	}
 
 	public int getRowSize(){
@@ -280,159 +284,115 @@ public class TraxBoard {
 			case 0:
 				throw new IllegalMoveException("No Neighbors.", move);
 			case 1:
-				switch (tile) {
-					case '/':
-						putAt(row, col, NW);
-						break;
-					case '\\':
-						putAt(row, col, NE);
-						break;
-					case '+':
-						putAt(row, col, NS);
-						break;
-					default:
-						throw new IllegalMoveException("Illegal Direction.", move);
+				if (tile == '/') {
+					putAt(row, col, NW);
+				} else if (tile == '\\') {
+					putAt(row, col, NE);
+				} else if (tile == '+') {
+					putAt(row, col, NS);
+				} else {
+					throw new IllegalMoveException("Illegal Direction.", move);
 				}
 				break;
 			case 2:
-				switch (tile) {
-					case '/':
-						putAt(row, col, SE);
-						break;
-					case '\\':
-						putAt(row, col, SW);
-						break;
-					case '+':
-						putAt(row, col, NS);
-						break;
-					default:
-						throw new IllegalMoveException("illegal direction.", move);
+				if (tile == '/') {
+					putAt(row, col, SE);
+				} else if (tile == '\\') {
+					putAt(row, col, SW);
+				} else if (tile == '+') {
+					putAt(row, col, NS);
+				} else {
+					throw new IllegalMoveException("illegal direction.", move);
 				}
 				break;
 			case 4:
-				switch (tile) {
-					case '/':
-						putAt(row, col, WN);
-						break;
-					case '\\':
-						putAt(row, col, WS);
-						break;
-					case '+':
-						putAt(row, col, WE);
-						break;
-					default:
-						throw new IllegalMoveException("illegal direction.", move);
+				if (tile == '/') {
+					putAt(row, col, WN);
+				} else if (tile == '\\') {
+					putAt(row, col, WS);
+				} else if (tile == '+') {
+					putAt(row, col, WE);
+				} else {
+					throw new IllegalMoveException("illegal direction.", move);
 				}
 				break;
 			case 8:
-				switch (tile) {
-					case '/':
-						putAt(row, col, ES);
-						break;
-					case '\\':
-						putAt(row, col, EN);
-						break;
-					case '+':
-						putAt(row, col, EW);
-						break;
-					default:
-						throw new IllegalMoveException("illegal direction.", move);
+				if (tile == '/') {
+					putAt(row, col, ES);
+				} else if (tile == '\\') {
+					putAt(row, col, EN);
+				} else if (tile == '+') {
+					putAt(row, col, EW);
+				} else {
+					throw new IllegalMoveException("illegal direction.", move);
 				}
 				break;
 			case 16:
-				switch (tile) {
-					case '/':
-						putAt(row, col, SE);
-						break;
-					case '\\':
-						putAt(row, col, SW);
-						break;
-					case '+':
-						putAt(row, col, WE);
-						break;
-					default:
-						throw new IllegalMoveException("illegal direction.", move);
+				if (tile == '/') {
+					putAt(row, col, SE);
+				} else if (tile == '\\') {
+					putAt(row, col, SW);
+				} else if (tile == '+') {
+					putAt(row, col, WE);
+				} else {
+					throw new IllegalMoveException("illegal direction.", move);
 				}
 				break;
 			case 18:
-				switch (tile) {
-					case '/':
-						putAt(row, col, SE);
-						break;
-					case '\\':
-						putAt(row, col, SW);
-						break;
-					default:
-						throw new IllegalMoveException("illegal direction.", move);
+				if (tile == '/') {
+					putAt(row, col, SE);
+				} else if (tile == '\\') {
+					putAt(row, col, SW);
+				} else {
+					throw new IllegalMoveException("illegal direction.", move);
 				}
 				break;
 			case 20:
-				switch (tile) {
-					case '\\':
-						putAt(row, col, WS);
-						break;
-					case '+':
-						putAt(row, col, WE);
-						break;
-					default:
-						throw new IllegalMoveException("illegal direction.", move);
+				if (tile == '\\') {
+					putAt(row, col, WS);
+				} else if (tile == '+') {
+					putAt(row, col, WE);
+				} else {
+					throw new IllegalMoveException("illegal direction.", move);
 				}
 				break;
 			case 24:
-				switch (tile) {
-					case '/':
-					case 'L':
-					case 'C':
-					case 'D':
-						putAt(row, col, SE);
-						break;
-					case 'U':
-					case '\\':
-					case 'R':
-						throw new IllegalMoveException("illegal direction.");
-					case 'S':
-					case '+':
-						putAt(row, col, WE);
-						break;
-					default:
-				/* This should never happen */
-						throw new RuntimeException("This should never happen. (010)");
+				if (tile == '/') {
+					putAt(row, col, SE);
+				} else if (tile == '+') {
+					putAt(row, col, WE);
+				} else {
+					throw new IllegalMoveException("illegal direction.");
 				}
 				break;
 			case 32:
-				switch (tile) {
-					case '/':
-						putAt(row, col, NW);
-						break;
-					case '\\':
-						putAt(row, col, NE);
-						break;
-					case '+':
-						putAt(row, col, WE);
-						break;
-					default:
-						throw new IllegalMoveException("illegal direction", move);
+				if (tile == '/') {
+					putAt(row, col, NW);
+				} else if (tile == '\\') {
+					putAt(row, col, NE);
+				} else if (tile == '+') {
+					putAt(row, col, WE);
+				} else {
+					throw new IllegalMoveException("illegal direction", move);
 				}
 				break;
 			case 33:
-				switch (tile) {
-					case '/':
-						putAt(row, col, NW);
-						break;
-					case '\\':
-						putAt(row, col, NE);
-						break;
-					default:
-						throw new IllegalMoveException("illegal direction.");
+				if (tile == '/') {
+					putAt(row, col, NW);
+				} else if (tile == '\\') {
+					putAt(row, col, NE);
+				} else {
+					throw new IllegalMoveException("illegal direction.");
 				}
 				break;
 			case 36:
-				if (tile == '/')
+				if (tile == '/') {
 					putAt(row, col, NW);
-				if (tile == '\\')
-					throw new IllegalMoveException("illegal direction.");
-				if (tile == '+')
+				} else if (tile == '+') {
 					putAt(row, col, WE);
+				} else {
+					throw new IllegalMoveException("illegal direction.");
+				}
 				break;
 			case 40:
 				if (tile == '/')
@@ -627,9 +587,11 @@ public class TraxBoard {
 			restoreState();
 			throw new IllegalMoveException("illegal filled cave.");
 		}
+		
 		/* note that switchPlayer() _must_ come before isGameOver() */
 		switchPlayer();
-		isGameOver(); // updates the gameOver attribute
+		/* update the gameOver attribute */
+		isGameOver();
 
 	}
 
@@ -641,9 +603,6 @@ public class TraxBoard {
 			case BLACK:
 				wtm = TraxStatus.WHITE;
 				break;
-			default:
-			/* This should never happen */
-				throw new RuntimeException("This should never happen. (014)");
 		}
 	}
 
@@ -1159,10 +1118,8 @@ public class TraxBoard {
 			if ((type == 'v') && (row == 9))
 				return true; // top-buttom win
 			if ((row == start_row) && (col == start_col)) {
-				if (type == 'l')
-					return true; // loop win
-				else
-					return false;
+				// loop win
+				return type == 'l';
 			}
 		}
 	}
@@ -1210,10 +1167,6 @@ public class TraxBoard {
 		return true;
 	}
 
-	public boolean isRightLeftMirror(){
-		return isLeftRightMirror();
-	}
-
 	public boolean isUpDownMirror(){
 		int piece, i, j, i2;
 
@@ -1255,10 +1208,6 @@ public class TraxBoard {
 			i2--;
 		}
 		return true;
-	}
-
-	public boolean isDownUpMirror(){
-		return isDownUpMirror();
 	}
 
 	// 90 degree rotation
@@ -1314,15 +1263,14 @@ public class TraxBoard {
 	public TraxStatus whoDidLastMove(){
 		if (boardEmpty)
 			return TraxStatus.NOPLAYER;
-		switch (wtm) {
-			case WHITE:
-				return TraxStatus.BLACK;
-			case BLACK:
-				return TraxStatus.WHITE;
-			default:
-				// This should never happen
-				throw new RuntimeException("This should never happen. (017)");
+
+		if (wtm == TraxStatus.WHITE) {
+			return TraxStatus.BLACK;
+		} else if (wtm == TraxStatus.BLACK) {
+			return TraxStatus.WHITE;
 		}
+
+		return TraxStatus.NOPLAYER;
 	}
 
 	public int getAt(int row, int col){
@@ -1330,7 +1278,7 @@ public class TraxBoard {
 			return EMPTY;
 		if ((col < 1) || (col > 8))
 			return EMPTY;
-		return board[firstRow + row - 1][firstcol + col - 1];
+		return board.get(firstRow + row - 1, firstcol + col - 1).number;
 	}
 
 	public void putAt(int row, int col, int piece){
@@ -1338,9 +1286,9 @@ public class TraxBoard {
 		if ((row + col < 0))
 			throw new AssertionError();
 		if (piece == EMPTY) {
-			if (board[firstRow + row - 1][firstcol + col - 1] != EMPTY)
+			if (board.get(firstRow + row - 1, firstcol + col - 1) != TraxTiles.EMPTY)
 				tilesNumber--;
-			board[firstRow + row - 1][firstcol + col - 1] = piece;
+			board.put(firstRow + row - 1, firstcol + col - 1, TraxTiles.tilesFromNumber(piece));
 			return;
 		} else {
 			if (boardEmpty) {
@@ -1350,7 +1298,7 @@ public class TraxBoard {
 				lastrow = 7;
 				lastcol = 7;
 				tilesNumber = 1;
-				board[firstRow][firstcol] = piece;
+				board.put(firstRow, firstcol, TraxTiles.tilesFromNumber(piece));
 				return;
 			}
 			if (row == 0) {
@@ -1373,7 +1321,7 @@ public class TraxBoard {
 			}
 			tilesNumber++;
 		}
-		board[firstRow + row - 1][firstcol + col - 1] = piece;
+		board.put(firstRow + row - 1, firstcol + col - 1, TraxTiles.tilesFromNumber(piece));
 	}
 
 	private boolean canMoveDown(){
