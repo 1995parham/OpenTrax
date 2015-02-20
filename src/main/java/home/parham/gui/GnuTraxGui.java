@@ -1,13 +1,14 @@
 package home.parham.gui;
 
 import home.parham.cli.Commands;
+import home.parham.core.domain.ColumnRowGenerator;
 import home.parham.core.domain.TraxBoard;
 import home.parham.core.domain.TraxStatus;
 import home.parham.core.engine.GnuTrax;
 import home.parham.core.player.Player;
 import home.parham.core.player.PlayerSimple;
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class GnuTraxGui extends JFrame {
 	public GnuTraxGui(){
 		super("GnuTrax 1.0");
 		setResizable(false);
-		setPreferredSize(new Dimension(800, 480));
+		setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
 		board = new ArrayList<ImagePanel>();
 		newGame();
 	}
@@ -56,29 +57,12 @@ public class GnuTraxGui extends JFrame {
 	}
 
 	private String getRowColForPos(int x, int y){
-		StringBuilder sb = new StringBuilder();
-		switch (x) {
-			case 0:
-				sb.append("@");
-				break;
-			case 1:
-			case 2:
-			case 3:
-			case 4:
-			case 5:
-			case 6:
-			case 7:
-			case 8:
-				sb.append(Character.toString((char) (x - 1 + 65)));
-				break;
-		}
-		sb.append(y);
-		return sb.toString();
+		return ColumnRowGenerator.generate(y, x);
 	}
 
 	private String position(int x, int y, int tileType){
 		StringBuilder sb = new StringBuilder();
-		sb.append(getRowColForPos(y, x));
+		sb.append(getRowColForPos(x, y));
 		switch (tileType) {
 			case TraxBoard.NS:
 			case TraxBoard.EW:
@@ -103,11 +87,10 @@ public class GnuTraxGui extends JFrame {
 	}
 
 	private int noToDraw(int a){
-		return (a == 8) ? 8 : a + 2;
+		return a + 2;
 	}
 
 	private void drawBoard(){
-		int colDiff = 0, rowDiff = 0;
 
 		int noOfRowsToDraw = noToDraw(traxBoard.getRowSize());
 		int noOfColsToDraw = noToDraw(traxBoard.getColSize());
@@ -122,18 +105,12 @@ public class GnuTraxGui extends JFrame {
 
 		ImagePanel innerPanel;
 
-		if (noOfColsToDraw == 8 && traxBoard.getColSize() == 8) {
-			colDiff = -1;
-		} else if (noOfRowsToDraw == 8 && traxBoard.getRowSize() == 8) {
-			rowDiff = -1;
-		}
-
 		int y = this.getPreferredSize().width / 2 - 30 * noOfColsToDraw;
 		int x = this.getPreferredSize().height / 2 - 30 * noOfRowsToDraw;
 
 		for (int i = 0; i < noOfRowsToDraw; i++) {
 			for (int j = 0; j < noOfColsToDraw; j++) {
-				innerPanel = new ImagePanel(tiles[TraxBoard.EMPTY].getImage(), this, i - rowDiff, j - colDiff);
+				innerPanel = new ImagePanel(tiles[TraxBoard.EMPTY].getImage(), this, i, j);
 				springLayout.putConstraint(SpringLayout.WEST, innerPanel, y + j * 60, SpringLayout.WEST, outerPanel);
 				springLayout.putConstraint(SpringLayout.NORTH, innerPanel, x + i * 60, SpringLayout.NORTH, outerPanel);
 				outerPanel.add(innerPanel);
@@ -143,8 +120,8 @@ public class GnuTraxGui extends JFrame {
 
 		for (int i = 1; i <= traxBoard.getRowSize(); i++) {
 			for (int j = 1; j <= traxBoard.getColSize(); j++) {
-				board.get((i + rowDiff) * noOfColsToDraw + (j + colDiff)).setImage(tiles[traxBoard.getAt(i, j)].getImage());
-				board.get((i + rowDiff) * noOfColsToDraw + (j + colDiff)).repaint();
+				board.get(i * noOfColsToDraw + j).setImage(tiles[traxBoard.getAt(i, j)].getImage());
+				board.get(i * noOfColsToDraw + j).repaint();
 			}
 		}
 
