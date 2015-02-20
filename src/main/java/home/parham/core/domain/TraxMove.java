@@ -61,7 +61,7 @@ public class TraxMove {
 	}
 
 	public void validate() throws IllegalMoveException{
-		if (move.length() != 3)
+		if (move.length() < 3)
 			throw new IllegalMoveException("Not a move.", this);
 
 		switch (tile) {

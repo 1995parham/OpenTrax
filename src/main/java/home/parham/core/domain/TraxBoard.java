@@ -20,7 +20,6 @@ public class TraxBoard {
 
 	private boolean boardEmpty;
 	private TraxStatus wtm;
-	/* private int[][] board; */
 	private BoardArray board;
 	private TraxStatus gameover;
 	private int tilesNumber;
@@ -36,21 +35,6 @@ public class TraxBoard {
 	public static final int EMPTY = 0, INVALID = 7,
 			NS = 1, SN = 1, WE = 2, EW = 2, NW = 3, WN = 3, NE = 4, EN = 4, WS = 5,
 			SW = 5, SE = 6, ES = 6;
-
-	private static String[][] col_row_array;
-
-	static{
-		StringBuffer str;
-		col_row_array = new String[9][9];
-		for (char i = '@'; i <= 'H'; i++) {
-			for (char j = '0'; j <= '8'; j++) {
-				str = new StringBuffer();
-				str.append(i);
-				str.append(j);
-				col_row_array[i - '@'][j - '0'] = new String(str);
-			}
-		}
-	}
 
 
 	public TraxBoard(){
@@ -237,10 +221,6 @@ public class TraxBoard {
 			throw new IllegalMoveException("Only @0/ and @0+ accepted as first move.", move);
 		}
 
-		if ((row == 0) && (!canMoveDown()))
-			throw new IllegalMoveException("Illegal Row.", move);
-		if ((col == 0) && (!canMoveRight()))
-			throw new IllegalMoveException("Illegal Column.", move);
 		if (!isBlank(row, col))
 			throw new IllegalMoveException("Occupied.", move);
 
@@ -751,8 +731,8 @@ public class TraxBoard {
 		lrsym = isLeftRightMirror();
 		udsym = isUpDownMirror();
 		rsym = isRotateMirror();
-		iBegin = (canMoveDown()) ? 0 : 1;
-		jBegin = (canMoveRight()) ? 0 : 1;
+		iBegin = 1;
+		jBegin = 1;
 		iEnd = (getRowSize() < 8) ? getRowSize() + 1 : 8;
 		jEnd = (getColSize() < 8) ? getColSize() + 1 : 8;
 		if (lrsym)
@@ -1011,7 +991,7 @@ public class TraxBoard {
 							putAt(i, j, SE);
 						if (forcedMove(i - 1, j) && forcedMove(i + 1, j)
 								&& forcedMove(i, j - 1) && forcedMove(i, j + 1)) {
-							Moves.add(col_row_array[j][i] + "/");
+							Moves.add(ColumnRowGenerator.generate(j, i) + "/");
 						}
 						restoreState();
 					}
@@ -1025,7 +1005,7 @@ public class TraxBoard {
 							putAt(i, j, SW);
 						if (forcedMove(i - 1, j) && forcedMove(i + 1, j)
 								&& forcedMove(i, j - 1) && forcedMove(i, j + 1)) {
-							Moves.add(col_row_array[j][i] + "\\");
+							Moves.add(ColumnRowGenerator.generate(j, i) + "\\");
 						}
 						restoreState();
 					}
@@ -1039,7 +1019,7 @@ public class TraxBoard {
 							putAt(i, j, WE);
 						if (forcedMove(i - 1, j) && forcedMove(i + 1, j)
 								&& forcedMove(i, j - 1) && forcedMove(i, j + 1)) {
-							Moves.add(col_row_array[j][i] + "+");
+							Moves.add(ColumnRowGenerator.generate(j, i) + "+");
 						}
 						restoreState();
 					}
@@ -1261,15 +1241,10 @@ public class TraxBoard {
 	}
 
 	public int getAt(int row, int col){
-		if ((row < 1) || (row > 8))
-			return EMPTY;
-		if ((col < 1) || (col > 8))
-			return EMPTY;
 		return board.get(firstRow + row - 1, firstcol + col - 1).number;
 	}
 
 	public void putAt(int row, int col, int piece){
-
 		if ((row + col < 0))
 			throw new AssertionError();
 		if (piece == EMPTY) {
@@ -1309,14 +1284,6 @@ public class TraxBoard {
 			tilesNumber++;
 		}
 		board.put(firstRow + row - 1, firstcol + col - 1, TraxTiles.tilesFromNumber(piece));
-	}
-
-	private boolean canMoveDown(){
-		return (getRowSize() < 8);
-	}
-
-	private boolean canMoveRight(){
-		return (getColSize() < 8);
 	}
 
 	public boolean forcedMove(int brow, int bcol){
@@ -1584,8 +1551,7 @@ public class TraxBoard {
 
 	private int neighbor_value(int x, int y){
 		int value = 0;
-		int up = getAt(x - 1, y), down = getAt(x + 1, y), left = getAt(x, y - 1), right = getAt(
-				x, y + 1);
+		int up = getAt(x - 1, y), down = getAt(x + 1, y), left = getAt(x, y - 1), right = getAt(x, y + 1);
 		if (up == TraxBoard.SN || up == TraxBoard.SE || up == TraxBoard.SW) {
 			value += 1;
 		} // ohs_up

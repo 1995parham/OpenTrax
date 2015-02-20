@@ -42,7 +42,11 @@ public class BoardArray {
 	}
 
 	public TraxTiles get(int row, int column){
-		return board.get(row).get(column);
+		try {
+			return board.get(row).get(column);
+		} catch (IndexOutOfBoundsException e) {
+			return TraxTiles.EMPTY;
+		}
 	}
 
 	public void put(int row, int column, TraxTiles tile){
@@ -66,6 +70,7 @@ public class BoardArray {
 
 	private void expand(){
 		board.add(new ArrayList<TraxTiles>());
+
 		for (int i = 0; i < size; i++) {
 			board.get(i).add(TraxTiles.EMPTY);
 		}
