@@ -1,12 +1,17 @@
-package home.parham.core.player;
+/*
+ * In The Name Of God
+ * ======================================
+ * [] Project Name : OpenTrax 
+ * 
+ * [] Package Name : home.parham.core.player
+ *
+ * [] Creation Date : 03-03-2015
+ *
+ * [] Created By : Parham Alvani (parham.alvani@gmail.com)
+ * =======================================
+*/
 
-/* 
- Date: 18th of September 2009
- version 0.1
- All source under GPL version 2 
- (GNU General Public License - http://www.gnu.org/)
- contact traxplayer@gmail.com for more information about this code
- */
+package home.parham.core.player;
 
 import home.parham.core.domain.TraxBoard;
 import home.parham.core.domain.TraxMove;
@@ -16,9 +21,17 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class PlayerSimple implements Player {
-	public String move(TraxBoard tb){
+	private TraxBoard tb;
+
+	public PlayerSimple(){
+		tb = new TraxBoard();
+	}
+
+
+	public String move(String otherPlayerMove){
 		String move = null;
 		try {
+			tb.makeMove(new TraxMove(otherPlayerMove));
 			move = getRandomMove(tb);
 		} catch (IllegalMoveException e) {
 			System.err.println("[" + e.getMove() + "] : " + e.getMessage());
@@ -61,3 +74,4 @@ public class PlayerSimple implements Player {
 		return moves_not_losing.get(randomGenerator.nextInt(moves_not_losing.size()));
 	}
 }
+

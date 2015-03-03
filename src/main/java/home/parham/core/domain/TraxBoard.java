@@ -559,7 +559,7 @@ public class TraxBoard {
 			throw new IllegalMoveException("illegal filled cave.");
 		}
 		
-		/* note that switchPlayer() _must_ come before isGameOver() */
+		/* note that switchPlayer() "must" come before isGameOver() */
 		switchPlayer();
 		/* update the gameOver attribute */
 		isGameOver();
@@ -648,7 +648,6 @@ public class TraxBoard {
 				}
 			}
 		}
-		// }
 
 		if (WhiteWins && BlackWins) {
 			gameover = whoDidLastMove();
@@ -666,10 +665,12 @@ public class TraxBoard {
 	}
 
 	public ArrayList<String> uniqueMoves(){
-		// complex throw away a lot of equal moves
-		// and symmetries (hopefully)
+		/*
+		 * complex throw away a lot of equal moves
+		 * and symmetries (hopefully)
+		*/
 
-		ArrayList<String> Moves = new ArrayList<String>(100); // 50 might be enough
+		ArrayList<String> moves = new ArrayList<String>(100); // 50 might be enough
 		int i, j, k;
 		int dl, dr, ur, ul, rr;
 		int[][] neighbors = new int[10][10]; // which neighbors - default all
@@ -695,32 +696,32 @@ public class TraxBoard {
 		 * moves.
 		*/
 		if (boardEmpty) {
-			Moves.add("@0/");
-			Moves.add("@0+");
-			Moves.trimToSize();
-			return Moves;
+			moves.add("@0/");
+			moves.add("@0+");
+			moves.trimToSize();
+			return moves;
 		}
 		if (getRowSize() * getColSize() == 1) {
 			switch (getAt(1, 1)) {
 				case NW:
-					Moves.add("@1+");
-					Moves.add("@1/");
-					Moves.add("@1\\");
-					Moves.add("B1+");
-					Moves.add("B1/");
-					Moves.add("B1\\");
+					moves.add("@1+");
+					moves.add("@1/");
+					moves.add("@1\\");
+					moves.add("B1+");
+					moves.add("B1/");
+					moves.add("B1\\");
 					break;
 				case NS:
-					Moves.add("@1+");
-					Moves.add("@1/");
-					Moves.add("@1\\");
-					Moves.add("A0/");
-					Moves.add("A0+");
-					Moves.add("A0\\");
+					moves.add("@1+");
+					moves.add("@1/");
+					moves.add("@1\\");
+					moves.add("A0/");
+					moves.add("A0+");
+					moves.add("A0\\");
 					break;
 			}
-			Moves.trimToSize();
-			return Moves;
+			moves.trimToSize();
+			return moves;
 		}
 
 		for (i = 0; i < 10; i++)
@@ -733,8 +734,8 @@ public class TraxBoard {
 		rsym = isRotateMirror();
 		iBegin = 1;
 		jBegin = 1;
-		iEnd = (getRowSize() < 8) ? getRowSize() + 1 : 8;
-		jEnd = (getColSize() < 8) ? getColSize() + 1 : 8;
+		iEnd = getRowSize() + 1;
+		jEnd = getColSize() + 1;
 		if (lrsym)
 			jEnd = (getColSize() + 1) / 2;
 		if (rsym || udsym)
@@ -991,7 +992,7 @@ public class TraxBoard {
 							putAt(i, j, SE);
 						if (forcedMove(i - 1, j) && forcedMove(i + 1, j)
 								&& forcedMove(i, j - 1) && forcedMove(i, j + 1)) {
-							Moves.add(ColumnRowGenerator.generate(j, i) + "/");
+							moves.add(ColumnRowGenerator.generate(j, i) + "/");
 						}
 						restoreState();
 					}
@@ -1005,7 +1006,7 @@ public class TraxBoard {
 							putAt(i, j, SW);
 						if (forcedMove(i - 1, j) && forcedMove(i + 1, j)
 								&& forcedMove(i, j - 1) && forcedMove(i, j + 1)) {
-							Moves.add(ColumnRowGenerator.generate(j, i) + "\\");
+							moves.add(ColumnRowGenerator.generate(j, i) + "\\");
 						}
 						restoreState();
 					}
@@ -1019,14 +1020,14 @@ public class TraxBoard {
 							putAt(i, j, WE);
 						if (forcedMove(i - 1, j) && forcedMove(i + 1, j)
 								&& forcedMove(i, j - 1) && forcedMove(i, j + 1)) {
-							Moves.add(ColumnRowGenerator.generate(j, i) + "+");
+							moves.add(ColumnRowGenerator.generate(j, i) + "+");
 						}
 						restoreState();
 					}
 				}
 			}
-		Moves.trimToSize();
-		return Moves;
+		moves.trimToSize();
+		return moves;
 	}
 
 	private boolean checkLine(int row, int col, char direction, char type){

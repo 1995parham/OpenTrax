@@ -14,13 +14,13 @@ import home.parham.core.domain.TraxMove;
 import home.parham.core.domain.TraxStatus;
 import home.parham.core.exceptions.IllegalMoveException;
 import home.parham.core.util.TraxUtil;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class PlayerUct implements Player {
 	private int maxSimulations;
 	private Openingbook book = new Openingbook();
+	private TraxBoard board;
 
 	public PlayerUct(){
 		//maxSimulations = 10000;
@@ -112,25 +112,32 @@ public class PlayerUct implements Player {
 		return null;
 	}
 
-	public String move(TraxBoard tb){
+	public String move(String otherPlayerMove){
+
+		try {
+			board.makeMove(new TraxMove(otherPlayerMove));
+		} catch (IllegalMoveException e) {
+			e.printStackTrace();
+		}
+
 		String simple = null;
 
-		simple = simpleMove(tb);
+		simple = simpleMove(board);
 		if (simple != null) {
 			//System.out.println("Simple move found");
 			TraxUtil.log("Simple move found");
 			return simple;
 		}
-		simple = openingMove(tb);
+		simple = openingMove(board);
 		if (simple != null) {
 			System.out.println("Move found in opening book.");
 			return simple;
 		}
 
-		UctNode root = new UctNode(tb);
+		UctNode root = new UctNode(board);
 		int maxSimulations;
 
-		maxSimulations = this.maxSimulations / (65 - tb.getNumOfTiles() / 2);
+		maxSimulations = this.maxSimulations / (65 - board.getNumOfTiles() / 2);
 		for (int simulationCount = 0; simulationCount < maxSimulations; simulationCount++) {
 			//System.out.println(root);
 			playSimulation(root);
