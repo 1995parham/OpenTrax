@@ -43,6 +43,7 @@ public class ServerNetPlayer implements Player {
 			PrintWriter ostream = new PrintWriter(player.getOutputStream());
 			ostream.println(otherPlayerMove);
 			ostream.flush();
+			System.out.println("Waiting for remote player");
 			BufferedReader istream = new BufferedReader(new InputStreamReader(player.getInputStream()));
 			return istream.readLine();
 		} catch (IOException e) {
