@@ -156,11 +156,12 @@ public class GnuTraxGui extends JFrame {
 		System.exit(0);
 	}
 
-	private void makeAIMove(){
+	private void makeAIMove(String otherPlayerMove){
 		this.setEnabled(false);
 
-		String AIMove = player.move(traxBoard);
-		GnuTrax.getInstance().gotAMove(AIMove);
+		String AIMove = player.move(otherPlayerMove);
+		if (AIMove != null)
+			GnuTrax.getInstance().gotAMove(AIMove);
 
 		clearBoard();
 		drawBoard();
@@ -172,14 +173,16 @@ public class GnuTraxGui extends JFrame {
 	public void setMove(int x, int y, Tile tile){
 		String theMove = position(x, y, tile.getTileType());
 		GnuTrax.getInstance().gotAMove(theMove);
+
 		board.get(x * noToDraw(traxBoard.getColSize()) + y).setImage(tile.getImage());
 		clearBoard();
 		drawBoard();
+
 		if (checkForWinner())
 			return;
 
 		if (haveAI)
-			makeAIMove();
+			makeAIMove(theMove);
 
 		checkForWinner();
 	}

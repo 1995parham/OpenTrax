@@ -13,8 +13,6 @@
 
 package home.parham.core.player;
 
-import home.parham.core.domain.TraxBoard;
-
 public interface Player {
-	public String move(TraxBoard traxBoard);
+	public String move(String otherPlayerMove);
 }

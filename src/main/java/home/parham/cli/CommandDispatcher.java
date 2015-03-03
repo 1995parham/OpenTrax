@@ -15,11 +15,10 @@ package home.parham.cli;
 
 import home.parham.core.domain.TraxStatus;
 import home.parham.core.engine.GnuTrax;
-
 import java.util.ArrayList;
 
 public class CommandDispatcher {
-	public static void dispatch(ArrayList<String> command){
+	public static int dispatch(ArrayList<String> command){
 
 		String line = command.get(0);
 
@@ -116,8 +115,11 @@ public class CommandDispatcher {
 		} else if (line.equals("white")) {
 			Commands.userWhite();
 		} else {
-			if (GnuTrax.getInstance().getTraxBoard().isGameOver() == TraxStatus.NOPLAYER)
+			if (GnuTrax.getInstance().getTraxBoard().isGameOver() == TraxStatus.NOPLAYER) {
 				GnuTrax.getInstance().gotAMove(line);
+				return 1;
+			}
 		}
+		return 0;
 	}
 }

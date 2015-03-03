@@ -19,7 +19,6 @@ import home.parham.core.engine.GnuTrax;
 import home.parham.core.player.Player;
 import home.parham.core.player.PlayerSimple;
 import home.parham.core.util.TraxUtil;
-
 import java.util.ArrayList;
 
 public class TraxCLI implements Runnable {
@@ -30,10 +29,10 @@ public class TraxCLI implements Runnable {
 		Player player = new PlayerSimple();
 
 		ArrayList<String> command = new ArrayList<String>();
+		String lastMove = "";
 
 		while (true) {
 			command.clear();
-
 			System.out.println(BoardViewer.view(traxBoard));
 
 			if (traxBoard.isGameOver() == TraxStatus.WHITE)
@@ -54,7 +53,7 @@ public class TraxCLI implements Runnable {
 					&& (traxBoard.whoToMove() == computerColour)) {
 				/* the player must give a move */
 				System.out.println("Thinking ...");
-				command.add(player.move(traxBoard));
+				command.add(player.move(lastMove));
 				System.out.println(command.get(0));
 			} else if ((traxBoard.whoToMove() != computerColour)
 					|| (traxBoard.isGameOver() != TraxStatus.NOPLAYER)) {
@@ -63,7 +62,9 @@ public class TraxCLI implements Runnable {
 				if (command.size() == 0)
 					continue;        /* read more input */
 			}
-			CommandDispatcher.dispatch(command);
+			if (CommandDispatcher.dispatch(command) == 1) {
+				lastMove = command.get(0);
+			}
 		}
 	}
 }
