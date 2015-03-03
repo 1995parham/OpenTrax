@@ -7,6 +7,7 @@ import javax.swing.*;
 public class ChoosePlayer extends JDialog {
 	private JRadioButton humanButton;
 	private JRadioButton simpleAIButton;
+	private JRadioButton serverNetButton;
 
 	private int choosenOption;
 
@@ -56,6 +57,12 @@ public class ChoosePlayer extends JDialog {
 		playersButtons.add(simpleAIButton);
 		contentPane.add(simpleAIButton);
 
+		serverNetButton = new JRadioButton("Server Net Player");
+		springLayout.putConstraint(SpringLayout.WEST, serverNetButton, 5, SpringLayout.WEST, contentPane);
+		springLayout.putConstraint(SpringLayout.NORTH, serverNetButton, 5, SpringLayout.SOUTH, simpleAIButton);
+		playersButtons.add(serverNetButton);
+		contentPane.add(serverNetButton);
+
 		this.setContentPane(contentPane);
 		
 		/* call onCancel() when cross is clicked */
@@ -81,6 +88,8 @@ public class ChoosePlayer extends JDialog {
 			choosenOption = 0;
 		if (simpleAIButton.isSelected())
 			choosenOption = 1;
+		if (serverNetButton.isSelected())
+			choosenOption = 2;
 		dispose();
 	}
 

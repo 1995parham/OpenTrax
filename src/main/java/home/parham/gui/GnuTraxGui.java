@@ -7,6 +7,7 @@ import home.parham.core.domain.TraxStatus;
 import home.parham.core.engine.GnuTrax;
 import home.parham.core.player.Player;
 import home.parham.core.player.PlayerSimple;
+import home.parham.core.player.ServerNetPlayer;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class GnuTraxGui extends JFrame {
 	private List<ImagePanel> board;
 	private TraxBoard traxBoard;
 	private Player player;
-	private boolean haveAI;
+	private boolean haveRemote;
 
 	public GnuTraxGui(){
 		super("GnuTrax 1.0");
@@ -39,11 +40,14 @@ public class GnuTraxGui extends JFrame {
 		playerChooser.setVisible(true);
 		int op = playerChooser.getChoosenOption();
 		if (op == 1) {
-			haveAI = true;
+			haveRemote = true;
 			player = new PlayerSimple();
 		} else if (op == 0) {
-			haveAI = false;
+			haveRemote = false;
 			player = null;
+		} else if (op == 2) {
+			haveRemote = true;
+			player = new ServerNetPlayer();
 		}
 
 		traxBoard = GnuTrax.getInstance().getTraxBoard();
@@ -156,7 +160,7 @@ public class GnuTraxGui extends JFrame {
 		System.exit(0);
 	}
 
-	private void makeAIMove(String otherPlayerMove){
+	private void makeRemoteMove(String otherPlayerMove){
 		this.setEnabled(false);
 
 		String AIMove = player.move(otherPlayerMove);
@@ -181,8 +185,8 @@ public class GnuTraxGui extends JFrame {
 		if (checkForWinner())
 			return;
 
-		if (haveAI)
-			makeAIMove(theMove);
+		if (haveRemote)
+			makeRemoteMove(theMove);
 
 		checkForWinner();
 	}
