@@ -578,7 +578,8 @@ public class TraxBoard {
 	}
 
 	public TraxStatus isGameOver(){
-		boolean WhiteWins = false, BlackWins = false;
+		boolean isWhiteWins = false;
+		boolean isBlackWins = false;
 		int sp;
 
 		if (gameover != TraxStatus.NOPLAYER)
@@ -588,52 +589,22 @@ public class TraxBoard {
 			return gameover;
 		}
 
-		if (uniqueMoves().size() == 0) {
-			gameover = TraxStatus.DRAW;
-			return gameover;
-		}
+//		if (uniqueMoves().size() == 0) {
+//			gameover = TraxStatus.DRAW;
+//			return gameover;
+//		}
 
-		// check for line win.
-		// check left-right line
-		if (getColumnSize() == 8) {
-			// check left-right line
-			for (int row = 1; row <= 8; row++) {
-				if (checkLine(row, 1, 'r', 'h')) {
-					// Line win
-					sp = getAt(row, 1);
-					if (sp == NS || sp == NE || sp == ES)
-						BlackWins = true;
-					else
-						WhiteWins = true;
-				}
-			}
-		}
-		// check up-down line
-		if (getRowSize() == 8) {
-			for (int col = 1; col <= 8; col++) {
-				if (checkLine(1, col, 'd', 'v')) {
-					// Line win
-					sp = getAt(1, col);
-					if (sp == WE || sp == WS || sp == SE)
-						BlackWins = true;
-					else
-						WhiteWins = true;
-				}
-			}
-		}
-
-		// if (need_loop_check==true) {
 		// Now check loop wins
 		for (int i = 1; i < 8; i++) {
 			for (int j = 1; j < 8; j++) {
 				switch (getAt(i, j)) {
 					case NW:
 						if (checkLine(i, j, 'u', 'l'))
-							BlackWins = true;
+							isBlackWins = true;
 						break;
 					case SE:
 						if (checkLine(i, j, 'u', 'l'))
-							WhiteWins = true;
+							isWhiteWins = true;
 						break;
 					case EMPTY:
 					case NS:
@@ -641,23 +612,19 @@ public class TraxBoard {
 					case NE:
 					case WS:
 						break;
-					default:
-					/* This should never happen */
-						throw new RuntimeException(
-								"This should never happen. (015)");
 				}
 			}
 		}
 
-		if (WhiteWins && BlackWins) {
+		if (isWhiteWins && isBlackWins) {
 			gameover = whoDidLastMove();
 			return gameover;
 		}
-		if (WhiteWins) {
+		if (isWhiteWins) {
 			gameover = TraxStatus.WHITE;
 			return gameover;
 		}
-		if (BlackWins) {
+		if (isBlackWins) {
 			gameover = TraxStatus.BLACK;
 			return gameover;
 		}
@@ -671,11 +638,12 @@ public class TraxBoard {
 		*/
 
 		ArrayList<String> moves = new ArrayList<String>(100); // 50 might be enough
+
 		int i, j, k;
 		int dl, dr, ur, ul, rr;
-		int[][] neighbors = new int[256][256]; // which neighbors - default all
+		int[][] neighbors = new int[board.size()][board.size()]; // which neighbors - default all
 		// values 0
-		boolean[][][] dirlist = new boolean[256][256][3]; // which directions for
+		boolean[][][] dirlist = new boolean[board.size()][board.size()][3]; // which directions for
 		// move
 		// 0 /, 1 \, 2 +
 		// true means already used
@@ -724,8 +692,8 @@ public class TraxBoard {
 			return moves;
 		}
 
-		for (i = 0; i < 256; i++)
-			for (j = 0; j < 256; j++)
+		for (i = 0; i < board.size(); i++)
+			for (j = 0; j < board.size(); j++)
 				for (k = 0; k < 3; k++)
 					dirlist[i][j][k] = false;
 
@@ -1027,7 +995,12 @@ public class TraxBoard {
 	}
 
 	private boolean checkLine(int row, int col, char direction, char type){
-		// type can be _h_orizontal , _v_ertical, _l_oop
+		/*
+		 * type can be
+		 * h : horizontal
+		 * v : vertical
+		 * l : loop
+		*/
 
 		int start_row = row;
 		int start_col = col;
@@ -1041,8 +1014,7 @@ public class TraxBoard {
 
 		for (; ; ) {
 			if (isBlank(row, col))
-				return false; // no line starts with a empty space
-			// or we are out of range
+				return false; // no line starts with a empty space or we are out of range
 			switch (direction) {
 				case 'u':
 					// newdir's first line
@@ -1077,12 +1049,12 @@ public class TraxBoard {
 					col++;
 					break;
 			}
-			if ((type == 'h') && (col == 9))
-				return true; // left-right win
-			if ((type == 'v') && (row == 9))
-				return true; // top-buttom win
+//			if ((type == 'h') && (col == 9))
+//				return true; // left-right win
+//			if ((type == 'v') && (row == 9))
+//				return true; // top-bottom win
 			if ((row == start_row) && (col == start_col)) {
-				// loop win
+				/* loop win */
 				return type == 'l';
 			}
 		}
@@ -1286,7 +1258,6 @@ public class TraxBoard {
 		int left = getAt(brow, bcol - 1);
 		int right = getAt(brow, bcol + 1);
 
-		// boolean result=true;
 		int neighbors = 0;
 
 		if (!isBlank(up))
@@ -1379,198 +1350,43 @@ public class TraxBoard {
 		return forcedMove(brow - 1, bcol) && forcedMove(brow + 1, bcol) && forcedMove(brow, bcol - 1) && forcedMove(brow, bcol + 1);
 	}
 
-	public String getBorder(){
-		String result = "";
-		int i, j, starti, startj;
-		char direction;
-		int[][] wnum = new int[9][9]; // every white line gets a number
-		int[][] bnum = new int[9][9];
-
-		if (whoDidLastMove() == TraxStatus.NOPLAYER)
-			return result;
-		for (i = 1; i < 9; i++) {
-			for (j = 1; j < 9; j++) {
-				wnum[i][j] = 0;
-				bnum[i][j] = 0;
-			}
-		}
-		starti = 1;
-		startj = 1;
-		while (getAt(starti, startj) == EMPTY)
-			starti++;
-
-		direction = 'd';
-		i = starti;
-		j = startj;
-		while (true) {
-			switch (direction) {
-				case 'd':
-					switch (getAt(i, j)) {
-						case NW:
-						case SW:
-						case WE:
-							result += 'W';
-							break;
-						case NS:
-						case NE:
-						case SE:
-							result += 'B';
-							break;
-						default:
-					/* This should never happen */
-							throw new RuntimeException(
-									"This should never happen. (021)");
-					}
-					if (getAt(i + 1, j - 1) != EMPTY) {
-						direction = 'l';
-						result += '+';
-						i++;
-						j--;
-						break;
-					}
-					if (getAt(i + 1, j) == EMPTY) {
-						direction = 'r';
-						result += '-';
-						break;
-					}
-					i++;
-					break;
-				case 'u':
-					switch (getAt(i, j)) {
-						case EW:
-						case NE:
-						case ES:
-							result += 'W';
-
-							break;
-						case WS:
-						case SN:
-						case NW:
-							result += 'B';
-							break;
-						default:
-					/* This should never happen */
-							throw new RuntimeException(
-									"This should never happen. (022)");
-					}
-					if (getAt(i - 1, j + 1) != EMPTY) {
-						direction = 'r';
-						result += '+';
-						i--;
-						j++;
-						break;
-					}
-					if (getAt(i - 1, j) == EMPTY) {
-						direction = 'l';
-						result += '-';
-						break;
-					}
-					i--;
-					break;
-				case 'l':
-					switch (getAt(i, j)) {
-						case NW:
-						case SN:
-						case NE:
-							result += 'W';
-							break;
-						case WE:
-						case SE:
-						case SW:
-							result += 'B';
-							break;
-						default:
-					/* This should never happen */
-							throw new RuntimeException(
-									"This should never happen. (023)");
-					}
-					if (getAt(i - 1, j - 1) != EMPTY) {
-						direction = 'u';
-						result += '+';
-						i--;
-						j--;
-						break;
-					}
-					if (getAt(i, j - 1) == EMPTY) {
-						if ((i == starti) && (j == startj))
-							return result;
-						result += '-';
-						direction = 'd';
-						break;
-					}
-					j--;
-					break;
-				case 'r':
-					switch (getAt(i, j)) {
-						case NS:
-						case SE:
-						case SW:
-							result += 'W';
-							break;
-						case NE:
-						case NW:
-						case WE:
-							result += 'B';
-							break;
-						default:
-					/* This should never happen */
-							throw new RuntimeException(
-									"This should never happen. (024)");
-					}
-					if (getAt(i + 1, j + 1) != EMPTY) {
-						direction = 'd';
-						result += '+';
-						i++;
-						j++;
-						break;
-					}
-					if (getAt(i, j + 1) == EMPTY) {
-						direction = 'u';
-						result += '-';
-						break;
-					}
-					j++;
-					break;
-				default:
-				/* This should never happen */
-					throw new RuntimeException("This should never happen. (025)");
-			}
-		}
-	}
-
-	private int neighbor_value(int x, int y){
+	private int neighborValue(int x, int y){
 		int value = 0;
-		int up = getAt(x - 1, y), down = getAt(x + 1, y), left = getAt(x, y - 1), right = getAt(x, y + 1);
+		int up = getAt(x - 1, y);
+		int down = getAt(x + 1, y);
+		int left = getAt(x, y - 1);
+		int right = getAt(x, y + 1);
+
 		if (up == TraxBoard.SN || up == TraxBoard.SE || up == TraxBoard.SW) {
 			value += 1;
-		} // ohs_up
+		} /* ohs_up */
 		if (up == TraxBoard.EW || up == TraxBoard.NW || up == TraxBoard.NE) {
 			value += 16;
-		} // eks_up
+		} /* eks_up */
 		if (down == TraxBoard.NS || down == TraxBoard.NE
 				|| down == TraxBoard.NW) {
 			value += 2;
-		} // ohs_down
+		} /* ohs_down */
 		if (down == TraxBoard.EW || down == TraxBoard.SW
 				|| down == TraxBoard.SE) {
 			value += 32;
-		} // eks_down
+		} /* eks_down */
 		if (left == TraxBoard.EN || left == TraxBoard.ES
 				|| left == TraxBoard.EW) {
 			value += 4;
-		} // ohs_left;
+		} /* ohs_left */
 		if (left == TraxBoard.WS || left == TraxBoard.WN
 				|| left == TraxBoard.NS) {
 			value += 64;
-		} // eks_left;
+		} /* eks_left */
 		if (right == TraxBoard.WN || right == TraxBoard.WE
 				|| right == TraxBoard.WS) {
 			value += 8;
-		} // ohs.right
+		} /* ohs_right */
 		if (right == TraxBoard.ES || right == TraxBoard.NS
 				|| right == TraxBoard.EN) {
 			value += 128;
-		} // eks.right
+		} /* eks.right */
 		return value;
 	}
 
@@ -1580,7 +1396,7 @@ public class TraxBoard {
 			result.add(TraxBoard.NW);
 			result.add(TraxBoard.NS);
 		}
-		switch (neighbor_value(x, y)) {
+		switch (neighborValue(x, y)) {
 			case 0:
 				return result;
 			case 1:
