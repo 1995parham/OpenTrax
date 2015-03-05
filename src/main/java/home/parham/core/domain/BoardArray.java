@@ -14,14 +14,15 @@
 package home.parham.core.domain;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BoardArray {
-	private ArrayList<ArrayList<TraxTiles>> board;
+	private List<List<TraxTiles>> board;
 	private int size;
 
 	public BoardArray(){
-		size = 16;
-		board = new ArrayList<ArrayList<TraxTiles>>(size);
+		size = 1;
+		board = new ArrayList<List<TraxTiles>>(size);
 		for (int i = 0; i < size; i++) {
 			board.add(new ArrayList<TraxTiles>(size));
 			for (int j = 0; j < size; j++) {
@@ -32,7 +33,7 @@ public class BoardArray {
 
 	public BoardArray(BoardArray org){
 		size = org.size;
-		board = new ArrayList<ArrayList<TraxTiles>>(size);
+		board = new ArrayList<List<TraxTiles>>(size);
 		for (int i = 0; i < size; i++) {
 			board.add(new ArrayList<TraxTiles>(size));
 			for (int j = 0; j < size; j++) {
@@ -51,14 +52,27 @@ public class BoardArray {
 
 	public void put(int row, int column, TraxTiles tile){
 		/* Expand board if needed. */
+		if (row == -1) {
+			expandFromBegin();
+			row++;
+			column++;
+		} else if (column == -1) {
+			expandFromBegin();
+			column++;
+			row++;
+		} else if (column < -1) {
+			throw new ArrayIndexOutOfBoundsException();
+		} else if (row < -1) {
+			throw new ArrayIndexOutOfBoundsException();
+		}
 		if (row > size) {
 			throw new ArrayIndexOutOfBoundsException();
 		} else if (row == size) {
-			expand();
+			expandFromEnd();
 		} else if (column > size) {
 			throw new ArrayIndexOutOfBoundsException();
 		} else if (column == size) {
-			expand();
+			expandFromEnd();
 		}
 
 		board.get(row).set(column, tile);
@@ -68,7 +82,7 @@ public class BoardArray {
 		return size;
 	}
 
-	private void expand(){
+	private void expandFromEnd(){
 		board.add(new ArrayList<TraxTiles>());
 
 		for (int i = 0; i < size; i++) {
@@ -76,6 +90,18 @@ public class BoardArray {
 		}
 		for (int i = 0; i <= size; i++) {
 			board.get(size).add(TraxTiles.EMPTY);
+		}
+		size++;
+	}
+
+	private void expandFromBegin(){
+		board.add(0, new ArrayList<TraxTiles>());
+
+		for (int i = 1; i <= size; i++) {
+			board.get(i).add(0, TraxTiles.EMPTY);
+		}
+		for (int i = 0; i <= size; i++) {
+			board.get(0).add(TraxTiles.EMPTY);
 		}
 		size++;
 	}

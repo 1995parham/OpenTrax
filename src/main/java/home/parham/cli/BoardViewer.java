@@ -30,7 +30,7 @@ public final class BoardViewer {
 
 		if (board.isBoardEmpty())
 			return new String();
-		result.append(cols.substring(0, 5 + 6 * board.getColSize()));
+		result.append(cols.substring(0, 5 + 6 * board.getColumnSize()));
 		result.append('\n');
 		for (i = 1; i <= board.getRowSize(); i++) {
 			for (k = 0; k < 4; k++) {
@@ -40,7 +40,7 @@ public final class BoardViewer {
 				} else {
 					result.append("  ");
 				}
-				for (j = 1; j <= board.getColSize(); j++) {
+				for (j = 1; j <= board.getColumnSize(); j++) {
 					switch (board.getAt(i, j)) {
 						case NS:
 							switch (k) {
@@ -215,7 +215,7 @@ public final class BoardViewer {
 			}
 		}
 		result.append("  ");
-		for (j = 1; j <= board.getColSize(); j++) {
+		for (j = 1; j <= board.getColumnSize(); j++) {
 			leftpiece = board.getAt(board.getRowSize(), j - 1);
 			uppiece = board.getAt(board.getRowSize(), j);
 			if ((uppiece == EMPTY) && (leftpiece == EMPTY))
@@ -227,7 +227,7 @@ public final class BoardViewer {
 			if ((uppiece == WE) || (uppiece == WN) || (uppiece == NE))
 				result.append("+--#--");
 		}
-		if (board.getAt(board.getRowSize(), board.getColSize()) != EMPTY)
+		if (board.getAt(board.getRowSize(), board.getColumnSize()) != EMPTY)
 			result.append("+");
 		result.append("\n");
 		return result.toString();
