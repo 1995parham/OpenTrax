@@ -23,7 +23,7 @@ public class TraxBoard {
 	private BoardArray board;
 	private TraxStatus gameover;
 	private int tilesNumber;
-	private int firstRow, lastrow, firstcol, lastcol;
+	private int firstRow, lastRow, firstColumn, lastColumn;
 
 	private boolean boardEmpty_save;
 	private TraxStatus wtm_save;
@@ -56,9 +56,9 @@ public class TraxBoard {
 		board_save = new BoardArray(org.board_save);
 
 		firstRow = org.firstRow;
-		firstcol = org.firstcol;
-		lastrow = org.lastrow;
-		lastcol = org.lastcol;
+		firstColumn = org.firstColumn;
+		lastRow = org.lastRow;
+		lastColumn = org.lastColumn;
 		firstrow_save = org.firstrow_save;
 		firstcol_save = org.firstcol_save;
 		lastrow_save = org.lastrow_save;
@@ -123,20 +123,20 @@ public class TraxBoard {
 		int size = board.size();
 
 		firstRow = -1;
-		firstcol = -1;
-		lastcol = -1;
-		lastrow = -1;
+		firstColumn = -1;
+		lastColumn = -1;
+		lastRow = -1;
 
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				if ((firstRow < 0) && (board.get(i, j) != TraxTiles.EMPTY))
 					firstRow = i;
-				if ((lastrow < 0) && (board.get(size - 1 - i, j) != TraxTiles.EMPTY))
-					lastrow = 16 - i;
-				if ((firstcol < 0) && (board.get(j, i) != TraxTiles.EMPTY))
-					firstcol = i;
-				if ((lastcol < 0) && (board.get(j, size - 1 - i) != TraxTiles.EMPTY))
-					lastcol = 16 - i;
+				if ((lastRow < 0) && (board.get(size - 1 - i, j) != TraxTiles.EMPTY))
+					lastRow = 16 - i;
+				if ((firstColumn < 0) && (board.get(j, i) != TraxTiles.EMPTY))
+					firstColumn = i;
+				if ((lastColumn < 0) && (board.get(j, size - 1 - i) != TraxTiles.EMPTY))
+					lastColumn = 16 - i;
 			}
 		}
 	}
@@ -147,9 +147,9 @@ public class TraxBoard {
 		gameoverSave = gameover;
 		num_of_tiles_save = tilesNumber;
 		firstrow_save = firstRow;
-		firstcol_save = firstcol;
-		lastrow_save = lastrow;
-		lastcol_save = lastcol;
+		firstcol_save = firstColumn;
+		lastrow_save = lastRow;
+		lastcol_save = lastColumn;
 		board_save = new BoardArray(board);
 	}
 
@@ -159,18 +159,18 @@ public class TraxBoard {
 		gameover = gameoverSave;
 		tilesNumber = num_of_tiles_save;
 		firstRow = firstrow_save;
-		firstcol = firstcol_save;
-		lastrow = lastrow_save;
-		lastcol = lastcol_save;
+		firstColumn = firstcol_save;
+		lastRow = lastrow_save;
+		lastColumn = lastcol_save;
 		board = new BoardArray(board_save);
 	}
 
 	public int getRowSize(){
-		return ((getNumOfTiles() == 0) ? 0 : 1 + (lastrow - firstRow));
+		return lastRow - firstRow + 1;
 	}
 
-	public int getColSize(){
-		return ((getNumOfTiles() == 0) ? 0 : 1 + (lastcol - firstcol));
+	public int getColumnSize(){
+		return lastColumn - firstColumn + 1;
 	}
 
 
@@ -595,7 +595,7 @@ public class TraxBoard {
 
 		// check for line win.
 		// check left-right line
-		if (getColSize() == 8) {
+		if (getColumnSize() == 8) {
 			// check left-right line
 			for (int row = 1; row <= 8; row++) {
 				if (checkLine(row, 1, 'r', 'h')) {
@@ -673,9 +673,9 @@ public class TraxBoard {
 		ArrayList<String> moves = new ArrayList<String>(100); // 50 might be enough
 		int i, j, k;
 		int dl, dr, ur, ul, rr;
-		int[][] neighbors = new int[10][10]; // which neighbors - default all
+		int[][] neighbors = new int[256][256]; // which neighbors - default all
 		// values 0
-		boolean[][][] dirlist = new boolean[10][10][3]; // which directions for
+		boolean[][][] dirlist = new boolean[256][256][3]; // which directions for
 		// move
 		// 0 /, 1 \, 2 +
 		// true means already used
@@ -701,7 +701,7 @@ public class TraxBoard {
 			moves.trimToSize();
 			return moves;
 		}
-		if (getRowSize() * getColSize() == 1) {
+		if (getRowSize() * getColumnSize() == 1) {
 			switch (getAt(1, 1)) {
 				case NW:
 					moves.add("@1+");
@@ -724,8 +724,8 @@ public class TraxBoard {
 			return moves;
 		}
 
-		for (i = 0; i < 10; i++)
-			for (j = 0; j < 10; j++)
+		for (i = 0; i < 256; i++)
+			for (j = 0; j < 256; j++)
 				for (k = 0; k < 3; k++)
 					dirlist[i][j][k] = false;
 
@@ -734,10 +734,10 @@ public class TraxBoard {
 		rsym = isRotateMirror();
 		iBegin = 1;
 		jBegin = 1;
-		iEnd = getRowSize() + 1;
-		jEnd = getColSize() + 1;
+		iEnd = getRowSize();
+		jEnd = getColumnSize();
 		if (lrsym)
-			jEnd = (getColSize() + 1) / 2;
+			jEnd = (getColumnSize() + 1) / 2;
 		if (rsym || udsym)
 			iEnd = (getRowSize() + 1) / 2;
 
@@ -797,7 +797,7 @@ public class TraxBoard {
 					ul = getAt(i - 1, j - 1);
 					rr = getAt(i, j + 2);
 					switch (neighbors[i][j]) {
-						case 1: {
+						case 1:
 							if (dr == NS || dr == NW || dr == NE)
 								dirlist[i][j + 1][1] = true;
 							if (dr == WN || dr == WS || dr == WE)
@@ -807,7 +807,6 @@ public class TraxBoard {
 							if (ur == SW || ur == SE || ur == SN)
 								dirlist[i][j + 1][0] = true;
 							break;
-						}
 						case 2: {
 							if (dr == NS || dr == NW || dr == NE)
 								dirlist[i][j + 1][1] = true;
@@ -920,16 +919,13 @@ public class TraxBoard {
 								dirlist[i + 1][j][1] = true;
 							break;
 						}
-						default:
-							// This should never happen
-							throw new RuntimeException("This should never happen(029)");
 					}
 				}
 			}
 		}
 
 		// remove left-right symmetry moves
-		if (lrsym && getColSize() % 2 == 1) {
+		if (lrsym && getColumnSize() % 2 == 1) {
 			for (i = iBegin; i <= iEnd; i++) {
 				dirlist[i][jEnd][0] = true;
 			}
@@ -946,7 +942,7 @@ public class TraxBoard {
 			for (j = jBegin; j <= jEnd; j++) {
 				// remove rotation symmetry moves
 				if (rsym && getRowSize() % 2 == 1) {
-					int jMiddle = (getColSize() + 1) / 2;
+					int jMiddle = (getColumnSize() + 1) / 2;
 					if (j > jMiddle && i == iEnd) {
 						continue;
 					}
@@ -1096,8 +1092,8 @@ public class TraxBoard {
 		int piece, i, j, j2;
 
 		for (i = 1; i <= getRowSize(); i++) {
-			j2 = getColSize();
-			for (j = 1; j <= ((getColSize() + 1) / 2); j++) {
+			j2 = getColumnSize();
+			for (j = 1; j <= ((getColumnSize() + 1) / 2); j++) {
 				piece = getAt(i, j);
 				switch (getAt(i, j2)) {
 					case NW:
@@ -1140,7 +1136,7 @@ public class TraxBoard {
 
 		i2 = getRowSize();
 		for (i = 1; i <= ((getRowSize() + 1) / 2); i++) {
-			for (j = 1; j <= getColSize(); j++) {
+			for (j = 1; j <= getColumnSize(); j++) {
 				piece = getAt(i, j);
 				switch (getAt(i2, j)) {
 					case NW:
@@ -1184,8 +1180,8 @@ public class TraxBoard {
 
 		i2 = getRowSize();
 		for (i = 1; i <= ((getRowSize() + 1) / 2); i++) {
-			j2 = getColSize();
-			for (j = 1; j <= getColSize(); j++) {
+			j2 = getColumnSize();
+			for (j = 1; j <= getColumnSize(); j++) {
 				piece = getAt(i, j);
 				switch (getAt(i2, j2)) {
 					case NW:
@@ -1242,55 +1238,47 @@ public class TraxBoard {
 	}
 
 	public int getAt(int row, int col){
-		return board.get(firstRow + row - 1, firstcol + col - 1).number;
+		return board.get(row - 1, col - 1).number;
 	}
 
 	public void putAt(int row, int col, int piece){
 		if ((row + col < 0))
 			throw new AssertionError();
 		if (piece == EMPTY) {
-			if (board.get(firstRow + row - 1, firstcol + col - 1) != TraxTiles.EMPTY)
+			if (board.get(row - 1, col - 1) != TraxTiles.EMPTY)
 				tilesNumber--;
-			board.put(firstRow + row - 1, firstcol + col - 1, TraxTiles.tilesFromNumber(piece));
+			board.put(row - 1, col - 1, TraxTiles.tilesFromNumber(piece));
 			return;
 		} else {
 			if (boardEmpty) {
 				boardEmpty = false;
-				firstRow = 7;
-				firstcol = 7;
-				lastrow = 7;
-				lastcol = 7;
+				firstColumn = 0;
+				firstRow = 0;
+				lastRow = 0;
+				lastColumn = 0;
 				tilesNumber = 1;
-				board.put(firstRow, firstcol, TraxTiles.tilesFromNumber(piece));
+				board.put(0, 0, TraxTiles.tilesFromNumber(piece));
 				return;
 			}
 			if (row == 0) {
-				if ((firstRow <= 0))
-					throw new AssertionError();
 				firstRow--;
-				row++;
 			}
 			if (col == 0) {
-				if ((firstcol <= 0))
-					throw new AssertionError();
-				firstcol--;
-				col++;
+				firstColumn--;
 			}
 			if (row > getRowSize()) {
-				lastrow += row - getRowSize();
+				lastRow += row - getRowSize();
 			}
-			if (col > getColSize()) {
-				lastcol += col - getColSize();
+			if (col > getColumnSize()) {
+				lastColumn += col - getColumnSize();
 			}
 			tilesNumber++;
 		}
-		board.put(firstRow + row - 1, firstcol + col - 1, TraxTiles.tilesFromNumber(piece));
+		board.put(row - 1, col - 1, TraxTiles.tilesFromNumber(piece));
 	}
 
 	public boolean forcedMove(int brow, int bcol){
 		if (!isBlank(brow, bcol))
-			return true;
-		if ((brow < 1) || (brow > 8) || (bcol < 1) || (bcol > 8))
 			return true;
 
 		int up = getAt(brow - 1, bcol);

@@ -52,9 +52,6 @@ public class GnuTraxGui extends JFrame {
 
 		traxBoard = GnuTrax.getInstance().getTraxBoard();
 		if (board != null && board.size() > 0) {
-			for (int i = 0; i < 1; i++) {
-				board.get(i).setImage(tiles[TraxBoard.INVALID].getImage());
-			}
 			board.get(0).setImage(tiles[TraxBoard.EMPTY].getImage());
 			this.repaint();
 		}
@@ -84,20 +81,14 @@ public class GnuTraxGui extends JFrame {
 		return sb.toString();
 	}
 
-	private void clearBoard(){
-		for (ImagePanel imagePanel : board) {
-			imagePanel.setImage(tiles[TraxBoard.EMPTY].getImage());
-		}
-	}
-
-	private int noToDraw(int a){
-		return a + 2;
+	private int noToDraw(int no){
+		return no + 4;
 	}
 
 	private void drawBoard(){
 
 		int noOfRowsToDraw = noToDraw(traxBoard.getRowSize());
-		int noOfColsToDraw = noToDraw(traxBoard.getColSize());
+		int noOfColsToDraw = noToDraw(traxBoard.getColumnSize());
 
 		SpringLayout springLayout = new SpringLayout();
 
@@ -122,8 +113,9 @@ public class GnuTraxGui extends JFrame {
 			}
 		}
 
-		for (int i = 1; i <= traxBoard.getRowSize(); i++) {
-			for (int j = 1; j <= traxBoard.getColSize(); j++) {
+
+		for (int i = 1; i <= traxBoard.getRowSize() + 1; i++) {
+			for (int j = 1; j <= traxBoard.getColumnSize() + 1; j++) {
 				board.get(i * noOfColsToDraw + j).setImage(tiles[traxBoard.getAt(i, j)].getImage());
 				board.get(i * noOfColsToDraw + j).repaint();
 			}
@@ -167,7 +159,6 @@ public class GnuTraxGui extends JFrame {
 		if (AIMove != null)
 			GnuTrax.getInstance().gotAMove(AIMove);
 
-		clearBoard();
 		drawBoard();
 		checkForWinner();
 
@@ -178,8 +169,6 @@ public class GnuTraxGui extends JFrame {
 		String theMove = position(x, y, tile.getTileType());
 		GnuTrax.getInstance().gotAMove(theMove);
 
-		board.get(x * noToDraw(traxBoard.getColSize()) + y).setImage(tile.getImage());
-		clearBoard();
 		drawBoard();
 
 		if (checkForWinner())
