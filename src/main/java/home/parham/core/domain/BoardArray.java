@@ -18,10 +18,9 @@ import java.util.List;
 
 public class BoardArray {
 	private List<List<TraxTiles>> board;
-	private int size;
 
 	public BoardArray(){
-		size = 1;
+		int size = 1;
 		board = new ArrayList<List<TraxTiles>>(size);
 		for (int i = 0; i < size; i++) {
 			board.add(new ArrayList<TraxTiles>(size));
@@ -32,11 +31,10 @@ public class BoardArray {
 	}
 
 	public BoardArray(BoardArray org){
-		size = org.size;
-		board = new ArrayList<List<TraxTiles>>(size);
-		for (int i = 0; i < size; i++) {
-			board.add(new ArrayList<TraxTiles>(size));
-			for (int j = 0; j < size; j++) {
+		board = new ArrayList<List<TraxTiles>>(org.getRowSize());
+		for (int i = 0; i < org.getRowSize(); i++) {
+			board.add(new ArrayList<TraxTiles>(org.getColumnSize()));
+			for (int j = 0; j < org.getColumnSize(); j++) {
 				board.get(i).add(org.board.get(i).get(j));
 			}
 		}
@@ -53,56 +51,75 @@ public class BoardArray {
 	public void put(int row, int column, TraxTiles tile){
 		/* Expand board if needed. */
 		if (row == -1) {
-			expandFromBegin();
+			expandFromFirstRow();
 			row++;
-			column++;
 		} else if (column == -1) {
-			expandFromBegin();
+			expandFromFirstColumn();
 			column++;
-			row++;
 		} else if (column < -1) {
 			throw new ArrayIndexOutOfBoundsException();
 		} else if (row < -1) {
 			throw new ArrayIndexOutOfBoundsException();
 		}
-		if (row > size) {
+		if (row > getRowSize()) {
 			throw new ArrayIndexOutOfBoundsException();
-		} else if (row == size) {
-			expandFromEnd();
-		} else if (column > size) {
+		} else if (row == getRowSize()) {
+			expandFromLastRow();
+		} else if (column > getColumnSize()) {
 			throw new ArrayIndexOutOfBoundsException();
-		} else if (column == size) {
-			expandFromEnd();
+		} else if (column == getColumnSize()) {
+			expandFromLastColumn();
 		}
 
 		board.get(row).set(column, tile);
 	}
 
 	public int size(){
-		return size;
+		return Math.max(getColumnSize(), getRowSize());
 	}
 
-	private void expandFromEnd(){
+	public int getColumnSize(){
+		return board.get(0).size();
+	}
+
+	public int getRowSize(){
+		return board.size();
+	}
+
+	private void expandFromLastRow(){
 		board.add(new ArrayList<TraxTiles>());
 
-		for (int i = 0; i < size; i++) {
-			board.get(i).add(TraxTiles.EMPTY);
+		for (int i = 0; i < getColumnSize(); i++) {
+			board.get(getRowSize() - 1).add(TraxTiles.EMPTY);
 		}
-		for (int i = 0; i <= size; i++) {
-			board.get(size).add(TraxTiles.EMPTY);
-		}
-		size++;
 	}
 
-	private void expandFromBegin(){
+	private void expandFromLastColumn(){
+		for (int i = 0; i < getRowSize(); i++) {
+			board.get(i).add(TraxTiles.EMPTY);
+		}
+	}
+
+	private void expandFromFirstRow(){
 		board.add(0, new ArrayList<TraxTiles>());
 
-		for (int i = 1; i <= size; i++) {
-			board.get(i).add(0, TraxTiles.EMPTY);
-		}
-		for (int i = 0; i <= size; i++) {
+		for (int i = 0; i < getColumnSize(); i++) {
 			board.get(0).add(TraxTiles.EMPTY);
 		}
-		size++;
+	}
+
+	private void expandFromFirstColumn(){
+		for (int i = 0; i < getRowSize(); i++) {
+			board.get(i).add(0, TraxTiles.EMPTY);
+		}
+	}
+
+	@Override
+	public String toString(){
+		String retval = "";
+		for (int i = 0; i < getRowSize(); i++) {
+			retval += board.get(i).toString() + "\n";
+		}
+		return retval;
 	}
 }

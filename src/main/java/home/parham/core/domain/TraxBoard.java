@@ -74,73 +74,6 @@ public class TraxBoard {
 		return (piece == EMPTY);
 	}
 
-	/**
-	 * Returns the numbers of used tiles. Can be used to determine if we are in
-	 * the opening, middle or end-phase of the game
-	 *
-	 * @return the number of used tiles
-	 */
-	public int getNumOfTiles(){
-		return tilesNumber;
-	}
-
-	public TraxBoard rotate(){
-		TraxBoard result = new TraxBoard(this);
-
-		int size = result.board.size();
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
-				switch (board.get(size - 1 - j, i)) {
-					case NS:
-						result.board.put(i, j, TraxTiles.WE);
-						break;
-					case WE:
-						result.board.put(i, j, TraxTiles.NS);
-						break;
-					case EMPTY:
-						result.board.put(i, j, TraxTiles.EMPTY);
-						break;
-					case NW:
-						result.board.put(i, j, TraxTiles.NE);
-						break;
-					case NE:
-						result.board.put(i, j, TraxTiles.SE);
-						break;
-					case SE:
-						result.board.put(i, j, TraxTiles.SW);
-						break;
-					case SW:
-						result.board.put(i, j, TraxTiles.NW);
-						break;
-				}
-			}
-		}
-		result.setCorners();
-		return result;
-	}
-
-	private void setCorners(){
-		int size = board.size();
-
-		firstRow = -1;
-		firstColumn = -1;
-		lastColumn = -1;
-		lastRow = -1;
-
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
-				if ((firstRow < 0) && (board.get(i, j) != TraxTiles.EMPTY))
-					firstRow = i;
-				if ((lastRow < 0) && (board.get(size - 1 - i, j) != TraxTiles.EMPTY))
-					lastRow = 16 - i;
-				if ((firstColumn < 0) && (board.get(j, i) != TraxTiles.EMPTY))
-					firstColumn = i;
-				if ((lastColumn < 0) && (board.get(j, size - 1 - i) != TraxTiles.EMPTY))
-					lastColumn = 16 - i;
-			}
-		}
-	}
-
 	private void saveState(){
 		wtm_save = wtm;
 		boardEmpty_save = boardEmpty;
@@ -166,11 +99,11 @@ public class TraxBoard {
 	}
 
 	public int getRowSize(){
-		return lastRow - firstRow + 1;
+		return board.getRowSize();
 	}
 
 	public int getColumnSize(){
-		return lastColumn - firstColumn + 1;
+		return board.getColumnSize();
 	}
 
 
@@ -211,11 +144,13 @@ public class TraxBoard {
 			if (move.equals("@0+")) {
 				putAt(0, 0, NS);
 				switchPlayer();
+				System.err.println(board);
 				return;
 			}
 			if (move.equals("@0/")) {
 				putAt(0, 0, NW);
 				switchPlayer();
+				System.err.println(board);
 				return;
 			}
 			throw new IllegalMoveException("Only @0/ and @0+ accepted as first move.", move);
@@ -558,7 +493,9 @@ public class TraxBoard {
 			restoreState();
 			throw new IllegalMoveException("illegal filled cave.");
 		}
-		
+		System.err.println(board);
+		System.err.println(firstColumn + " -- " + lastColumn);
+		System.err.println(firstRow + " -- " + lastRow);
 		/* note that switchPlayer() "must" come before isGameOver() */
 		switchPlayer();
 		/* update the gameOver attribute */
@@ -580,7 +517,6 @@ public class TraxBoard {
 	public TraxStatus isGameOver(){
 		boolean isWhiteWins = false;
 		boolean isBlackWins = false;
-		int sp;
 
 		if (gameover != TraxStatus.NOPLAYER)
 			return gameover;
@@ -1231,18 +1167,14 @@ public class TraxBoard {
 				tilesNumber = 1;
 				board.put(0, 0, TraxTiles.tilesFromNumber(piece));
 				return;
-			}
-			if (row == 0) {
+			} else if (row == 0) {
 				firstRow--;
-			}
-			if (col == 0) {
+			} else if (col == 0) {
 				firstColumn--;
-			}
-			if (row > getRowSize()) {
-				lastRow += row - getRowSize();
-			}
-			if (col > getColumnSize()) {
-				lastColumn += col - getColumnSize();
+			} else if (row > getRowSize()) {
+				lastRow++;
+			} else if (col > getColumnSize()) {
+				lastColumn++;
 			}
 			tilesNumber++;
 		}
