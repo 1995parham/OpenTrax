@@ -82,7 +82,7 @@ public class GnuTraxGui extends JFrame {
 	}
 
 	private int noToDraw(int no){
-		return no + 4;
+		return no + 2;
 	}
 
 	private void drawBoard(){
@@ -114,8 +114,8 @@ public class GnuTraxGui extends JFrame {
 		}
 
 
-		for (int i = 1; i <= traxBoard.getRowSize() + 1; i++) {
-			for (int j = 1; j <= traxBoard.getColumnSize() + 1; j++) {
+		for (int i = 1; i <= traxBoard.getRowSize(); i++) {
+			for (int j = 1; j <= traxBoard.getColumnSize(); j++) {
 				board.get(i * noOfColsToDraw + j).setImage(tiles[traxBoard.getAt(i, j)].getImage());
 				board.get(i * noOfColsToDraw + j).repaint();
 			}
