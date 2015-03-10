@@ -53,18 +53,18 @@ public class BoardArray {
 		if (row == -1) {
 			expandFromFirstRow();
 			row++;
-		} else if (column == -1) {
+		} else if (row < -1) {
+			throw new ArrayIndexOutOfBoundsException();
+		} else if (row > getRowSize()) {
+			throw new ArrayIndexOutOfBoundsException();
+		} else if (row == getRowSize()) {
+			expandFromLastRow();
+		}
+		if (column == -1) {
 			expandFromFirstColumn();
 			column++;
 		} else if (column < -1) {
 			throw new ArrayIndexOutOfBoundsException();
-		} else if (row < -1) {
-			throw new ArrayIndexOutOfBoundsException();
-		}
-		if (row > getRowSize()) {
-			throw new ArrayIndexOutOfBoundsException();
-		} else if (row == getRowSize()) {
-			expandFromLastRow();
 		} else if (column > getColumnSize()) {
 			throw new ArrayIndexOutOfBoundsException();
 		} else if (column == getColumnSize()) {
@@ -101,9 +101,10 @@ public class BoardArray {
 	}
 
 	private void expandFromFirstRow(){
+		int csize = getColumnSize();
 		board.add(0, new ArrayList<TraxTiles>());
 
-		for (int i = 0; i < getColumnSize(); i++) {
+		for (int i = 0; i < csize; i++) {
 			board.get(0).add(TraxTiles.EMPTY);
 		}
 	}
