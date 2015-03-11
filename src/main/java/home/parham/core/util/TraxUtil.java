@@ -18,17 +18,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.StringTokenizer;
 
 public final class TraxUtil {
 
 	static boolean LOG = false;
-	static Random randomGenerator = new Random();
-
-	public static int getRandom(int limit){
-		return randomGenerator.nextInt(limit);
-	}
 
 	public static void startLog(){
 		LOG = true;
@@ -37,13 +31,6 @@ public final class TraxUtil {
 	public static void stopLog(){
 		LOG = false;
 	}
-
-	public static void log(String msg){
-		if (LOG) {
-			System.err.println(msg);
-		}
-	}
-
 
 	public static ArrayList<String> getInput(InputStream inputStream){
 		ArrayList<String> result = new ArrayList<String>(5);
@@ -63,30 +50,6 @@ public final class TraxUtil {
 
 	public static ArrayList<String> getInput(){
 		return getInput(System.in);
-	}
-
-	public static String reverseBorder(String border){
-		StringBuffer result = new StringBuffer(border.length());
-		for (int i = 0; i < border.length(); i++) {
-			switch (border.charAt(i)) {
-				case 'W':
-					result.append('B');
-					break;
-				case 'B':
-					result.append('W');
-					break;
-				case '+':
-					result.append('+');
-					break;
-				case '-':
-					result.append('-');
-					break;
-				default:
-					// This should never happen
-					throw new IllegalArgumentException("This should never happen (032).");
-			}
-		}
-		return result.toString();
 	}
 
 }

@@ -17,6 +17,7 @@ import home.parham.core.domain.TraxBoard;
 import home.parham.core.domain.TraxStatus;
 import home.parham.core.engine.GnuTrax;
 import home.parham.core.util.TraxUtil;
+import home.parham.core.util.TraxVersion;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -1065,7 +1066,7 @@ public class Commands {
 		System.out.println();
 		System.out.println("type \"help\" to get a list of the commands you can use in this program.");
 		System.out.println();
-		System.out.print("    ---===###   OpenTrax version: 0.3 welcomes you.   ###===---\n");
+		System.out.print("    ---===###   OpenTrax version: " + TraxVersion.getVersion() + " welcomes you.   ###===---\n");
 		System.out.println();
 	}
 }

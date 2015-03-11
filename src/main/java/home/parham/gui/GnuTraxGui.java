@@ -8,6 +8,7 @@ import home.parham.core.engine.GnuTrax;
 import home.parham.core.player.Player;
 import home.parham.core.player.PlayerSimple;
 import home.parham.core.player.ServerNetPlayer;
+import home.parham.core.util.TraxVersion;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.io.IOException;
@@ -26,7 +27,8 @@ public class GnuTraxGui extends JFrame {
 	private boolean haveRemote;
 
 	public GnuTraxGui(){
-		super("GnuTrax 1.0");
+		super("GnuTrax " + TraxVersion.getVersion());
+
 		setResizable(false);
 		setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
 		board = new ArrayList<ImagePanel>();
@@ -97,6 +99,12 @@ public class GnuTraxGui extends JFrame {
 		outerPanel = new JPanel();
 		outerPanel.setLayout(springLayout);
 		outerPanel.setBackground(new Color(0, 100, 0));
+
+		JLabel playerTurn = new JLabel(traxBoard.whoToMove().name());
+		playerTurn.setForeground(Color.ORANGE);
+		springLayout.putConstraint(SpringLayout.NORTH, playerTurn, 5, SpringLayout.NORTH, outerPanel);
+		springLayout.putConstraint(SpringLayout.WEST, playerTurn, 5, SpringLayout.WEST, outerPanel);
+		outerPanel.add(playerTurn);
 
 		ImagePanel innerPanel;
 
@@ -200,6 +208,12 @@ public class GnuTraxGui extends JFrame {
 		outerPanel.setLayout(springLayout);
 		outerPanel.setBackground(new Color(0, 100, 0));
 		this.setContentPane(outerPanel);
+
+		JLabel playerTurn = new JLabel(traxBoard.whoToMove().name());
+		playerTurn.setForeground(Color.ORANGE);
+		springLayout.putConstraint(SpringLayout.NORTH, playerTurn, 5, SpringLayout.NORTH, outerPanel);
+		springLayout.putConstraint(SpringLayout.WEST, playerTurn, 5, SpringLayout.WEST, outerPanel);
+		outerPanel.add(playerTurn);
 
 		ImagePanel innerPanel;
 
