@@ -23,8 +23,10 @@ public class GnuTraxGui extends JFrame {
 	private JPanel outerPanel;
 	private List<ImagePanel> board;
 	private TraxBoard traxBoard;
-	private Player player;
-	private boolean haveRemote;
+	private Player player1;
+	private Player player2;
+	private boolean haveRemote1;
+	private boolean haveRemote2;
 
 	public GnuTraxGui(){
 		super("GnuTrax " + TraxVersion.getVersion());
@@ -38,24 +40,47 @@ public class GnuTraxGui extends JFrame {
 	private void newGame(){
 		Commands.userNew();
 
-		ChoosePlayer playerChooser = new ChoosePlayer(this);
-		playerChooser.setVisible(true);
-		int op = playerChooser.getChoosenOption();
-		if (op == 1) {
-			haveRemote = true;
-			player = new PlayerSimple();
-		} else if (op == 0) {
-			haveRemote = false;
-			player = null;
-		} else if (op == 2) {
-			haveRemote = true;
-			player = new ServerNetPlayer();
+		ChoosePlayer playerChooser1 = new ChoosePlayer(this);
+		playerChooser1.setVisible(true);
+		int op1 = playerChooser1.getChosenOption();
+		if (op1 == 1) {
+			haveRemote1 = true;
+			player1 = new PlayerSimple();
+		} else if (op1 == 0) {
+			haveRemote1 = false;
+			player1 = null;
+		} else if (op1 == 2) {
+			haveRemote1 = true;
+			player1 = new ServerNetPlayer();
+		}
+
+		ChoosePlayer playerChooser2 = new ChoosePlayer(this);
+		playerChooser2.setVisible(true);
+		int op2 = playerChooser2.getChosenOption();
+		if (op2 == 1) {
+			haveRemote2 = true;
+			player2 = new PlayerSimple();
+		} else if (op2 == 0) {
+			haveRemote2 = false;
+			player2 = null;
+		} else if (op2 == 2) {
+			haveRemote2 = true;
+			player2 = new ServerNetPlayer();
 		}
 
 		traxBoard = GnuTrax.getInstance().getTraxBoard();
 		if (board != null && board.size() > 0) {
 			board.get(0).setImage(tiles[TraxBoard.EMPTY].getImage());
 			this.repaint();
+		}
+
+		if (haveRemote1 && haveRemote2) {
+			this.setEnabled(false);
+			String move = "";
+			while (true) {
+				move = makeRemoteMove(move, 1);
+				move = makeRemoteMove(move, 2);
+			}
 		}
 	}
 
@@ -98,7 +123,7 @@ public class GnuTraxGui extends JFrame {
 
 		outerPanel = new JPanel();
 		outerPanel.setLayout(springLayout);
-		outerPanel.setBackground(new Color(0, 100, 0));
+		outerPanel.setBackground(new Color(0, 195, 0));
 
 		JLabel playerTurn = new JLabel(traxBoard.whoToMove().name());
 		playerTurn.setForeground(Color.ORANGE);
@@ -160,20 +185,25 @@ public class GnuTraxGui extends JFrame {
 		System.exit(0);
 	}
 
-	private void makeRemoteMove(String otherPlayerMove){
-		this.setEnabled(false);
+	private String makeRemoteMove(String otherPlayerMove, int playerNo){
+		String AIMove = null;
+		if (playerNo == 2)
+			AIMove = player2.move(otherPlayerMove);
+		if (playerNo == 1)
+			AIMove = player1.move(otherPlayerMove);
 
-		String AIMove = player.move(otherPlayerMove);
 		if (AIMove != null)
 			GnuTrax.getInstance().gotAMove(AIMove);
+		else
+			System.exit(1);
 
 		drawBoard();
 		checkForWinner();
 
-		this.setEnabled(true);
+		return AIMove;
 	}
 
-	public void setMove(int x, int y, Tile tile){
+	public void makeHumanMove(int x, int y, Tile tile){
 		String theMove = position(x, y, tile.getTileType());
 		GnuTrax.getInstance().gotAMove(theMove);
 
@@ -182,8 +212,11 @@ public class GnuTraxGui extends JFrame {
 		if (checkForWinner())
 			return;
 
-		if (haveRemote)
-			makeRemoteMove(theMove);
+		if (haveRemote2) {
+			this.setEnabled(false);
+			makeRemoteMove(theMove, 2);
+			this.setEnabled(true);
+		}
 
 		checkForWinner();
 	}
@@ -206,7 +239,7 @@ public class GnuTraxGui extends JFrame {
 
 		outerPanel = new JPanel();
 		outerPanel.setLayout(springLayout);
-		outerPanel.setBackground(new Color(0, 100, 0));
+		outerPanel.setBackground(new Color(0, 195, 0));
 		this.setContentPane(outerPanel);
 
 		JLabel playerTurn = new JLabel(traxBoard.whoToMove().name());
