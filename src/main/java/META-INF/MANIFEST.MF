@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-Main-Class: home.parham.main.main
-Application-Version: V3.0(Collina)
-Application-Name: OpenTrax
-Bundle-License: GPLv2
-Repositories: https://github.com/1995parham/OpenTrax
