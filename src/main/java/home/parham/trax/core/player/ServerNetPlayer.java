@@ -40,9 +40,11 @@ public class ServerNetPlayer implements Player {
 	@Override
 	public String move(String otherPlayerMove){
 		try {
-			PrintWriter ostream = new PrintWriter(player.getOutputStream());
-			ostream.println(otherPlayerMove);
-			ostream.flush();
+			if (otherPlayerMove != null) {
+				PrintWriter ostream = new PrintWriter(player.getOutputStream());
+				ostream.println(otherPlayerMove);
+				ostream.flush();
+			}
 			System.out.println("Waiting for remote player");
 			BufferedReader istream = new BufferedReader(new InputStreamReader(player.getInputStream()));
 			return istream.readLine();

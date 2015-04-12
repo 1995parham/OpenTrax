@@ -32,7 +32,7 @@ public class ImagePanel extends JComponent {
 		ChooseTile ct = new ChooseTile(this.gnuTrax, possibleMoves);
 		ct.setVisible(true);
 		if (ct.getChosenMove() != -1) {
-			this.gnuTrax.setMove(this.x, this.y, possibleMoves.get(ct.getChosenMove()));
+			this.gnuTrax.makeHumanMove(this.x, this.y, possibleMoves.get(ct.getChosenMove()));
 		}
 	}
 

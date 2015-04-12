@@ -525,12 +525,7 @@ public class TraxBoard {
 			return gameover;
 		}
 
-//		if (uniqueMoves().size() == 0) {
-//			gameover = TraxStatus.DRAW;
-//			return gameover;
-//		}
-
-		// Now check loop wins
+		/* Now check loop wins */
 		for (int i = 1; i < 8; i++) {
 			for (int j = 1; j < 8; j++) {
 				switch (getAt(i, j)) {
@@ -948,7 +943,7 @@ public class TraxBoard {
 				+ "llduud" // 'l' 13..18
 				+ "rruddu"; // 'r' 19..24
 
-		for (; ; ) {
+		while (true) {
 			if (isBlank(row, col))
 				return false; // no line starts with a empty space or we are out of range
 			switch (direction) {
@@ -985,10 +980,12 @@ public class TraxBoard {
 					col++;
 					break;
 			}
-//			if ((type == 'h') && (col == 9))
-//				return true; // left-right win
-//			if ((type == 'v') && (row == 9))
-//				return true; // top-bottom win
+			/*
+			if ((type == 'h') && (col == 9))
+				return true; // left-right win
+			if ((type == 'v') && (row == 9))
+				return true; // top-bottom win
+			*/
 			if ((row == start_row) && (col == start_col)) {
 				/* loop win */
 				return type == 'l';

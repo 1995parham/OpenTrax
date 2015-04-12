@@ -31,10 +31,11 @@ public class PlayerSimple implements Player {
 	public String move(String otherPlayerMove){
 		String move = null;
 		try {
-			tb.makeMove(new TraxMove(otherPlayerMove));
+			if (!otherPlayerMove.equals(""))
+				tb.makeMove(new TraxMove(otherPlayerMove));
 			move = getRandomMove(tb);
 		} catch (IllegalMoveException e) {
-			System.err.println("[" + e.getMove() + "] : " + e.getMessage());
+			System.err.println(this.getClass().getName() + " : " + "[" + e.getMove() + "] : " + e.getMessage());
 		}
 		return move;
 	}

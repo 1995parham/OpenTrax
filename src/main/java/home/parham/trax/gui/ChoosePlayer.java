@@ -9,7 +9,7 @@ public class ChoosePlayer extends JDialog {
 	private JRadioButton simpleAIButton;
 	private JRadioButton serverNetButton;
 
-	private int choosenOption;
+	private int chosenOption;
 
 	public ChoosePlayer(JFrame owner){
 		super(owner, "Choose Player", true);
@@ -83,22 +83,22 @@ public class ChoosePlayer extends JDialog {
 	}
 
 	private void onOK(){
-		choosenOption = 0;
+		chosenOption = 0;
 		if (humanButton.isSelected())
-			choosenOption = 0;
+			chosenOption = 0;
 		if (simpleAIButton.isSelected())
-			choosenOption = 1;
+			chosenOption = 1;
 		if (serverNetButton.isSelected())
-			choosenOption = 2;
+			chosenOption = 2;
 		dispose();
 	}
 
 	private void onCancel(){
-		choosenOption = 0;
+		chosenOption = 0;
 		dispose();
 	}
 
-	public int getChoosenOption(){
-		return choosenOption;
+	public int getChosenOption(){
+		return chosenOption;
 	}
 }
