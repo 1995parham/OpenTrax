@@ -24,10 +24,10 @@ public class ServerNetPlayer implements Player {
 
 	private Socket player;
 
-	public ServerNetPlayer(){
+	public ServerNetPlayer(int port){
 		ServerSocket serverSocket;
 		try {
-			serverSocket = new ServerSocket(1373);
+			serverSocket = new ServerSocket(port);
 			System.out.println("Waiting for connection ..");
 			player = serverSocket.accept();
 			System.out.println("Connected to " + player.getInetAddress());
