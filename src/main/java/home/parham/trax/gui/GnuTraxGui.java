@@ -51,7 +51,7 @@ public class GnuTraxGui extends JFrame {
 			player1 = null;
 		} else if (op1 == 2) {
 			haveRemote1 = true;
-			player1 = new ServerNetPlayer();
+			player1 = new ServerNetPlayer(1373);
 		}
 
 		ChoosePlayer playerChooser2 = new ChoosePlayer(this);
@@ -65,7 +65,7 @@ public class GnuTraxGui extends JFrame {
 			player2 = null;
 		} else if (op2 == 2) {
 			haveRemote2 = true;
-			player2 = new ServerNetPlayer();
+			player2 = new ServerNetPlayer(1374);
 		}
 
 		traxBoard = GnuTrax.getInstance().getTraxBoard();
@@ -74,14 +74,7 @@ public class GnuTraxGui extends JFrame {
 			this.repaint();
 		}
 
-		if (haveRemote1 && haveRemote2) {
-			this.setEnabled(false);
-			String move = "";
-			while (true) {
-				move = makeRemoteMove(move, 1);
-				move = makeRemoteMove(move, 2);
-			}
-		}
+		this.setEnabled(false);
 	}
 
 	private String getRowColForPos(int x, int y){
@@ -183,6 +176,22 @@ public class GnuTraxGui extends JFrame {
 		JOptionPane.showMessageDialog(this, "Good game. The winner was "
 				+ winner, "Game Over", JOptionPane.INFORMATION_MESSAGE);
 		System.exit(0);
+	}
+
+	public void startGame(){
+		if (haveRemote1 && haveRemote2) {
+			makeRemoteGame();
+		}
+		this.setEnabled(true);
+	}
+
+	private void makeRemoteGame(){
+		this.setEnabled(false);
+		String move = "";
+		while (true) {
+			move = makeRemoteMove(move, 1);
+			move = makeRemoteMove(move, 2);
+		}
 	}
 
 	private String makeRemoteMove(String otherPlayerMove, int playerNo){
@@ -290,6 +299,7 @@ public class GnuTraxGui extends JFrame {
 		frame.pack();
 		frame.setLocationByPlatform(true);
 		frame.setVisible(true);
+		frame.startGame();
 	}
 
 	public static final long serialVersionUID = 2488472L;
