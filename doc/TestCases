@@ -1,0 +1,8 @@
+1. Check wrong move from FPGA
+
+  @
+ +---+
+0| + |   --->   No Neighbours
+ +---+   @0+
+
+2. Invalid turn move

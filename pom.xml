@@ -45,7 +45,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>home.parham.trax.main.main</mainClass>
+                            <mainClass>home.parham.trax.main.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
