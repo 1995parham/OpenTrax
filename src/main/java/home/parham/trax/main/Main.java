@@ -13,13 +13,10 @@
 
 package home.parham.trax.main;
 
-import home.parham.trax.cli.Commands;
 import home.parham.trax.gui.GnuTraxGui;
 
-public class main {
+public class Main {
 	public static void main(String args[]){
-		Commands.welcome();
-
 		GnuTraxGui.createAndShowGUI();
 	}
 }
