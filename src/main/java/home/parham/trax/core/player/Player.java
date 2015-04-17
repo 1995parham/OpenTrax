@@ -14,5 +14,7 @@
 package home.parham.trax.core.player;
 
 public interface Player {
-	public String move(String otherPlayerMove);
+	String move(String otherPlayerMove);
+
+	String getName();
 }
