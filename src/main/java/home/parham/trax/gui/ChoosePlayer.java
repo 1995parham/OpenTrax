@@ -42,6 +42,13 @@ public class ChoosePlayer extends JDialog {
 			}
 		});
 
+		JTextField nameField = new JTextField();
+		springLayout.putConstraint(SpringLayout.SOUTH, nameField, -20, SpringLayout.NORTH, buttonOK);
+		springLayout.putConstraint(SpringLayout.EAST, nameField, 0, SpringLayout.EAST, buttonOK);
+		springLayout.putConstraint(SpringLayout.WEST, nameField, 0, SpringLayout.WEST, buttonCancel);
+		contentPane.add(nameField);
+
+
 		ButtonGroup playersButtons = new ButtonGroup();
 
 		humanButton = new JRadioButton("Human Player");
