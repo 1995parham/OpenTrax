@@ -40,6 +40,10 @@ public class PlayerSimple implements Player {
 		return move;
 	}
 
+	public String getName(){
+		return "AI";
+	}
+
 	public static String getRandomMove(TraxBoard traxBoard) throws IllegalMoveException{
 		Random randomGenerator = new Random();
 		if (traxBoard.isGameOver() != TraxStatus.NOPLAYER) {

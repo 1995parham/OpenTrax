@@ -37,7 +37,10 @@ public class ServerNetPlayer implements Player {
 
 	}
 
-	@Override
+	public String getName(){
+		return "None";
+	}
+
 	public String move(String otherPlayerMove){
 		try {
 			if (otherPlayerMove != null) {
