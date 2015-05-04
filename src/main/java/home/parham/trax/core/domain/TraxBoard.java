@@ -22,14 +22,14 @@ public class TraxBoard {
 	private boolean boardEmpty;
 	private TraxStatus wtm;
 	private BoardArray board;
-	private TraxStatus gameover;
+	private TraxStatus gameOver;
 	private int tilesNumber;
 	private int firstRow, lastRow, firstColumn, lastColumn;
 
 	private boolean boardEmpty_save;
 	private TraxStatus wtm_save;
 	private BoardArray board_save;
-	private TraxStatus gameoverSave;
+	private TraxStatus gameOverSave;
 	private int num_of_tiles_save;
 	private int firstrow_save, lastrow_save, firstcol_save, lastcol_save;
 
@@ -40,7 +40,7 @@ public class TraxBoard {
 
 	public TraxBoard() {
 		wtm = TraxStatus.WHITE;
-		gameover = TraxStatus.NOPLAYER;
+		gameOver = TraxStatus.NOPLAYER;
 		tilesNumber = 0;
 		board = new BoardArray();
 		board_save = new BoardArray();
@@ -50,7 +50,7 @@ public class TraxBoard {
 
 	public TraxBoard(TraxBoard org) {
 		wtm = org.wtm;
-		gameover = org.gameover;
+		gameOver = org.gameOver;
 		tilesNumber = org.tilesNumber;
 
 		board = new BoardArray(org.board);
@@ -78,7 +78,7 @@ public class TraxBoard {
 	private void saveState() {
 		wtm_save = wtm;
 		boardEmpty_save = boardEmpty;
-		gameoverSave = gameover;
+		gameOverSave = gameOver;
 		num_of_tiles_save = tilesNumber;
 		firstrow_save = firstRow;
 		firstcol_save = firstColumn;
@@ -90,7 +90,7 @@ public class TraxBoard {
 	private void restoreState() {
 		wtm = wtm_save;
 		boardEmpty = boardEmpty_save;
-		gameover = gameoverSave;
+		gameOver = gameOverSave;
 		tilesNumber = num_of_tiles_save;
 		firstRow = firstrow_save;
 		firstColumn = firstcol_save;
@@ -138,7 +138,7 @@ public class TraxBoard {
 		row = move.getRow();
 		tile = move.getTile();
 
-		if (gameover != TraxStatus.NOPLAYER)
+		if (gameOver != TraxStatus.NOPLAYER)
 			throw new IllegalMoveException("Game is over.", move);
 
 		if (boardEmpty) {
@@ -519,11 +519,11 @@ public class TraxBoard {
 		boolean isWhiteWins = false;
 		boolean isBlackWins = false;
 
-		if (gameover != TraxStatus.NOPLAYER)
-			return gameover;
+		if (gameOver != TraxStatus.NOPLAYER)
+			return gameOver;
 		if (tilesNumber < 4) {
-			gameover = TraxStatus.NOPLAYER;
-			return gameover;
+			gameOver = TraxStatus.NOPLAYER;
+			return gameOver;
 		}
 
 		/* Now check loop wins */
@@ -549,16 +549,16 @@ public class TraxBoard {
 		}
 
 		if (isWhiteWins && isBlackWins) {
-			gameover = whoDidLastMove();
-			return gameover;
+			gameOver = whoDidLastMove();
+			return gameOver;
 		}
 		if (isWhiteWins) {
-			gameover = TraxStatus.WHITE;
-			return gameover;
+			gameOver = TraxStatus.WHITE;
+			return gameOver;
 		}
 		if (isBlackWins) {
-			gameover = TraxStatus.BLACK;
-			return gameover;
+			gameOver = TraxStatus.BLACK;
+			return gameOver;
 		}
 		return TraxStatus.NOPLAYER;
 	}
@@ -586,7 +586,7 @@ public class TraxBoard {
 		int iBegin, jBegin, iEnd, jEnd;
 		boolean lrsym, udsym, rsym;
 
-		if (gameover != TraxStatus.NOPLAYER) {
+		if (gameOver != TraxStatus.NOPLAYER) {
 			return new ArrayList<String>(0);
 		}
 
