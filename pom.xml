@@ -6,7 +6,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <groupId>home.parham</groupId>
     <artifactId>OpenTrax</artifactId>
-    <version>4.0</version>
+    <version>4.1</version>
     <packaging>jar</packaging>
 
     <name>Open Trax</name>
@@ -34,6 +34,13 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 
     <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <testSourceDirectory>src/test/java</testSourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <!-- Build an executable JAR -->
@@ -59,7 +66,6 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                 </configuration>
             </plugin>
         </plugins>
-        <sourceDirectory>src/main/java</sourceDirectory>
     </build>
 
 </project>

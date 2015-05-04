@@ -15,7 +15,7 @@ package home.parham.trax.core.util;
 
 public final class TraxVersion {
 
-	private static String version = "V4.0";
+	private static String version = "V4.1";
 	private static String versionName = "MSK";
 
 	public static String getVersion(){
