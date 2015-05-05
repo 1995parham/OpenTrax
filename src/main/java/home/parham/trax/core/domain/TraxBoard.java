@@ -470,7 +470,7 @@ public class TraxBoard {
 					putAt(row, col, WS);
 				break;
 			default:
-	    /* This should never happen */
+			         /* This should never happen */
 				throw new RuntimeException("This should never happen. (013)");
 		}
 		if (row == 0)
