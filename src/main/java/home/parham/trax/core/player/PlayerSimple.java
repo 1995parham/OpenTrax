@@ -52,7 +52,6 @@ public class PlayerSimple implements Player {
 			return "";
 		}
 		ArrayList<String> moves = traxBoard.uniqueMoves();
-		System.err.println("Unique moves return : " + moves.size());
 
 		if (moves.size() == 1) {
 			return moves.get(0);
