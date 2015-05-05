@@ -15,7 +15,7 @@ package home.parham.trax.core.domain;
 
 public final class ColumnRowGenerator {
 
-	public static String generate(int i, int j){
+	public static String generate(int i, int j) {
 		String retval;
 
 		if (i == 0) {
@@ -27,7 +27,7 @@ public final class ColumnRowGenerator {
 				column += (char) ((i % 26) + 'A');
 				i /= 26;
 			} while (i != 0);
-			retval = new StringBuilder(column).reverse().toString();
+			retval = new StringBuilder(column).toString();
 		}
 
 		retval += j;
