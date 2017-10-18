@@ -1,8 +1,7 @@
-OpenTrax
-=========
-# Introduction
+# OpenTrax
+## Introduction
 This project created based on [GnuTrax](https://github.com/MartinMSPedersen/GnuTrax)
-project from Martin Møller Skarbiniks Pedersen.
+from Martin Møller Skarbiniks Pedersen.
 
-# Dependencies
+## Dependencies
 This project have no dependencies.
