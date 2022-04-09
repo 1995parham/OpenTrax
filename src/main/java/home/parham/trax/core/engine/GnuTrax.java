@@ -19,45 +19,44 @@ import home.parham.trax.core.exceptions.IllegalMoveException;
 
 public class GnuTrax {
 
-	private static GnuTrax instance = null;
+  private static GnuTrax instance = null;
 
-	public static GnuTrax getInstance(){
-		if (instance == null)
-			instance = new GnuTrax();
-		return instance;
-	}
+  public static GnuTrax getInstance() {
+    if (instance == null)
+      instance = new GnuTrax();
+    return instance;
+  }
 
-	private TraxBoard traxBoard;
-	private TraxStatus secondPlayerStatus;
+  private TraxBoard traxBoard;
+  private TraxStatus secondPlayerStatus;
 
+  private GnuTrax() {
+    traxBoard = new TraxBoard();
+  }
 
-	private GnuTrax(){
-		traxBoard = new TraxBoard();
-	}
+  public TraxBoard getTraxBoard() {
+    return traxBoard;
+  }
 
-	public TraxBoard getTraxBoard(){
-		return traxBoard;
-	}
+  public void setTraxBoard(TraxBoard traxBoard) {
+    this.traxBoard = traxBoard;
+  }
 
-	public void setTraxBoard(TraxBoard traxBoard){
-		this.traxBoard = traxBoard;
-	}
+  public TraxStatus getSecondPlayerStatus() {
+    return secondPlayerStatus;
+  }
 
-	public TraxStatus getSecondPlayerStatus(){
-		return secondPlayerStatus;
-	}
+  public void setSecondPlayerStatus(TraxStatus secondPlayerStatus) {
+    this.secondPlayerStatus = secondPlayerStatus;
+  }
 
-	public void setSecondPlayerStatus(TraxStatus secondPlayerStatus){
-		this.secondPlayerStatus = secondPlayerStatus;
-	}
-
-	public void gotAMove(String theMove){
-		try {
-			traxBoard.makeMove(new TraxMove(theMove));
-			System.err.println(theMove);
-		} catch (IllegalMoveException e) {
-			System.err.println("[ " + e.getMove() + "]" + " : " + e.getMessage());
-		}
-	}
+  public void gotAMove(String theMove) {
+    try {
+      traxBoard.makeMove(new TraxMove(theMove));
+      System.err.println(theMove);
+    } catch (IllegalMoveException e) {
+      System.err.println("[ " + e.getMove() + "]" + " : " + e.getMessage());
+    }
+  }
 
 }

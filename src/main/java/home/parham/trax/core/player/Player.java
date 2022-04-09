@@ -1,8 +1,8 @@
 /*
  * In The Name Of God
  * ======================================
- * [] Project Name : OpenTrax 
- * 
+ * [] Project Name : OpenTrax
+ *
  * [] Package Name : main.player
  *
  * [] Creation Date : 11-02-2015
@@ -14,7 +14,7 @@
 package home.parham.trax.core.player;
 
 public interface Player {
-	String move(String otherPlayerMove);
+  String move(String otherPlayerMove);
 
-	String getName();
+  String getName();
 }
