@@ -8,7 +8,7 @@ import home.parham.trax.core.engine.GnuTrax;
 import home.parham.trax.core.player.Player;
 import home.parham.trax.core.player.PlayerSimple;
 import home.parham.trax.core.player.ServerNetPlayer;
-import home.parham.trax.core.util.TraxVersion;
+import static home.parham.trax.main.Version.getVersion;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.io.IOException;
@@ -29,7 +29,7 @@ public class GnuTraxGui extends JFrame {
 	private boolean haveRemote2;
 
 	public GnuTraxGui(){
-		super("GnuTrax " + TraxVersion.getVersion());
+		super("GnuTrax " + getVersion());
 
 		setResizable(false);
 		setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
