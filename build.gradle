@@ -6,6 +6,7 @@
 
 plugins {
     id 'application'
+    id 'checkstyle'
 }
 
 repositories {
@@ -21,9 +22,14 @@ dependencies {
 
 application {
     mainClass = 'home.parham.trax.main.Main'
+    mainModule = 'home.parham.trax'
+}
+
+checkstyle {
+  toolVersion = '10.1'
 }
 
 group = 'home.parham'
 version = '4.1'
 description = 'Open Trax'
-java.sourceCompatibility = 1.17
+sourceCompatibility = 1.17
