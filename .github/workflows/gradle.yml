@@ -26,6 +26,8 @@ jobs:
       - uses: gradle/gradle-build-action@v2
         with:
           gradle-version: current
+      - name: Check with Gradle
+        run: gradle check
       - name: Test with Gradle
         run: gradle test
       - name: Build with Gradle
