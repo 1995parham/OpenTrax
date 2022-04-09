@@ -1,8 +1,8 @@
 /*
  * In The Name Of God
  * ======================================
- * [] Project Name : OpenTrax 
- * 
+ * [] Project Name : OpenTrax
+ *
  * [] Package Name : main.cli
  *
  * [] Creation Date : 11-02-2015
@@ -17,7 +17,7 @@ import home.parham.trax.core.domain.TraxBoard;
 import home.parham.trax.core.domain.TraxStatus;
 import home.parham.trax.core.engine.GnuTrax;
 import home.parham.trax.core.util.TraxUtil;
-import home.parham.trax.core.util.TraxVersion;
+import static home.parham.trax.main.Version.getVersion;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -1066,7 +1066,7 @@ public class Commands {
 		System.out.println();
 		System.out.println("type \"help\" to get a list of the commands you can use in this program.");
 		System.out.println();
-		System.out.print("    ---===###   OpenTrax version: " + TraxVersion.getVersion() + " welcomes you.   ###===---\n");
+		System.out.print("    ---===###   OpenTrax version: " + getVersion() + " welcomes you.   ###===---\n");
 		System.out.println();
 	}
 }
