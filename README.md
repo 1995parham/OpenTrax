@@ -4,9 +4,12 @@
 
 ## Introduction
 
-This project created based on [GnuTrax](https://github.com/MartinMSPedersen/GnuTrax)
+[Trax](http://www.traxgame.com/) game implementation in Java and Swing based on GnuTrax](https://github.com/MartinMSPedersen/GnuTrax)
 from Martin Møller Skarbiniks Pedersen.
+It was written at 2015 for AUT FPGA Competition which was based on Trax Game and this acted as GUI and Judge for the game.
 
-## Dependencies
+## How to Run
 
-This project have no dependencies.
+```sh
+gradle run
+```
