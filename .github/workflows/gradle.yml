@@ -23,11 +23,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: 'gradle'
+      - uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: current
       - name: Test with Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: test
+        run: gradle test
       - name: Build with Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: build
+        run: gradle build
