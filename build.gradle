@@ -31,5 +31,5 @@ checkstyle {
 
 group = 'home.parham'
 version = '4.1'
-description = 'Open Trax'
+description = 'Open source implementation of the Trax game'
 sourceCompatibility = 1.17
