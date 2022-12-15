@@ -1,6 +1,6 @@
 # OpenTrax
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/1995parham/OpenTrax/build?label=build&logo=github&style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/1995parham/OpenTrax/gradle.yml?label=build&logo=github&style=flat-square&branch=main)
 
 ## Introduction
 
